@@ -2,11 +2,11 @@ import 'package:VenomVerse/screens/pages/home_page.dart';
 import 'package:VenomVerse/screens/pages/learn_page.dart';
 import 'package:VenomVerse/screens/pages/notification_page.dart';
 import 'package:VenomVerse/screens/pages/profile_page.dart';
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 // import '../widgets/generate_body.dart';
 
 class GenerateBody extends StatefulWidget {
-
   const GenerateBody({super.key, required this.role});
 
   final String role;
@@ -23,10 +23,11 @@ class _GenerateBodyState extends State<GenerateBody> {
   set selectedIndex(int value) {
     _selectedIndex = value;
   }
+
   Map pages = {
     'Home': const HomePage(),
     'Notifications': const NotificationPage(),
-    'Learn' : const LearnPage(),
+    'Learn': const LearnPage(),
     'Profile': const ProfilePage(),
   };
 
@@ -35,36 +36,63 @@ class _GenerateBodyState extends State<GenerateBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[currentPage],
-      bottomNavigationBar: BottomNavigationBar(
+        body: pages[currentPage],
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.camera),
+          onPressed: () {
+            Navigator.pushNamed(context, '/scan');
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: AnimatedBottomNavigationBar(
+          // selectedIconTheme: const IconThemeData(color: Colors.green),
+          // selectedLabelStyle: const TextStyle(
+          //   fontWeight: FontWeight.bold,
+          // ),
+          // unselectedIconTheme: const IconThemeData(color: Colors.white),
+          activeColor: Colors.brown,
+          inactiveColor: Colors.white,
           backgroundColor: Colors.green,
           onTap: _onTap,
-          currentIndex: selectedIndex,
-          showUnselectedLabels: true,
+          gapLocation: GapLocation.center,
+          activeIndex: selectedIndex,
+          icons: const [
+            Icons.home,
+            Icons.notifications,
+            Icons.school,
+            Icons.person,
+          ],
+          // currentIndex: selectedIndex,
+          // showUnselectedLabels: true,
           // elevation: ,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.notifications),
-              label: "Notifications",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.camera_alt),
-              label: "Scanner",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.school),
-              label: "Learn",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: "Profile",
-            ),
-          ]),
-    );
+          // items: const [
+          //   BottomNavigationBarItem(
+          //     icon: Icon(Icons.home),
+          //     label: "Home",
+          //     backgroundColor: Colors.brown,
+          //   ),
+          //   BottomNavigationBarItem(
+          //     icon: Icon(Icons.notifications),
+          //     label: "Notifications",
+          //     backgroundColor: Colors.brown,
+          //   ),
+          //   BottomNavigationBarItem(
+          //     icon: Icon(Icons.camera_alt),
+          //     label: "Scanner",
+          //     backgroundColor: Colors.brown,
+          //   ),
+          //   BottomNavigationBarItem(
+          //     icon: Icon(Icons.school),
+          //     label: "Learn",
+          //     backgroundColor: Colors.brown,
+          //   ),
+          //   BottomNavigationBarItem(
+          //     icon: Icon(Icons.person),
+          //     label: "Profile",
+          //     backgroundColor: Colors.brown,
+          //   ),
+          // ]),
+        ));
   }
 
   void _onTap(int index) {
@@ -78,12 +106,9 @@ class _GenerateBodyState extends State<GenerateBody> {
           currentPage = "Notifications";
           break;
         case 2:
-          Navigator.pushNamed(context, '/');
-          break;
-        case 3:
           currentPage = "Learn";
           break;
-        case 4:
+        case 3:
           currentPage = "Profile";
           break;
       }

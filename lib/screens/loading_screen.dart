@@ -8,13 +8,13 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     loadHome(context);
   }
+
   @override
   Widget build(BuildContext context) {
     // loadHome(context);
@@ -29,10 +29,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 }
 
-
 void loadHome(BuildContext context) {
   // BuildContext context;
-  Future.delayed(const Duration(seconds:3), () => {
-    Navigator.pushReplacementNamed(context, '/home')
-  });
+  Future.delayed(const Duration(seconds: 3),
+      () => {Navigator.pushReplacementNamed(context, '/home')});
 }

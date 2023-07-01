@@ -41,10 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
         leading: const Image(
           image: AssetImage('assets/images/logo.png'),
         ),
-        title: Center(
-            child: Text(widget.title)
-        ),
-
+        title: Center(child: Text(widget.title)),
       ),
       // body: pages[page],
       // body: Center(
@@ -77,8 +74,9 @@ class _MyHomePageState extends State<MyHomePage> {
       //     ],
       //   ),
       // ),
-      body: const GenerateBody(role: 'role',),// This trailing comma makes auto-formatting nicer for build methods.
-
+      body: const GenerateBody(
+        role: 'role',
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
