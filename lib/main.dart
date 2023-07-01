@@ -1,30 +1,110 @@
-import 'package:VenomVerse/screens/homescreen.dart';
-import 'package:VenomVerse/screens/loading_screen.dart';
-import 'package:VenomVerse/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MaterialApp(
+    home: Home(),
+
+
+
+  ));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
 
-  // This widget is the root of your application.
+class _HomeState extends State<Home> {
+  int currentIndex = 0;
+
+  void onTabTapped(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.brown,
-        primaryColor: const Color.fromRGBO(26, 77, 46, 1)
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green[900],
+        leading: Image.asset('assets/LOGO Round 8.png'),
       ),
-      // home: const MyHomePage(title: "VenomVerse"),
-      // initialRoute: '/home',
-      routes: {
-        '/': (context) => const LoadingScreen(),
-        '/home' : (context) => const MyHomePage(title: "VenomVerse"),
-      },
+
+
+
+
+      body: Container(
+        color: Colors.red[50], // Set the background color to red
+        child: Center(
+          child: Text(
+            'Hello!',
+            style: TextStyle(
+              fontSize: 50.0,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 2.0,
+              color: Colors.grey[600],
+              fontFamily: 'Poppins',
+            ),
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: Colors.green[900],
+        child: Text('Click'),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.green[900], // Set the bottom navigation bar color to green
+        type: BottomNavigationBarType.fixed, // Allow more than three items
+        currentIndex: currentIndex,
+        onTap: onTabTapped,
+        selectedItemColor: Colors.yellow[700],
+
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+
+
+            label: 'Home',
+
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Notifications',
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              width: 48.0,
+              height: 48.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white,
+                  width: 2.0,
+                ),
+
+              ),
+              child: IconButton(
+                icon: Icon(Icons.camera_alt),
+                onPressed: () {
+                  // Handle camera icon pressed
+                },
+              ),
+            ),
+            label: 'Camera',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'Learn',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+
+        ],
+      ),
     );
   }
 }
