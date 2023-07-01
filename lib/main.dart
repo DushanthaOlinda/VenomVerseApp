@@ -1,6 +1,5 @@
-import 'package:VenomVerse/screens/homescreen.dart';
+import 'package:VenomVerse/screens/home_screen.dart';
 import 'package:VenomVerse/screens/loading_screen.dart';
-import 'package:VenomVerse/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 void main() {
