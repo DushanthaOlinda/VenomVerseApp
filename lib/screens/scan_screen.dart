@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +56,7 @@ class _ScanImageState extends State<ScanImage> {
           }
         },
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         // Provide an onPressed callback.
         onPressed: () async {
@@ -101,10 +104,10 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Display the Picture')),
+      appBar: AppBar(title: const Text('Select Pictures')),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
-      // body: Image.file(File(imagePath)),
+      body: Image.file(File(imagePath)),
     );
   }
 }
