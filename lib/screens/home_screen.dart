@@ -1,4 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:VenomVerse/widgets/generate_body.dart';
+import 'package:flutter/material.dart';
+// import '../widgets/generate_body.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -19,19 +21,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
+  String get role => "TestUser";
+  String page = "Home";
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -40,13 +31,19 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
+    // BottomNavBar navBar = BottomNavBar(context, role: 'Role',);
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-
+        leading: const Image(
+          image: AssetImage('assets/images/logo.png'),
+        ),
+        title: Center(child: Text(widget.title)),
       ),
+      // body: pages[page],
       // body: Center(
       //   // Center is a layout widget. It takes a single child and positions it
       //   // in the middle of the parent.
@@ -77,8 +74,9 @@ class _MyHomePageState extends State<MyHomePage> {
       //     ],
       //   ),
       // ),
-      bottomNavigationBar: const BottomNavBar( navbarItems: [Icon(Icons.ice_skating)],)
-      ,// This trailing comma makes auto-formatting nicer for build methods.
+      body: const GenerateBody(
+        role: 'role',
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
