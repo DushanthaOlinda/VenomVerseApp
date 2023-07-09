@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+
   flutter:
     sdk: flutter
 
@@ -40,6 +41,8 @@ dependencies:
   path_provider: ^2.0.15
   path: ^1.8.2
   flutter_login: ^4.1.1
+  social_embed_webview: ^0.3.2
+  stacked_notification_cards: ^0.1.0-dev.4
 
 dev_dependencies:
   flutter_test:
