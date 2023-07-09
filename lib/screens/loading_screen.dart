@@ -32,5 +32,5 @@ class _LoadingScreenState extends State<LoadingScreen> {
 void loadHome(BuildContext context) {
   // BuildContext context;
   Future.delayed(const Duration(seconds: 3),
-      () => {Navigator.pushReplacementNamed(context, '/home')});
+      () => {Navigator.pushReplacementNamed(context, '/login')});
 }
