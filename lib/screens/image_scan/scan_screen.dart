@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ScanImage extends StatefulWidget {
   const ScanImage({super.key, required this.camera});
@@ -56,7 +58,7 @@ class _ScanImageState extends State<ScanImage> {
           }
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         // Provide an onPressed callback.
         onPressed: () async {
@@ -91,6 +93,47 @@ class _ScanImageState extends State<ScanImage> {
         },
         child: const Icon(Icons.camera_alt),
       ),
+      bottomNavigationBar: AnimatedBottomNavigationBar(
+        leftCornerRadius: 32,
+        rightCornerRadius: 32,
+        gapLocation: GapLocation.center,
+        inactiveColor: Colors.white,
+        activeColor: Colors.white,
+        backgroundColor: Colors.green,
+        icons: const [Icons.image_search, Icons.person],
+        activeIndex: 1,
+        onTap: (int i) {
+          setState(() async {
+            if (i == 0) {
+            try {
+              final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+              if (pickedFile != null){
+
+              }
+              if (pickedFile == null) {
+                // TODO: do what if photo is not selected
+              }else{
+                // DisplayPictureScreen(imagePath: pickedFile.path);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DisplayPictureScreen(
+                      imagePath: pickedFile.path,
+                    ),
+                  ),
+                );
+              }
+                // final image = await _controller.takePicture();
+              } catch (e) {
+                if (kDebugMode) {
+                  print(e);
+                }
+              }
+            } else if (i == 1) {
+              // TODO: Add contact snake Catcher
+            }
+          });
+        },
+      ),
     );
   }
 }
@@ -105,8 +148,6 @@ class DisplayPictureScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Select Pictures')),
-      // The image is stored as a file on the device. Use the `Image.file`
-      // constructor with the given path to display the image.
       body: Image.file(File(imagePath)),
     );
   }
