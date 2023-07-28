@@ -10,8 +10,21 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("hjhvhb"),
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            // SafeArea(child: Icon(Icons.person)),
+            // Center(),
+            Text("Email"),
+            Text("Name"),
+            Text("Phone"),
+            Text("Address"),
+            // Icon(Icons.person)
+          ],
+        ),
+      ),
     );
   }
 }
