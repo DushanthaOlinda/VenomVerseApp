@@ -4,6 +4,7 @@ import 'package:VenomVerse/screens/pages/notification_page.dart';
 import 'package:VenomVerse/screens/pages/profile_page.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:sidebarx/sidebarx.dart';
 // import '../widgets/generate_body.dart';
 
 class GenerateBody extends StatefulWidget {

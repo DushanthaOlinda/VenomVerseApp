@@ -7,12 +7,7 @@ import 'package:flutter_credit_card_new/constants.dart';
 import 'package:flutter_credit_card_new/credit_card_animation.dart';
 import 'package:flutter_credit_card_new/credit_card_background.dart';
 import 'package:flutter_credit_card_new/credit_card_brand.dart';
-import 'package:flutter_credit_card_new/credit_card_form.dart';
-import 'package:flutter_credit_card_new/credit_card_model.dart';
-import 'package:flutter_credit_card_new/credit_card_widget.dart';
-import 'package:flutter_credit_card_new/custom_card_type_icon.dart';
 import 'package:flutter_credit_card_new/flutter_credit_card.dart';
-import 'package:flutter_credit_card_new/glassmorphism_config.dart';
 import 'package:flutter_credit_card_new/localized_text_model.dart';
 
 
@@ -27,7 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      backgroundColor: Colors.red[50],
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
@@ -136,10 +131,10 @@ class BecomeCatcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.red[50],
-        appBar: AppBar(
+      backgroundColor: Colors.red[50],
+      appBar: AppBar(
         title: const Text('Become a Catcher'),
-        ),
+      ),
     );
 
   }
@@ -193,7 +188,7 @@ class _EditProfileState extends State<EditProfile> {
             const SizedBox(height: 16.0),
 
             // Profile Picture
-             CircleAvatar(
+            CircleAvatar(
               radius: 60.0,
               backgroundImage: NetworkImage(_profilePictureUrl),
 
@@ -544,9 +539,3 @@ class AddNewCardState extends State<AddNewCard> {
     });
   }
 }
-
-
-
-
-
-
