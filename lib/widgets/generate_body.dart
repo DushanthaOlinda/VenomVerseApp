@@ -27,7 +27,7 @@ class _GenerateBodyState extends State<GenerateBody> {
   Map pages = {
     'Home': const HomePage(),
     'Notifications': const NotificationPage(),
-    'Learn': const LearnPage(),
+    'Learn':  const LearnPage(),
     'Profile': const ProfilePage(),
   };
 

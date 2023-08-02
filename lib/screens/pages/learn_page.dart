@@ -1,89 +1,105 @@
 import 'package:flutter/material.dart';
-import 'package:horizontal_card_pager/horizontal_card_pager.dart';
-import 'package:horizontal_card_pager/card_item.dart';
+import 'package:grid/Homepage.dart';
 
 class LearnPage extends StatefulWidget {
 
-  const LearnPage({super.key});
+  const LearnPage({ Key? key }) : super(key: key);
 
-
-  @override
-  State<LearnPage> createState() => _LearnPageState();
+@override
+   _LearnPageState createState() => _LearnPageState();
 }
 
 class _LearnPageState extends State<LearnPage> {
 
-  @override
+ @override
   Widget build(BuildContext context) {
-    List<CardItem> items = [
-      IconTitleCardItem(
-        text: "E-Books",
-        iconData: Icons.book,
-        selectedBgColor: Colors.green,
-      ),
-      IconTitleCardItem(
-
-        text: "Articles",
-        iconData: Icons.article,
-        selectedBgColor: Colors.green,
-      ),
-      IconTitleCardItem(
-        text: "Videos",
-        iconData: Icons.video_label,
-        selectedBgColor: Colors.green,
-      ),
-      IconTitleCardItem(
-        text: "Quizes",
-        iconData: Icons.quiz,
-        selectedBgColor: Colors.green,
-      ),
-      IconTitleCardItem(
-        text: "Researches",
-        iconData: Icons.book_online,
-        selectedBgColor: Colors.green,
-      ),
-    ];
-    return MaterialApp(
-
-      home: Scaffold(
-          backgroundColor: Colors.red [50],
-          body: Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(8),
-                child: Text(
-                  'Learning Materials',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SafeArea(
-
-                minimum: const EdgeInsets.all(20),
-                child: HorizontalCardPager(
-                    onPageChanged: (page) => print("page : $page"),
-                    onSelectedItem: (page) => print("selected : $page"),
-                    items: items,
-                ),
-              ),
-
-            Container(
-              color: Colors.white,
-
-              height: 450,
-              width: 400,
-
-
-            )
-            ],
-
-          )),
-
+    return Scaffold(
+      appBar: AppBar(title: Text("Grid"),),
+      body: Container(child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: GridView(children: [
+          InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>eBooksPage()));
+            },
+            child: Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.red,),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              Icon(Icons.home,size: 50,color: Colors.white,),
+              Text("E-Books",style: TextStyle(color: Colors.white,fontSize: 30),)
+            ],),
+            ),
+          ),
+         InkWell(
+             onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>ArticlesPage()));
+            },
+           child: Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.yellow,),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              Icon(Icons.search,size: 50,color: Colors.white,),
+              Text("Articles",style: TextStyle(color: Colors.white,fontSize: 30),)
+            ],),
+            ),
+         ),
+          InkWell(
+              onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>VideoPage()));
+            },
+            child: Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.green,),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              Icon(Icons.settings,size: 50,color: Colors.white,),
+              Text("Video",style: TextStyle(color: Colors.white,fontSize: 30),)
+            ],),
+            ),
+          ),
+          InkWell(
+              onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>ResearchPage()));
+            },
+            child: Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.grey,),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              Icon(Icons.book,size: 50,color: Colors.white,),
+              Text("Research",style: TextStyle(color: Colors.white,fontSize: 30),)
+            ],),
+            ),
+          ),
+              InkWell(
+              onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>QuizPage()));
+            },
+            child: Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.green,),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              Icon(Icons.settings,size: 50,color: Colors.white,),
+              Text("Quizes",style: TextStyle(color: Colors.white,fontSize: 30),)
+            ],),
+            ),
+          ),
+                    InkWell(
+              onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>extraPage()));
+            },
+            child: Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.green,),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              Icon(Icons.settings,size: 50,color: Colors.white,),
+              Text("Extra",style: TextStyle(color: Colors.white,fontSize: 30),)
+            ],),
+            ),
+          ),
+        ],
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,mainAxisSpacing: 10,crossAxisSpacing: 10),
+        ),
+      ),),
     );
   }
-
-
-
 }
