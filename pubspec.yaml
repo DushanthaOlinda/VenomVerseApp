@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+
   flutter:
     sdk: flutter
 
@@ -39,6 +40,21 @@ dependencies:
   camera: ^0.10.5+2
   path_provider: ^2.0.15
   path: ^1.8.2
+  flutter_login: ^4.1.1
+  social_embed_webview: ^0.3.2
+  stacked_notification_cards: ^0.1.0-dev.4
+  material_floating_search_bar_2: ^0.5.0
+  app_bar_with_search_switch: ^1.5.1
+  widget_circular_animator: ^1.0.0
+  profile_containers: ^0.0.5
+  profile: ^0.0.1
+  profile_photo: ^1.0.3
+  flutter_credit_card: ^3.0.7
+  http: ^0.13.6
+  horizontal_card_pager: ^1.1.1
+  group_list_view: ^1.1.1
+  flutter_credit_card_new: ^0.0.4
+  image_picker: ^1.0.0
 
 dev_dependencies:
   flutter_test:

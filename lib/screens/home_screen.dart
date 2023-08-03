@@ -1,4 +1,5 @@
 import 'package:VenomVerse/widgets/generate_body.dart';
+import 'package:app_bar_with_search_switch/app_bar_with_search_switch.dart';
 import 'package:flutter/material.dart';
 // import '../widgets/generate_body.dart';
 
@@ -35,14 +36,31 @@ class _MyHomePageState extends State<MyHomePage> {
     // BottomNavBar navBar = BottomNavBar(context, role: 'Role',);
 
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        leading: const Image(
-          image: AssetImage('assets/images/logo.png'),
-        ),
-        title: Center(child: Text(widget.title)),
+      appBar: AppBarWithSearchSwitch(
+        onChanged: (text) {
+          // update you provider here
+          // searchText.value = text;
+        }, // onSubmitted: (text) => searchText.value = text,
+        appBarBuilder: (context) {
+          return AppBar(
+            leading: const Image(
+              image: AssetImage('assets/images/logo.png'),
+
+            ),
+            title:  Text(widget.title),
+
+            actions: const [
+              AppBarSearchButton(),
+              // or
+              // IconButton(onPressed: AppBarWithSearchSwitch.of(context)?startSearch, icon: Icon(Icons.search)),
+            ],
+          );
+        },
       ),
+      // search in body by any way you want, example:
+
+
+
       // body: pages[page],
       // body: Center(
       //   // Center is a layout widget. It takes a single child and positions it
@@ -76,6 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // ),
       body: const GenerateBody(
         role: 'role',
+
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

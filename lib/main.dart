@@ -1,6 +1,8 @@
 import 'package:VenomVerse/screens/home_screen.dart';
+import 'package:VenomVerse/screens/image_scan/select_from_gallery.dart';
 import 'package:VenomVerse/screens/loading_screen.dart';
-import 'package:VenomVerse/screens/scan_screen.dart';
+import 'package:VenomVerse/screens/image_scan/scan_screen.dart';
+import 'package:VenomVerse/screens/login_screen.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
@@ -33,13 +35,15 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.green,
       ),
       // home: const MyHomePage(title: "VenomVerse"),
-      // initialRoute: '/home',
+      // initialRoute: '/selectImage',
       routes: {
         '/': (context) => const LoadingScreen(),
+        '/login': (context) => const LoginPage(),
         '/home': (context) => const MyHomePage(title: "VenomVerse"),
         '/scan': (context) => ScanImage(
               camera: camera,
             ),
+        '/selectImage': (context) => const SelectImageFromGallery(),
       },
     );
   }
