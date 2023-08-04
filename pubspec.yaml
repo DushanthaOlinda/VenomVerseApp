@@ -58,6 +58,8 @@ dependencies:
   sidebarx: ^0.16.1
 
   image_picker: ^1.0.0
+  amity_sdk: ^0.23.0
+
 
 dev_dependencies:
   flutter_test:

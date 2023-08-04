@@ -1,14 +1,13 @@
-import 'package:flutter/gestures.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:profile/profile.dart';
 
-import 'package:group_list_view/group_list_view.dart';
-import 'package:flutter_credit_card_new/constants.dart';
-import 'package:flutter_credit_card_new/credit_card_animation.dart';
-import 'package:flutter_credit_card_new/credit_card_background.dart';
 import 'package:flutter_credit_card_new/credit_card_brand.dart';
 import 'package:flutter_credit_card_new/flutter_credit_card.dart';
-import 'package:flutter_credit_card_new/localized_text_model.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:video_uploader/video_uploader.dart';
+
 
 
 class ProfilePage extends StatefulWidget {
@@ -58,7 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
 
-            Profile(
+            Profile(    //profile data
               imageUrl:
               "https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
 
@@ -127,16 +126,127 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-class BecomeCatcher extends StatelessWidget {
+const primaryColor = Colors.green;
+const secondaryColor = Colors.green;
+
+class BecomeCatcher extends StatefulWidget {
+  const BecomeCatcher({super.key});
+
+  @override
+  _BecomeCatcherState createState() => _BecomeCatcherState();
+}
+class _BecomeCatcherState extends State<BecomeCatcher> {
+  late String _imagePath;
+  final _tokenTextController = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
+  double _progressValue = 0;
+
+  void setProgress(double value) async {
+    setState(() {
+      _progressValue = value;
+    });
+  }
+
+  @override
+  void dispose() {
+    _tokenTextController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.red[50],
-      appBar: AppBar(
-        title: const Text('Become a Catcher'),
-      ),
-    );
+    return MaterialApp(
+        theme: ThemeData(
+          primaryColor: primaryColor,
+        ),
+        home: Scaffold(
+          appBar: AppBar(
+            backgroundColor: primaryColor,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context); // This will navigate back to the previous screen
+              },
+            ),
+            title: const Text('Become a Catcher'),
+          ),
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
 
+                children: [
+
+                  const SizedBox(
+                    height: 52,
+                  ),
+                  TextField(
+                    cursorColor: primaryColor,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 2.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: primaryColor, width: 2.0),
+                      ),
+                      hintText: 'My video token',
+                    ),
+                    controller: _tokenTextController,
+                  ),
+                  MaterialButton(
+                    color: primaryColor,
+                    child: const Text(
+                      "Pick Video from Gallery",
+                      style: TextStyle(
+                          color: Colors.white70, fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () async {
+                      var source = ImageSource.gallery;
+                      XFile? image = await _picker.pickVideo(source: source);
+                      if (image != null) {
+                        setState(() {
+                          try {
+                            _imagePath = image.path;
+                          } catch (e) {
+                            log("Failed to get video: $e");
+                          }
+                        });
+                      }
+                    },
+                  ),
+                  MaterialButton(
+                    color: primaryColor,
+                    child: const Text(
+                      "Upload video",
+                      style: TextStyle(
+                          color: Colors.white70, fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () async {
+                      try {
+                        var video =
+                        await ApiVideoUploader.uploadWithUploadToken(
+                            _tokenTextController.text, _imagePath,
+                                (bytesSent, totalByte) {
+                              log("Progress : ${bytesSent / totalByte}");
+                              setProgress(bytesSent / totalByte);
+                            });
+                        log("Video : $video");
+                        log("Title : ${video.title}");
+                      } catch (e) {
+                        log("Failed to upload video: $e");
+                      }
+                    },
+                  ),
+                  LinearProgressIndicator(
+                    color: primaryColor,
+                    backgroundColor: secondaryColor,
+                    value: _progressValue,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 
 }
@@ -153,11 +263,20 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
 
+  void _changeProfilePicture() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _profilePictureUrl = pickedFile.path;
+      });
+    }
+  }
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  final String _profilePictureUrl = 'https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'; // Store the profile picture URL here
+   late String _profilePictureUrl = 'https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'; // Store the profile picture URL here
 
   // Method to handle saving profile changes
   void _saveChanges() {
@@ -196,13 +315,7 @@ class _EditProfileState extends State<EditProfile> {
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () {
-                // Implement the logic to change profile picture here
-                // You can use image picker packages to choose an image from the gallery or camera
-                // For simplicity, we'll assume the URL of the new profile picture is stored in _profilePictureUrl
-
-                setState(() {});
-              },
+              onPressed: _changeProfilePicture,
               child: const Text('Change Profile Picture'),
             ),
             const SizedBox(height: 16.0),
