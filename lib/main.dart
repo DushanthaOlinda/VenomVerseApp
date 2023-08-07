@@ -5,6 +5,7 @@ import 'package:VenomVerse/screens/image_scan/scan_screen.dart';
 import 'package:VenomVerse/screens/login_screen.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
