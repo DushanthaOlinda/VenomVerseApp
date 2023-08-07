@@ -55,6 +55,7 @@ dependencies:
   group_list_view: ^1.1.1
   flutter_credit_card_new: ^0.0.4
   image_picker: ^1.0.0
+  rflutter_alert: ^2.0.7
 
 dev_dependencies:
   flutter_test:
