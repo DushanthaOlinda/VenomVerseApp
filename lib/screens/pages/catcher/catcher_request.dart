@@ -23,7 +23,7 @@ class CatcherRequestState extends State<CatcherRequest> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Catcher Request'),
+        title: const Text('Requests:'),
       ),
       body: Center(
         child: Column(
@@ -43,18 +43,22 @@ class CatcherRequestState extends State<CatcherRequest> {
               ),
             ),
             const SizedBox(
-              height: 50,
+              height: 40,
             ),
-            OutlinedButton(
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                )),
-              ),
+            RoundedLoadingButton(
+              color: Colors.amber,
+              successColor: Colors.amber,
+              controller: RoundedLoadingButtonController(),
               onPressed: () {
-                _btnController2.reset();
+                // Add your button onPressed logic
               },
-              child: const Text('Reset'),
+              valueColor: Colors.black,
+              borderRadius: 10,
+              child: const Text(
+                'Remove a Snake',
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
             ),
           ],
         ),

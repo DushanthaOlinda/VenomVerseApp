@@ -6,7 +6,7 @@ import 'package:horizontal_card_pager/card_item.dart';
 import 'catcher/catcher_request.dart';
 
 class LearnPage extends StatefulWidget {
-  LearnPage({Key? key}) : super(key: key);
+  const LearnPage({Key? key}) : super(key: key);
 
   @override
   State<LearnPage> createState() => _LearnPageState();
