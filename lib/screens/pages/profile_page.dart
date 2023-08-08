@@ -7,12 +7,7 @@ import 'package:flutter_credit_card_new/constants.dart';
 import 'package:flutter_credit_card_new/credit_card_animation.dart';
 import 'package:flutter_credit_card_new/credit_card_background.dart';
 import 'package:flutter_credit_card_new/credit_card_brand.dart';
-import 'package:flutter_credit_card_new/credit_card_form.dart';
-import 'package:flutter_credit_card_new/credit_card_model.dart';
-import 'package:flutter_credit_card_new/credit_card_widget.dart';
-import 'package:flutter_credit_card_new/custom_card_type_icon.dart';
 import 'package:flutter_credit_card_new/flutter_credit_card.dart';
-import 'package:flutter_credit_card_new/glassmorphism_config.dart';
 import 'package:flutter_credit_card_new/localized_text_model.dart';
 
 
@@ -52,14 +47,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EditProfile()),
+                    MaterialPageRoute(builder: (context) => const EditProfile()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.yellow[700],
                 ),
-                icon: Icon(Icons.edit), // Edit icon
-                label: Text('Edit Profile'),
+                icon: const Icon(Icons.edit), // Edit icon
+                label: const Text('Edit Profile'),
               ),
             ),
 
