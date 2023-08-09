@@ -8,6 +8,7 @@ import 'package:flutter_credit_card_new/flutter_credit_card.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_uploader/video_uploader.dart';
 
+import 'package:flutter_credit_card_new/localized_text_model.dart';
 
 
 class ProfilePage extends StatefulWidget {
