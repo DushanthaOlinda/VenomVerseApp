@@ -46,14 +46,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EditProfile()),
+                    MaterialPageRoute(builder: (context) => const EditProfile()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.yellow[700],
                 ),
-                icon: Icon(Icons.edit), // Edit icon
-                label: Text('Edit Profile'),
+                icon: const Icon(Icons.edit), // Edit icon
+                label: const Text('Edit Profile'),
               ),
             ),
 
