@@ -108,9 +108,11 @@ class _ScanImageState extends State<ScanImage> {
               try {
                 final pickedFile =
                     await ImagePicker().pickImage(source: ImageSource.gallery);
-                if (pickedFile != null) {}
+                if (pickedFile != null) {
+                }
                 if (pickedFile == null) {
                   // TODO: do what if photo is not selected
+
                 } else {
                   // DisplayPictureScreen(imagePath: pickedFile.path);
                   Navigator.of(context).push(

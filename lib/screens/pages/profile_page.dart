@@ -11,7 +11,7 @@ class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
@@ -95,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                BecomeCatcher()), // Navigate to CardsPage
+                                const BecomeCatcher()), // Navigate to CardsPage
                       );
                       // Handle button press
                     },
@@ -385,7 +385,8 @@ class CardsPage extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => AddNewCard()), // Navigate to CardsPage
+                builder: (context) =>
+                    const AddNewCard()), // Navigate to CardsPage
           );
           // Handle the onPressed event for the "Add New Card" button
           // Perform the desired action here, such as opening a new screen or dialog
@@ -400,6 +401,8 @@ class CardsPage extends StatelessWidget {
 }
 
 class AddNewCard extends StatefulWidget {
+  const AddNewCard({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return AddNewCardState();
@@ -600,7 +603,7 @@ class AddNewCardState extends State<AddNewCard> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            primary: const Color(0xff1b447b),
+                            backgroundColor: const Color(0xff1b447b),
                           ),
                           child: Container(
                             margin: const EdgeInsets.all(12),

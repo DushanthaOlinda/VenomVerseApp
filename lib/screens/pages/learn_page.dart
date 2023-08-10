@@ -7,7 +7,7 @@ class LearnPage extends StatefulWidget {
   // const LearnPage({Key? key}) : super(key: key);
 
   @override
-  _LearnPageState createState() => _LearnPageState();
+  State<LearnPage> createState() => _LearnPageState();
 }
 
 class _LearnPageState extends State<LearnPage> {

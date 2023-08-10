@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:comment_box/comment/comment.dart';
 
@@ -35,7 +34,8 @@ class _HomePageState extends State<HomePage> {
                 child: const Row(
                   children: [
                     CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/user image.png'),
+                      backgroundImage:
+                          AssetImage('assets/images/user image.png'),
                       radius: 30,
                     ),
                     SizedBox(width: 16),
@@ -78,7 +78,9 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => TestMe()), // Navigate to CardsPage
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  TestMe()), // Navigate to CardsPage
                         );
                         // Perform comment action
                       },
@@ -104,8 +106,10 @@ class _HomePageState extends State<HomePage> {
 }
 
 class TestMe extends StatefulWidget {
+  const TestMe({super.key});
+
   @override
-  _TestMeState createState() => _TestMeState();
+  State<TestMe> createState() => _TestMeState();
 }
 
 class _TestMeState extends State<TestMe> {
@@ -167,7 +171,8 @@ class _TestMeState extends State<TestMe> {
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               subtitle: Text(data[i]['message']),
-              trailing: Text(data[i]['date'], style: const TextStyle(fontSize: 10)),
+              trailing:
+                  Text(data[i]['date'], style: const TextStyle(fontSize: 10)),
             ),
           )
       ],
@@ -196,7 +201,7 @@ class _TestMeState extends State<TestMe> {
                 var value = {
                   'name': 'New User',
                   'pic':
-                  'https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400',
+                      'https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400',
                   'message': commentController.text,
                   'date': '2021-01-01 12:00:00'
                 };
@@ -212,7 +217,7 @@ class _TestMeState extends State<TestMe> {
           commentController: commentController,
           backgroundColor: Colors.green,
           textColor: Colors.white,
-          sendWidget: Icon(Icons.send_sharp, size: 30, color: Colors.white),
+          sendWidget: const Icon(Icons.send_sharp, size: 30, color: Colors.white),
         ),
       ),
     );
