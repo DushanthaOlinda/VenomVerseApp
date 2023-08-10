@@ -1,105 +1,213 @@
+import 'package:VenomVerse/screens/pages/learning_resources/extra_page.dart';
+import 'package:VenomVerse/screens/pages/learning_resources/quize_page.dart';
+import 'package:VenomVerse/screens/pages/learning_resources/resource_page.dart';
+import 'package:VenomVerse/screens/pages/learning_resources/video_page.dart';
 import 'package:flutter/material.dart';
-import 'package:grid/Homepage.dart';
+import 'package:VenomVerse/screens/pages/learning_resources/e_books_pages.dart';
+
+import 'learning_resources/articles_page.dart';
 
 class LearnPage extends StatefulWidget {
+  const LearnPage({Key? key}) : super(key: key);
 
-  const LearnPage({ Key? key }) : super(key: key);
-
-@override
-   _LearnPageState createState() => _LearnPageState();
+  @override
+  State<LearnPage> createState() => _LearnPageState();
 }
 
 class _LearnPageState extends State<LearnPage> {
-
- @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Grid"),),
-      body: Container(child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: GridView(children: [
-          InkWell(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>eBooksPage()));
-            },
-            child: Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.red,),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-              Icon(Icons.home,size: 50,color: Colors.white,),
-              Text("E-Books",style: TextStyle(color: Colors.white,fontSize: 30),)
-            ],),
-            ),
-          ),
-         InkWell(
-             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>ArticlesPage()));
-            },
-           child: Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.yellow,),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-              Icon(Icons.search,size: 50,color: Colors.white,),
-              Text("Articles",style: TextStyle(color: Colors.white,fontSize: 30),)
-            ],),
-            ),
-         ),
-          InkWell(
-              onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>VideoPage()));
-            },
-            child: Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.green,),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-              Icon(Icons.settings,size: 50,color: Colors.white,),
-              Text("Video",style: TextStyle(color: Colors.white,fontSize: 30),)
-            ],),
-            ),
-          ),
-          InkWell(
-              onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>ResearchPage()));
-            },
-            child: Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.grey,),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-              Icon(Icons.book,size: 50,color: Colors.white,),
-              Text("Research",style: TextStyle(color: Colors.white,fontSize: 30),)
-            ],),
-            ),
-          ),
+      //appBar: AppBar(
+        //title: const Text("Learning Resources"),
+      //),
+
+      body: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: SafeArea(
+          child: GridView(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 20, // Set the spacing between the rows
+                  crossAxisSpacing: 20, // Set the spacing between the columns
+                  mainAxisExtent: 140,   // Set the height of each grid cell
+                  childAspectRatio: 1,  // Maintain square cells (width:height ratio)
+                ),
+            children: [ 
               InkWell(
-              onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>QuizPage()));
-            },
-            child: Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.green,),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-              Icon(Icons.settings,size: 50,color: Colors.white,),
-              Text("Quizes",style: TextStyle(color: Colors.white,fontSize: 30),)
-            ],),
-            ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const EBooksPage()));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(1.0),
+                    border: Border.all(color: Colors.orange), 
+                    color: Colors.white,
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.menu_book,
+                        size: 50,
+                        color: Colors.orange,
+                      ),
+                      SizedBox(height: 8), // Add space between Icon and Text
+                      Text(
+                        "Books",
+                        style: TextStyle(color: Colors.orange, fontSize: 18),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const ArticlesPage()));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(1.0),
+                    border: Border.all(color: Colors.orange), 
+                    color: Colors.white,
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.description_outlined,
+                        size: 50,
+                        color: Colors.orange,
+                      ),
+                      SizedBox(height: 8), // Add space between Icon and Text
+                      Text(
+                        "Articles",
+                        style: TextStyle(color: Colors.orange, fontSize: 18),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const VideosPage()));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(1.0),
+                    border: Border.all(color: Colors.orange), 
+                    color: Colors.white,
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.video_collection,
+                        size: 50,
+                        color: Colors.orange,
+                      ),
+                      SizedBox(height: 8), // Add space between Icon and Text
+                      Text(
+                        "Video",
+                        style: TextStyle(color: Colors.orange, fontSize: 18),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const ResourcesPage()));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(1.0),
+                    border: Border.all(color: Colors.orange), 
+                    color: Colors.white,
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.library_books,
+                        size: 50,
+                        color: Colors.orange,
+                      ),
+                      SizedBox(height: 8), // Add space between Icon and Text
+                      Text(
+                        "Research Papers",
+                        style: TextStyle(color: Colors.orange, fontSize: 18),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const QuizePage()));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(1.0),
+                    border: Border.all(color: Colors.orange), 
+                    color: Colors.white,
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.list_alt,
+                        size: 50,
+                        color: Colors.orange,
+                      ),
+                      SizedBox(height: 8), // Add space between Icon and Text
+                      Text(
+                        "Quize",
+                        style: TextStyle(color: Colors.orange, fontSize: 18),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const ExtraPage()));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(1.0),
+                    border: Border.all(color: Colors.orange), 
+                    color: Colors.white,
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.settings,
+                        size: 50,
+                        color: Colors.orange,
+                      ),
+                      SizedBox(height: 8), // Add space between Icon and Text
+                      Text(
+                        "Extra",
+                        style: TextStyle(color: Colors.orange, fontSize: 18),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-                    InkWell(
-              onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>extraPage()));
-            },
-            child: Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.green,),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-              Icon(Icons.settings,size: 50,color: Colors.white,),
-              Text("Extra",style: TextStyle(color: Colors.white,fontSize: 30),)
-            ],),
-            ),
-          ),
-        ],
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,mainAxisSpacing: 10,crossAxisSpacing: 10),
         ),
-      ),),
+      ),
     );
   }
 }
+
+

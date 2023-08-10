@@ -33,6 +33,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.1"
+  article:
+    dependency: "direct main"
+    description:
+      name: article
+      sha256: "5978c8c9e04147a5fb9d13d1c7df6aa399fcd818d73c821108f20015be448e6e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.14"
   async:
     dependency: transitive
     description:
@@ -190,6 +198,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.4"
+  flutter_inappwebview:
+    dependency: transitive
+    description:
+      name: flutter_inappwebview
+      sha256: f73505c792cf083d5566e1a94002311be497d984b5607f25be36d685cf6361cf
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.7.2+3"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -709,6 +725,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  youtube_player_flutter:
+    dependency: "direct main"
+    description:
+      name: youtube_player_flutter
+      sha256: "72d487e1a1b9155a2dc9d448c137380791101a0ff623723195275ac275ac6942"
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.1.2"
 sdks:
   dart: ">=3.0.3 <4.0.0"
   flutter: ">=3.10.0"
