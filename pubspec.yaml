@@ -59,6 +59,7 @@ dependencies:
 
   image_picker: ^1.0.0
   amity_sdk: ^0.23.0
+  comment_box: ^0.0.18
 
 
 dev_dependencies:
