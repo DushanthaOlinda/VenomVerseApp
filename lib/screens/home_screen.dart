@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
 // import '../widgets/generate_body.dart';
 
-
-
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -28,11 +26,8 @@ class _MyHomePageState extends State<MyHomePage> {
   String get role => "TestUser";
   String page = "Home";
 
-
-
   @override
   Widget build(BuildContext context) {
-
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -42,54 +37,38 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // BottomNavBar navBar = BottomNavBar(context, role: 'Role',);
 
-        return  Scaffold(
-          drawer: SidebarX(
-            controller: SidebarXController(selectedIndex: 0, extended: true),
-            items: const [
-              SidebarXItem(icon: Icons.home, label: 'Home'),
-              SidebarXItem(icon: Icons.search, label: 'Search'),
+    return Scaffold(
+      drawer: SidebarX(
+        controller: SidebarXController(selectedIndex: 0, extended: true),
+        items: const [
+          SidebarXItem(icon: Icons.home, label: 'Home'),
+          SidebarXItem(icon: Icons.search, label: 'Search'),
+        ],
+      ),
+      appBar: AppBarWithSearchSwitch(
+        onChanged: (text) {
+          // update you provider here
+          // searchText.value = text;
+        }, // onSubmitted: (text) => searchText.value = text,
+        appBarBuilder: (context) {
+          return AppBar(
+            title: Text(widget.title),
+            actions: const [
+              AppBarSearchButton(),
+              // or
+              // IconButton(onPressed: AppBarWithSearchSwitch.of(context)?startSearch, icon: Icon(Icons.search)),
             ],
-          ),
-            appBar: AppBarWithSearchSwitch(
-                onChanged: (text) {
-                    // update you provider here
-                    // searchText.value = text;
-                }, // onSubmitted: (text) => searchText.value = text,
-                appBarBuilder: (context) {
-                    return AppBar(
-                        title: Text(widget.title),
+          );
+        },
+      ),
 
-                        actions: const [
-                            AppBarSearchButton(),
-        // or
-        // IconButton(onPressed: AppBarWithSearchSwitch.of(context)?startSearch, icon: Icon(Icons.search)),
-                        ],
+      // search in body by any way you want, example:
 
-                    );
-                },
-            ),
+      body: const GenerateBody(
+        role: 'role',
+      ),
 
-    // search in body by any way you want, example:
-
-
-
-            body: const GenerateBody(
-                role: 'role',
-
-            ),
-
-            // This trailing comma makes auto-formatting nicer for build methods.
-        );
-
-
-
-
+      // This trailing comma makes auto-formatting nicer for build methods.
+    );
   }
 }
-
-
-
-
-
-
-

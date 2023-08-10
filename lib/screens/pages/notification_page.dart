@@ -11,15 +11,15 @@ class NotificationPage extends StatefulWidget {
 class _NotificationPageState extends State<NotificationPage> {
   final List<NotificationCard> _listOfNotification = [
     NotificationCard(
-
-      date: DateTime.now(),   //notification date
+      date: DateTime.now(), //notification date
       leading: const Icon(
         Icons.account_circle,
         size: 48,
       ),
 
-      title: 'OakTree 1',    //notification title
-      subtitle: 'We believe in the power of mobile computing.',    //notification subtitle
+      title: 'OakTree 1', //notification title
+      subtitle:
+          'We believe in the power of mobile computing.', //notification subtitle
     ),
     NotificationCard(
       date: DateTime.now().subtract(
@@ -70,7 +70,7 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red [50],
+      backgroundColor: Colors.red[50],
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -81,7 +81,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   blurRadius: 2.0,
                 )
               ],
-              notificationCardTitle: 'Message',     //title
+              notificationCardTitle: 'Message', //title
               notificationCards: [..._listOfNotification],
               cardColor: const Color(0xFFF1F1F1),
               padding: 16,
@@ -126,7 +126,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   blurRadius: 2.0,
                 )
               ],
-              notificationCardTitle: 'Message',     //title
+              notificationCardTitle: 'Message', //title
               notificationCards: [..._listOfNotification],
               cardColor: const Color(0xFFF1F1F1),
               padding: 16,
@@ -169,5 +169,4 @@ class _NotificationPageState extends State<NotificationPage> {
       ),
     );
   }
-
 }

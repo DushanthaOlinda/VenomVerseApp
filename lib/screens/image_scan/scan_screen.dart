@@ -105,23 +105,22 @@ class _ScanImageState extends State<ScanImage> {
         onTap: (int i) {
           setState(() async {
             if (i == 0) {
-            try {
-              final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-              if (pickedFile != null){
-
-              }
-              if (pickedFile == null) {
-                // TODO: do what if photo is not selected
-              }else{
-                // DisplayPictureScreen(imagePath: pickedFile.path);
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => DisplayPictureScreen(
-                      imagePath: pickedFile.path,
+              try {
+                final pickedFile =
+                    await ImagePicker().pickImage(source: ImageSource.gallery);
+                if (pickedFile != null) {}
+                if (pickedFile == null) {
+                  // TODO: do what if photo is not selected
+                } else {
+                  // DisplayPictureScreen(imagePath: pickedFile.path);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DisplayPictureScreen(
+                        imagePath: pickedFile.path,
+                      ),
                     ),
-                  ),
-                );
-              }
+                  );
+                }
                 // final image = await _controller.takePicture();
               } catch (e) {
                 if (kDebugMode) {

@@ -1,7 +1,5 @@
-
-import 'package:flutter/material.dart';
 import 'package:amity_sdk/amity_sdk.dart';
-
+import 'package:flutter/material.dart';
 
 void main() async {
   ///Setup Amity Core client with [apikey] and the region you want to connect with
@@ -29,7 +27,6 @@ class AmitySocialSdk extends StatelessWidget {
   }
 }
 
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
 
@@ -40,12 +37,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

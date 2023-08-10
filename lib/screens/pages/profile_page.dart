@@ -1,15 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:profile/profile.dart';
-
 import 'package:flutter_credit_card_new/credit_card_brand.dart';
 import 'package:flutter_credit_card_new/flutter_credit_card.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:profile/profile.dart';
 import 'package:video_uploader/video_uploader.dart';
-
-import 'package:flutter_credit_card_new/localized_text_model.dart';
-
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -40,14 +36,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
             ),
-
             Align(
               alignment: Alignment.topRight,
               child: ElevatedButton.icon(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const EditProfile()),
+                    MaterialPageRoute(
+                        builder: (context) => const EditProfile()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -57,10 +53,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 label: const Text('Edit Profile'),
               ),
             ),
-
-            Profile(    //profile data
+            Profile(
+              //profile data
               imageUrl:
-              "https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+                  "https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
 
               name: "Oshadhi Dilthara",
               website: "",
@@ -68,7 +64,6 @@ class _ProfilePageState extends State<ProfilePage> {
               email: 'oshadhi@gmail.com',
               phone_number: '0175773607',
             ),
-
             const SizedBox(height: 20),
             Align(
               alignment: Alignment.center,
@@ -76,19 +71,18 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CardsPage()), // Navigate to CardsPage
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            CardsPage()), // Navigate to CardsPage
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellow[700], // Set the button color to yellow
+                  backgroundColor:
+                      Colors.yellow[700], // Set the button color to yellow
                 ),
                 child: const Text('Payments'),
               ),
             ),
-
-
-
-
             const SizedBox(height: 50),
             Align(
               alignment: Alignment.bottomCenter,
@@ -99,12 +93,15 @@ class _ProfilePageState extends State<ProfilePage> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BecomeCatcher()), // Navigate to CardsPage
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                BecomeCatcher()), // Navigate to CardsPage
                       );
                       // Handle button press
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.yellow[700], // Set the button color to yellow
+                      backgroundColor:
+                          Colors.yellow[700], // Set the button color to yellow
                     ),
                     child: const Text('Become a Catcher'),
                   ),
@@ -113,7 +110,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       // Handle button press
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.yellow[700], // Set the button color to yellow
+                      backgroundColor:
+                          Colors.yellow[700], // Set the button color to yellow
                     ),
                     child: const Text('Become a Zoologist'),
                   ),
@@ -136,6 +134,7 @@ class BecomeCatcher extends StatefulWidget {
   @override
   _BecomeCatcherState createState() => _BecomeCatcherState();
 }
+
 class _BecomeCatcherState extends State<BecomeCatcher> {
   late String _imagePath;
   final _tokenTextController = TextEditingController();
@@ -166,7 +165,8 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.pop(context); // This will navigate back to the previous screen
+                Navigator.pop(
+                    context); // This will navigate back to the previous screen
               },
             ),
             title: const Text('Become a Catcher'),
@@ -175,9 +175,7 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
-
                 children: [
-
                   const SizedBox(
                     height: 52,
                   ),
@@ -225,12 +223,12 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
                     onPressed: () async {
                       try {
                         var video =
-                        await ApiVideoUploader.uploadWithUploadToken(
-                            _tokenTextController.text, _imagePath,
+                            await ApiVideoUploader.uploadWithUploadToken(
+                                _tokenTextController.text, _imagePath,
                                 (bytesSent, totalByte) {
-                              log("Progress : ${bytesSent / totalByte}");
-                              setProgress(bytesSent / totalByte);
-                            });
+                          log("Progress : ${bytesSent / totalByte}");
+                          setProgress(bytesSent / totalByte);
+                        });
                         log("Video : $video");
                         log("Title : ${video.title}");
                       } catch (e) {
@@ -249,11 +247,7 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
           ),
         ));
   }
-
 }
-
-
-
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -263,7 +257,6 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-
   void _changeProfilePicture() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -273,11 +266,13 @@ class _EditProfileState extends State<EditProfile> {
       });
     }
   }
+
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-   late String _profilePictureUrl = 'https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'; // Store the profile picture URL here
+  late String _profilePictureUrl =
+      'https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'; // Store the profile picture URL here
 
   // Method to handle saving profile changes
   void _saveChanges() {
@@ -311,8 +306,6 @@ class _EditProfileState extends State<EditProfile> {
             CircleAvatar(
               radius: 60.0,
               backgroundImage: NetworkImage(_profilePictureUrl),
-
-
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
@@ -357,7 +350,6 @@ class _EditProfileState extends State<EditProfile> {
   }
 }
 
-
 class CardsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -392,7 +384,8 @@ class CardsPage extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddNewCard()), // Navigate to CardsPage
+            MaterialPageRoute(
+                builder: (context) => AddNewCard()), // Navigate to CardsPage
           );
           // Handle the onPressed event for the "Add New Card" button
           // Perform the desired action here, such as opening a new screen or dialog
@@ -438,7 +431,6 @@ class AddNewCardState extends State<AddNewCard> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       title: 'Flutter Credit Card View Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -447,13 +439,13 @@ class AddNewCardState extends State<AddNewCard> {
       home: Scaffold(
         backgroundColor: Colors.red[50],
         appBar: AppBar(
-
           title: const Text('Add New Card'),
           backgroundColor: Colors.green,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pop(context); // This will navigate back to the previous screen
+              Navigator.pop(
+                  context); // This will navigate back to the previous screen
             },
           ),
         ),
@@ -462,11 +454,10 @@ class AddNewCardState extends State<AddNewCard> {
           decoration: BoxDecoration(
             image: !useBackgroundImage
                 ? const DecorationImage(
-              image: ExactAssetImage('assets/bg.png'),
-              fit: BoxFit.fill,
-            )
+                    image: ExactAssetImage('assets/bg.png'),
+                    fit: BoxFit.fill,
+                  )
                 : null,
-
           ),
           child: SafeArea(
             child: Column(
@@ -476,7 +467,7 @@ class AddNewCardState extends State<AddNewCard> {
                 ),
                 CreditCardWidget(
                   glassmorphismConfig:
-                  useGlassMorphism ? Glassmorphism.defaultConfig() : null,
+                      useGlassMorphism ? Glassmorphism.defaultConfig() : null,
                   cardNumber: cardNumber,
                   expiryDate: expiryDate,
                   cardHolderName: cardHolderName,
@@ -487,7 +478,7 @@ class AddNewCardState extends State<AddNewCard> {
                   isHolderNameVisible: true,
                   cardBgColor: Colors.red,
                   backgroundImage:
-                  useBackgroundImage ? 'assets/images/card_bg.jpg' : null,
+                      useBackgroundImage ? 'assets/images/card_bg.jpg' : null,
                   isSwipeGestureEnabled: true,
                   onCreditCardWidgetChange:
                       (CreditCardBrand creditCardBrand) {},
@@ -553,8 +544,8 @@ class AddNewCardState extends State<AddNewCard> {
                             labelText: 'Card Holder',
                           ),
                           onCreditCardModelChange: onCreditCardModelChange,
-                          textStyle:
-                          const TextStyle(color: Colors.black, fontSize: 12),
+                          textStyle: const TextStyle(
+                              color: Colors.black, fontSize: 12),
                         ),
                         const SizedBox(
                           height: 20,

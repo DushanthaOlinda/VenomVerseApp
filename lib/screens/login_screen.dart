@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 
-
 const users = {
   'dribbble@gmail.com': '12345',
   'hunter@gmail.com': 'hunter',
@@ -44,9 +43,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return FlutterLogin(
-
       logo: const AssetImage('assets/images/logo.png'),
       onLogin: _authUser,
       onSignup: _signupUser,

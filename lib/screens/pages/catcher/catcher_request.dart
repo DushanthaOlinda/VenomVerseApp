@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
@@ -11,7 +12,7 @@ class CatcherRequest extends StatefulWidget {
 
 class CatcherRequestState extends State<CatcherRequest> {
   final RoundedLoadingButtonController _btnController2 =
-  RoundedLoadingButtonController();
+      RoundedLoadingButtonController();
 
   void _doSomething() async {
     Timer(const Duration(seconds: 10), () {
