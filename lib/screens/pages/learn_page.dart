@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:horizontal_card_pager/horizontal_card_pager.dart';
 import 'package:horizontal_card_pager/card_item.dart';
-
 import 'catcher/catcher_request.dart';
 
 class LearnPage extends StatefulWidget {
