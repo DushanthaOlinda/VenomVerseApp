@@ -3,6 +3,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:horizontal_card_pager/horizontal_card_pager.dart';
 import 'package:horizontal_card_pager/card_item.dart';
 import 'catcher/catcher_request.dart';
+import 'catcher/requestform_details.dart';
 import 'catcher/result_popup.dart';
 
 // class LearnPage extends StatefulWidget {
@@ -35,7 +36,7 @@ class _LearnPageState extends State<LearnPage> {
                     context,
                     // MaterialPageRoute(builder: (context) => CatcherRequest(key: UniqueKey())),
                     MaterialPageRoute(
-                      builder: (context) => const ResultPopup(),
+                      builder: (context) => const RequestForm(),
                     ),
                   );
                 },
