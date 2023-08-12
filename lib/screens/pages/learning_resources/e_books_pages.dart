@@ -31,7 +31,7 @@ class _EBooksPageState extends State<EBooksPage> {
                   "SNAKES OF SRI LANKA",
                   "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
                   'assets/images/bk2.jpeg',
-                  const EBook1(EBook1: null),
+                  const EBook1(),
                 ),
                 buildArticleCard(
                   context,
