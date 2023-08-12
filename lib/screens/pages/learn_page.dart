@@ -3,14 +3,20 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:horizontal_card_pager/horizontal_card_pager.dart';
 import 'package:horizontal_card_pager/card_item.dart';
 import 'catcher/catcher_request.dart';
+import 'catcher/result_popup.dart';
 
+// class LearnPage extends StatefulWidget {
+//   const LearnPage({Key? key}) : super(key: key);
+//
+//   @override
+//   State<LearnPage> createState() => _LearnPageState();
+// }
 class LearnPage extends StatefulWidget {
   const LearnPage({Key? key}) : super(key: key);
 
   @override
   State<LearnPage> createState() => _LearnPageState();
 }
-
 class _LearnPageState extends State<LearnPage> {
   @override
   Widget build(BuildContext context) {
@@ -23,15 +29,18 @@ class _LearnPageState extends State<LearnPage> {
               color: Colors.white,
               height: 450,
               width: 400,
-                child: FloatingActionButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CatcherRequest(key: UniqueKey())),
-                    );
-                  },
-                ),
-            )
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    // MaterialPageRoute(builder: (context) => CatcherRequest(key: UniqueKey())),
+                    MaterialPageRoute(
+                      builder: (context) => const ResultPopup(),
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
