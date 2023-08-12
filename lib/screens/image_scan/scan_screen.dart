@@ -42,21 +42,36 @@ class _ScanImageState extends State<ScanImage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black12,
       appBar: AppBar(title: const Text('Take a picture')),
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
-      body: FutureBuilder<void>(
-        future: _initializeControllerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            // If the Future is complete, display the preview.
-            return CameraPreview(_controller);
-          } else {
-            // Otherwise, display a loading indicator.
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
+      body: Column(
+        children: [
+          FutureBuilder<void>(
+            future: _initializeControllerFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                // If the Future is complete, display the preview.
+                return CameraPreview(_controller);
+              } else {
+                // Otherwise, display a loading indicator.
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              "1. Do not touch or handle any snake. \n2. Stay away from tall grass and piles of leaves when possible. \n3. Avoid climbing on rocks or piles of wood where a snake may be hiding",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15),
+            ),
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -94,8 +109,6 @@ class _ScanImageState extends State<ScanImage> {
         child: const Icon(Icons.camera_alt),
       ),
       bottomNavigationBar: AnimatedBottomNavigationBar(
-        leftCornerRadius: 32,
-        rightCornerRadius: 32,
         gapLocation: GapLocation.center,
         inactiveColor: Colors.white,
         activeColor: Colors.white,
@@ -108,11 +121,9 @@ class _ScanImageState extends State<ScanImage> {
               try {
                 final pickedFile =
                     await ImagePicker().pickImage(source: ImageSource.gallery);
-                if (pickedFile != null) {
-                }
+                if (pickedFile != null) {}
                 if (pickedFile == null) {
                   // TODO: do what if photo is not selected
-
                 } else {
                   // DisplayPictureScreen(imagePath: pickedFile.path);
                   Navigator.of(context).push(
@@ -148,8 +159,29 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Select Pictures')),
-      body: Image.file(File(imagePath)),
+      backgroundColor: Colors.greenAccent,
+      appBar: AppBar(title: const Text('Capture Snake')),
+      body: Column(
+        children: [
+          Image.file(File(imagePath)),
+          Row(
+            children: [
+              FloatingActionButton.extended(
+                onPressed: _retakeImage,
+                label: const Text("Retake a Picture"),
+              ),
+              FloatingActionButton.extended(
+                onPressed: _sendToScan,
+                label: const Text("Get Species name"),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
+
+  void _retakeImage() {}
+
+  void _sendToScan() {}
 }

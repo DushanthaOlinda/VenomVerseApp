@@ -4,6 +4,7 @@ import 'package:VenomVerse/screens/pages/learning_resources/resource_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/video_page.dart';
 import 'package:flutter/material.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/e_books_pages.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import 'learning_resources/articles_page.dart';
 

@@ -1,7 +1,10 @@
 import 'package:VenomVerse/widgets/generate_body.dart';
 import 'package:app_bar_with_search_switch/app_bar_with_search_switch.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sidebarx/sidebarx.dart';
+
+import '../models/auth.dart';
 // import '../widgets/generate_body.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -25,9 +28,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String get role => "TestUser";
   String page = "Home";
+  final _controller = SidebarXController(selectedIndex: 0, extended: true);
 
   @override
   Widget build(BuildContext context) {
+    var auth = context.watch<AuthModel>();
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -39,10 +45,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       drawer: SidebarX(
-        controller: SidebarXController(selectedIndex: 0, extended: true),
+        controller: _controller,
         items: const [
-          SidebarXItem(icon: Icons.home, label: 'Home'),
+          SidebarXItem(icon: Icons.home, label: 'Home',),
           SidebarXItem(icon: Icons.search, label: 'Search'),
+        ],
+        footerItems: [
+          SidebarXItem(icon: Icons.logout, label: 'Logout',  onTap: (){
+            auth.logout();
+            Navigator.pushReplacementNamed(context, '/login');
+          }),
         ],
       ),
       appBar: AppBarWithSearchSwitch(
