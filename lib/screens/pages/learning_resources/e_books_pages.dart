@@ -18,7 +18,7 @@ class _EBooksPageState extends State<EBooksPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("E-Books"),
+        title: const Text("Books"),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -30,42 +30,42 @@ class _EBooksPageState extends State<EBooksPage> {
                   context,
                   "SNAKES OF SRI LANKA",
                   "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
-                  'assets/images/bk2.jpeg',
+                  'assets/images/bk2.png',
                   const EBook1(),
                 ),
                 buildArticleCard(
                   context,
                   "SNAKES OF SRI LANKA",
                   "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
-                  'assets/images/bk2.jpeg',
+                  'assets/images/bk2.png',
                   const EBook2(),
                 ),
                 buildArticleCard(
                   context,
                   "SNAKES OF SRI LANKA",
                   "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
-                  'assets/images/bk2.jpeg',
+                  'assets/images/bk2.png',
                   const EBook3(),
                 ),
                 buildArticleCard(
                   context,
                   "SNAKES OF SRI LANKA",
                   "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
-                  'assets/images/bk2.jpeg',
+                  'assets/images/bk2.png',
                   const EBook4(),
                 ),
                 buildArticleCard(
                   context,
                   "SNAKES OF SRI LANKA",
                   "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
-                  'assets/images/bk2.jpeg',
+                  'assets/images/bk2.png',
                   const EBook5(),
                 ),
                 buildArticleCard(
                   context,
                   "SNAKES OF SRI LANKA",
                   "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
-                  'assets/images/bk2.jpeg',
+                  'assets/images/bk2.png',
                   const EBook6(),
                 ),
                 // Repeat for other articles...
