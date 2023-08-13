@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'requests_list.dart';
 
 class CatcherRequest extends StatefulWidget {
   const CatcherRequest({required Key key}) : super(key: key);
@@ -33,7 +34,12 @@ class CatcherRequestState extends State<CatcherRequest> {
               color: Colors.amber,
               successColor: Colors.amber,
               controller: _btnController2,
-              onPressed: _doSomething,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const RequestsList()),
+                );
+              },
               valueColor: Colors.black,
               borderRadius: 10,
               child: const Text(
