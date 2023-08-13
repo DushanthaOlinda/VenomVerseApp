@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:stacked_notification_cards/stacked_notification_cards.dart';
+import 'package:flutter/material.dart';
+import 'requestform_details.dart';
 
 class RequestsList extends StatefulWidget {
   const RequestsList({super.key});
@@ -114,6 +115,10 @@ class _RequestsListState extends State<RequestsList> {
                 });
               },
               onTapViewCallback: (index) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const RequestForm()),
+                );
                 print(index);
               },
             ),
