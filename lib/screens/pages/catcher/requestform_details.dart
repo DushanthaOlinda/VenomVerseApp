@@ -14,42 +14,82 @@ class _RequestFormState extends State<RequestForm> {
       appBar: AppBar(
         title: const Text('Request Details:'),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Profile picture
-            Center(
-              child: CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('assets/images/profile_picture.png'),
-              ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Profile picture
+          const Center(
+            child: CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage('assets/images/profile_picture.png'),
             ),
-            SizedBox(height: 16), // Add some spacing between the profile picture and text
+          ),
+          const SizedBox(height: 16), // Add some spacing between the profile picture and text
 
-            // Text details
-            Text(
-              'Name: Senuri Wickramasinghe',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Age: 38 Years',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Details: [Add details here]',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Qualifications: [Add qualifications here]',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
+          // Text details
+          const Text(
+            'Name: Senuri Wickramasinghe',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.left,
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            'Age: 38 Years',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.left,
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            'Details: [Add details here]',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.left,
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            'Qualifications: [Add qualifications here]',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.left,
+          ),
+
+          // Buttons
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  // TODO: Implement approve logic
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                  'Approve',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              const SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: () {
+                  // TODO: Implement reject logic
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  backgroundColor: Colors.red,
+                ),
+                child: const Text(
+                  'Reject',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
