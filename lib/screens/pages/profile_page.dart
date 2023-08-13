@@ -145,7 +145,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => myPosts()), // Navigate to CardsPage
+                    MaterialPageRoute(builder: (context) => const myPosts()), // Navigate to CardsPage
                   );
                   // Handle button press
                 },
@@ -296,7 +296,7 @@ class _myPostsState extends State<myPosts> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                   children: [
                     const Row(
                       children: [
@@ -320,6 +320,7 @@ class _myPostsState extends State<myPosts> {
                         ),
                       ],
                     ),
+                    const SizedBox(width: 110),
                     Container(
                       width: 40,
                       height: 40,
@@ -328,7 +329,7 @@ class _myPostsState extends State<myPosts> {
                         shape: BoxShape.circle,
                       ),
                       child: IconButton(
-                        icon: const Icon(Icons.edit, color: Colors.white),
+                        icon: const Icon(Icons.edit, color: Colors.black),
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -339,6 +340,24 @@ class _myPostsState extends State<myPosts> {
                         },
                       ),
                     ),
+                    const SizedBox(width: 5),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                        color: Colors.grey,
+                        shape: BoxShape.circle,
+                      ),
+                      child: IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: () {
+
+                             popUpDeletePost(context);
+
+                          // Handle edit icon press
+                        },
+                      ),
+                    )
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -396,6 +415,38 @@ class _myPostsState extends State<myPosts> {
     );
   }
 
+  popUpDeletePost(context) {
+    Alert(
+      context: context,
+
+      title: "DELETE THE POST",
+      desc: "Are you sure to delete the post?",
+      buttons: [
+        DialogButton(
+          onPressed: () {
+            deleteSuccess(context);
+            // Perform report action
+          },
+          color: const Color.fromRGBO(0, 179, 134, 1.0),
+          child: const Text(
+            "OK",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+        DialogButton(
+          onPressed: () => Navigator.pop(context),
+          gradient: const LinearGradient(colors: [
+            Color.fromRGBO(116, 116, 191, 1.0),
+            Color.fromRGBO(52, 138, 199, 1.0),
+          ]),
+          child: const Text(
+            "CANCEL",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        )
+      ],
+    ).show();
+  }
 
   popUpReportPost(context) {
     Alert(
@@ -563,6 +614,33 @@ class _myPostsState extends State<myPosts> {
       ],
     ).show();
   }
+
+  deleteSuccess(context) {
+    Alert(
+      context: context,
+      type: AlertType.success,
+      title: "Successfully Deleted",
+      desc: " ",
+      buttons: [
+        DialogButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const myPosts()), // Navigate to CardsPage
+            );            // Perform report action
+          },
+          color: const Color.fromRGBO(0, 179, 134, 1.0),
+          child: const Text(
+            "OK",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+
+      ],
+    ).show();
+  }
+
 
 }
 
