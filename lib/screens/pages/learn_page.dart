@@ -1,9 +1,12 @@
+import 'dart:ffi';
+
 import 'package:VenomVerse/screens/pages/learning_resources/extra_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/quize_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/resource_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/video_page.dart';
 import 'package:flutter/material.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/e_books_pages.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'learning_resources/articles_page.dart';
 import 'catcher/result_popup.dart';
 
@@ -19,6 +22,7 @@ class LearnPage extends StatefulWidget {
   @override
   State<LearnPage> createState() => _LearnPageState();
 }
+
 class _LearnPageState extends State<LearnPage> {
   @override
   Widget build(BuildContext context) {
@@ -37,12 +41,15 @@ class _LearnPageState extends State<LearnPage> {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const EBooksPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const EBooksPage()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0), // Curve the corners
+                    borderRadius:
+                        BorderRadius.circular(20.0), // Curve the corners
                     color: Colors.white, // Set the card color to white
                     boxShadow: [
                       BoxShadow(
@@ -59,7 +66,8 @@ class _LearnPageState extends State<LearnPage> {
                       Container(
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.green, // Set the icon background color to green
+                          color: Colors
+                              .green, // Set the icon background color to green
                         ),
                         child: const Padding(
                           padding: EdgeInsets.all(20.0),
@@ -73,7 +81,9 @@ class _LearnPageState extends State<LearnPage> {
                       const SizedBox(height: 8),
                       const Text(
                         "Books",
-                        style: TextStyle(color: Colors.green, fontSize: 18), // Set the text color to green
+                        style: TextStyle(
+                            color: Colors.green,
+                            fontSize: 18), // Set the text color to green
                       )
                     ],
                   ),
@@ -82,8 +92,10 @@ class _LearnPageState extends State<LearnPage> {
 
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const ArticlesPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ArticlesPage()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -125,10 +137,12 @@ class _LearnPageState extends State<LearnPage> {
                 ),
               ),
               // Repeat the same modifications for the other InkWell widgets
-                            InkWell(
+              InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const VideosPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const VideosPage()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -172,8 +186,10 @@ class _LearnPageState extends State<LearnPage> {
               // Repeat the same modifications for the other InkWell widgets
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const ResourcesPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ResourcesPage()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -217,8 +233,10 @@ class _LearnPageState extends State<LearnPage> {
               // Repeat the same modifications for the other InkWell widgets
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const QuizePage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const QuizePage()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -260,10 +278,12 @@ class _LearnPageState extends State<LearnPage> {
                 ),
               ),
               // Repeat the same modifications for the other InkWell widgets
-                            InkWell(
+              InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const ExtraPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ResultPopup(species: "species", confidence: 100.0)));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -309,6 +329,7 @@ class _LearnPageState extends State<LearnPage> {
         ),
       ),
     );
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.red[50],
@@ -320,13 +341,11 @@ class _LearnPageState extends State<LearnPage> {
               width: 400,
               child: FloatingActionButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    // MaterialPageRoute(builder: (context) => CatcherRequest(key: UniqueKey())),
-                    MaterialPageRoute(
-                      builder: (context) => const ResultPopup(),
-                    ),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   // MaterialPageRoute(builder: (context) => CatcherRequest(key: UniqueKey())),
+                  //   // MaterialPageRoute(builder: (context) => const ResultPopup(),),
+                  // );
                 },
               ),
             ),
@@ -373,6 +392,3 @@ class _LearnPageState extends State<LearnPage> {
     ).show();
   }
 }
-
-
-

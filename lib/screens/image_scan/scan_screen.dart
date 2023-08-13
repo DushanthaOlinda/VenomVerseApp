@@ -4,7 +4,12 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+
+import '../../services/api.dart';
+import '../pages/catcher/result_popup.dart';
 
 class ScanImage extends StatefulWidget {
   const ScanImage({super.key, required this.camera});
@@ -42,7 +47,7 @@ class _ScanImageState extends State<ScanImage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black12,
+      backgroundColor: Colors.black,
       appBar: AppBar(title: const Text('Take a picture')),
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
@@ -126,13 +131,15 @@ class _ScanImageState extends State<ScanImage> {
                   // TODO: do what if photo is not selected
                 } else {
                   // DisplayPictureScreen(imagePath: pickedFile.path);
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => DisplayPictureScreen(
-                        imagePath: pickedFile.path,
+                  if (context.mounted) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => DisplayPictureScreen(
+                          imagePath: pickedFile.path,
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  }
                 }
                 // final image = await _controller.takePicture();
               } catch (e) {
@@ -159,29 +166,66 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: Colors.black,
       appBar: AppBar(title: const Text('Capture Snake')),
       body: Column(
         children: [
           Image.file(File(imagePath)),
-          Row(
-            children: [
-              FloatingActionButton.extended(
-                onPressed: _retakeImage,
-                label: const Text("Retake a Picture"),
-              ),
-              FloatingActionButton.extended(
-                onPressed: _sendToScan,
-                label: const Text("Get Species name"),
-              ),
-            ],
+          const SizedBox(height: 40,),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  child: const SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.replay),
+                        Text("Retake a Picture",textAlign: TextAlign.center,),
+                      ],
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },                        ),
+                ElevatedButton(
+                  child: const SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.send),
+                        Text("Get Species name", textAlign: TextAlign.center,),
+                      ],
+                    ),
+                  ),
+                  onPressed: () => _sendToScan(context),
+                ),
+              ],
+            ),
           )
         ],
       ),
     );
   }
 
-  void _retakeImage() {}
-
-  void _sendToScan() {}
+  _sendToScan(BuildContext context) async {
+    EasyLoading.show(status: 'loading...');
+    var result = await Api.scanSnake(File(imagePath));
+    EasyLoading.dismiss();
+    print(result);
+    if (context.mounted) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ResultPopup(
+              species: result['class'], confidence: result['confidence']);
+        },
+      );
+    }
+  }
 }

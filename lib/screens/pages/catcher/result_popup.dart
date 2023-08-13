@@ -1,9 +1,14 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class ResultPopup extends StatefulWidget {
-  const ResultPopup({Key? key}) : super(key: key);
+  const ResultPopup({Key? key, required this.species, required this.confidence})
+      : super(key: key);
 
-   @override
+  final String species;
+  final double confidence;
+  @override
   State<ResultPopup> createState() => _ResultPopupState();
 }
 
@@ -15,7 +20,8 @@ class _ResultPopupState extends State<ResultPopup> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset('assets/images/snake_image.png',
+          Image.asset(
+            'assets/images/snake_image.png',
             width: 100,
             height: 200,
           ),
@@ -24,20 +30,20 @@ class _ResultPopupState extends State<ResultPopup> {
           //   'Predicted Answer: Seems to be a rattle snake',
           //   style: TextStyle(fontWeight: FontWeight.bold),
           // ),
-          const Center(
+          Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Predicted Answer:',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 40), // Add a 10-pixel vertical space
+                const SizedBox(height: 40), // Add a 10-pixel vertical space
                 Text(
-                  'Seems to be a COBRA!',
-                  style: TextStyle(
+                  'Seems to be a ${widget.species}!',
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.red,
                   ),
@@ -46,9 +52,9 @@ class _ResultPopupState extends State<ResultPopup> {
             ),
           ),
           const SizedBox(height: 100),
-          const Text(
-            'Confidence: 70%',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Text(
+            'Confidence: ${widget.confidence}%',
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ],
       ),
@@ -57,9 +63,9 @@ class _ResultPopupState extends State<ResultPopup> {
           onPressed: () {
             Navigator.pop(context);
           },
-    style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.red,
-    ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.red,
+          ),
           child: const Text('Close'),
         ),
         ElevatedButton(

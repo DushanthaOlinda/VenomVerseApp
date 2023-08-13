@@ -45,6 +45,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       drawer: SidebarX(
+        showToggleButton: false,
+        theme: const SidebarXTheme(width: 200, itemMargin: EdgeInsets.zero),
         controller: _controller,
         items: const [
           SidebarXItem(icon: Icons.home, label: 'Home',),

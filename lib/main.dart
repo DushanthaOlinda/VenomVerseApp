@@ -5,6 +5,7 @@ import 'package:VenomVerse/screens/loading_screen.dart';
 import 'package:VenomVerse/screens/login_screen.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 import 'models/auth.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
         create: (context) => authModel,
         child: MaterialApp(
+          builder: EasyLoading.init(),
           title: 'Flutter Demo',
           theme: ThemeData(
             primarySwatch: Colors.green,

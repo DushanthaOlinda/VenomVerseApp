@@ -55,7 +55,6 @@ class LoginPage extends StatelessWidget {
     return FlutterLogin(
       logo: const AssetImage('assets/images/logo.png'),
       onLogin: (LoginData data) async {
-
         auth.logout();
         var res = await Api().login(data.name, data.password);
         if (res != null) {
@@ -67,7 +66,11 @@ class LoginPage extends StatelessWidget {
           return "Invalid Credentials";
         }
       },
-      onSignup: _signupUser,
+      onSignup: (SignupData data) async {
+        auth.logout();
+        var res = await Api().signup(data.name, data.password);
+        return res;
+      },
       onSubmitAnimationCompleted: () {
         if (auth.isAuthorized) {
           Navigator.pushReplacementNamed(context, '/home');
