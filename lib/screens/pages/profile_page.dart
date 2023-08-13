@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:profile/profile.dart';
@@ -6,7 +7,14 @@ import 'package:profile/profile.dart';
 import 'package:flutter_credit_card_new/credit_card_brand.dart';
 import 'package:flutter_credit_card_new/flutter_credit_card.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:video_uploader/video_uploader.dart';
+import 'package:video_player/video_player.dart';
+
+
+import 'home_page.dart';
+
+
 
 
 
@@ -21,7 +29,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red[50],
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
@@ -52,8 +59,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.yellow[700],
                 ),
-                icon: Icon(Icons.edit), // Edit icon
-                label: Text('Edit Profile'),
+                icon: const Icon(Icons.edit), // Edit icon
+                label: const Text('Edit Profile'),
               ),
             ),
 
@@ -69,6 +76,9 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
 
             const SizedBox(height: 20),
+
+
+
             Align(
               alignment: Alignment.center,
               child: ElevatedButton(
@@ -83,12 +93,15 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 child: const Text('Payments'),
               ),
+
             ),
 
 
 
 
-            const SizedBox(height: 50),
+
+
+            const SizedBox(height: 20),
             Align(
               alignment: Alignment.bottomCenter,
               child: Row(
@@ -109,6 +122,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BecomeZoologist()), // Navigate to CardsPage
+                      );
                       // Handle button press
                     },
                     style: ElevatedButton.styleFrom(
@@ -116,15 +133,524 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     child: const Text('Become a Zoologist'),
                   ),
+
                 ],
+
               ),
+            ),
+            const SizedBox(height: 50),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => myPosts()), // Navigate to CardsPage
+                  );
+                  // Handle button press
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.yellow[700],
+                  // Set the button color to green
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15), // Adjust padding for button size
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15), // Adjust corner radius
+                  ),
+                ),
+                child: const Text(
+                  'View My Posts',
+                  style: TextStyle(fontSize: 18), // Adjust font size
+                ),
+              ),
+            )
+
+          ],
+        ),
+      ),
+    );
+  }
+
+}
+
+class BecomeZoologist extends StatefulWidget {
+  const BecomeZoologist({super.key});
+
+  @override
+  _BecomeZoologistState createState() => _BecomeZoologistState();
+}
+
+class _BecomeZoologistState extends State<BecomeZoologist> {
+  File? imageFile;
+  TextEditingController degreeController = TextEditingController();
+  TextEditingController yearController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Request to Become a Zoologist"),
+      ),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ElevatedButton.icon(
+              onPressed: () async {
+                var pickedImage = await _getFromGallery();
+                setState(() {
+                  imageFile = pickedImage;
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.yellow[700],
+              ),
+              icon: const Icon(Icons.image),
+              label: const Text('Select Image'),
+            ),
+            const SizedBox(height: 10, width: 20,),
+            if (imageFile != null)
+              Image.file(
+                imageFile!,
+                width: 400,
+                height: 200,
+              ),
+            const SizedBox(height: 20),
+            // Degree Box
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: TextFormField(
+                controller: degreeController,
+                decoration: const InputDecoration(
+                  hintText: 'Enter your degree...',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Graduation Year Box
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: TextFormField(
+                controller: yearController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  hintText: 'Enter graduation year...',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Submit Button
+            ElevatedButton.icon(
+              onPressed: () {
+                // Handle submit here
+                String degree = degreeController.text;
+                String year = yearController.text;
+                // You can now use the 'imageFile', 'degree', and 'year' for further processing
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.yellow[700],
+              ),
+              icon: const Icon(Icons.post_add),
+              label: const Text('Request'),
             ),
           ],
         ),
       ),
     );
   }
+
+  Future<File?> _getFromGallery() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      return File(pickedFile.path);
+    }
+    return null;
+  }
 }
+
+class myPosts extends StatefulWidget {
+  const myPosts({super.key});
+
+  @override
+  _myPostsState createState() => _myPostsState();
+}
+
+class _myPostsState extends State<myPosts> {
+  bool isLiked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.red[50],
+      appBar: AppBar(
+        title: const Text('My Posts'),
+      ),
+      body: Center(
+        child: Card(
+
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundImage: AssetImage('assets/images/user image.png'),
+                          radius: 30,
+                        ),
+                        SizedBox(width: 16),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Kimutu Kisal',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              'Posted 2 hours ago',
+                              style: TextStyle(fontSize: 12, color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                        color: Colors.grey,
+                        shape: BoxShape.circle,
+                      ),
+                      child: IconButton(
+                        icon: const Icon(Icons.edit, color: Colors.white),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) =>
+                            const EditPost()),
+                          );
+                          // Handle edit icon press
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'A snake is a type of reptile that belongs to the suborder Serpentes. Snakes are known for their elongated, legless bodies covered in scales...',
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 8),
+                Image.asset('assets/images/snake image.jpg'),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        isLiked ? Icons.favorite : Icons.favorite_border,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          isLiked = !isLiked;
+                        });
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.comment,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const TestMe()),
+                        );
+                        // Perform comment action
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.report,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        popUpReportPost(context);
+                        // Perform report action
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+
+  popUpReportPost(context) {
+    Alert(
+      context: context,
+      type: AlertType.warning,
+      title: "REPORT THE POST",
+      desc: "Are you sure to report the post?",
+      buttons: [
+        DialogButton(
+          onPressed: () {
+            reportPost(context);
+            // Perform report action
+          },
+          color: const Color.fromRGBO(0, 179, 134, 1.0),
+          child: const Text(
+            "Yes",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+        DialogButton(
+          onPressed: () => Navigator.pop(context),
+          gradient: const LinearGradient(colors: [
+            Color.fromRGBO(116, 116, 191, 1.0),
+            Color.fromRGBO(52, 138, 199, 1.0),
+          ]),
+          child: const Text(
+            "No",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        )
+      ],
+    ).show();
+  }
+
+  reportPost(context) {
+    Alert(
+      context: context,
+      type: AlertType.success,
+      title: "Thanks for letting us know.",
+      desc: "We'll send you a notification to view the outcome as soon as possible",
+      buttons: [
+        DialogButton(
+          onPressed: () {
+            cancelReport(context);
+            // Perform report action
+          },
+          color: const Color.fromRGBO(0, 179, 134, 1.0),
+          child: const Text(
+            "Undo Report",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+        DialogButton(
+          onPressed: () => addReason(context),
+          gradient: const LinearGradient(colors: [
+            Color.fromRGBO(116, 116, 191, 1.0),
+            Color.fromRGBO(52, 138, 199, 1.0),
+          ]),
+          child: const Text(
+            "Add a Reason",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        )
+      ],
+    ).show();
+  }
+
+  cancelReport(context) {
+    Alert(
+      context: context,
+      type: AlertType.error,
+      title: "This report has been cancelled.",
+      desc: "You can report this post again if you change your mind.",
+      buttons: [
+        DialogButton(
+
+          onPressed: ()
+    {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const myPosts()), // Navigate to CardsPage
+      );
+    },
+          color: const Color.fromRGBO(0, 179, 134, 1.0),
+          child: const Text(
+            "OK",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+
+      ],
+    ).show();
+  }
+
+  addReason(context) {
+    Alert(
+      context: context,
+
+      title: "Please select the problem.",
+      desc: " ",
+      buttons: [
+        DialogButton(
+          onPressed: () {
+            reportReceived(context);
+            // Perform report action
+          },
+
+          color: const Color.fromRGBO(0, 179, 134, 1.0),
+          child: const Text(
+            "Hate speech",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+        DialogButton(
+          onPressed: () {
+            reportReceived(context);
+            // Perform report action
+          },
+          color: const Color.fromRGBO(0, 179, 134, 1.0),
+          child: const Text(
+            "False Information",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+        DialogButton(
+          onPressed: () {
+            reportReceived(context);
+            // Perform report action
+          },
+          color: const Color.fromRGBO(0, 179, 134, 1.0),
+          child: const Text(
+            "Spam",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+
+      ],
+    ).show();
+  }
+
+  reportReceived(context) {
+    Alert(
+      context: context,
+      type: AlertType.success,
+      title: "Thank you, we've received your report",
+      desc: " ",
+      buttons: [
+        DialogButton(
+          onPressed: ()
+          {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const myPosts()), // Navigate to CardsPage
+            );
+          },
+          color: const Color.fromRGBO(0, 179, 134, 1.0),
+          child: const Text(
+            "Back",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+
+      ],
+    ).show();
+  }
+
+}
+
+class EditPost extends StatefulWidget {
+  const EditPost({Key? key}) : super(key: key);
+
+  @override
+  _EditPostState createState() => _EditPostState();
+}
+
+class _EditPostState extends State<EditPost> {
+  final TextEditingController _descriptionController = TextEditingController();
+  File? _imageFile;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Edit Post'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _imageFile != null
+                ? Image.file(
+              _imageFile!,
+              height: 200,
+              width: 200,
+              fit: BoxFit.cover,
+            )
+                : Image.asset(
+              'assets/images/snake image.jpg', // Initial image from assets
+              height: 200,
+              width: 200,
+              fit: BoxFit.cover,
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.yellow[700],
+                ),
+              onPressed: () async {
+                final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+                if (pickedFile != null) {
+                  setState(() {
+                    _imageFile = File(pickedFile.path);
+                  });
+                }
+              },
+              child: const Text('Pick and Update Image'),
+            ),
+            const SizedBox(height: 100),
+            TextField(
+              controller: _descriptionController,
+              maxLines: null, // Allow unlimited lines
+              keyboardType: TextInputType.multiline,
+              decoration: const InputDecoration(
+                hintText: 'A snake is a type of reptile that belongs to the suborder Serpentes. Snakes are known for their elongated, legless bodies covered in scales. They are found in various habitats worldwide, including forests, deserts, grasslands, and even bodies of water.',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 50),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.yellow[700],
+                ),
+              onPressed: () {
+                // Update the description
+              },
+              child: const Text('Update Description'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _descriptionController.dispose();
+    super.dispose();
+  }
+}
+
+
 
 const primaryColor = Colors.green;
 const secondaryColor = Colors.green;
@@ -135,13 +661,15 @@ class BecomeCatcher extends StatefulWidget {
   @override
   _BecomeCatcherState createState() => _BecomeCatcherState();
 }
+
 class _BecomeCatcherState extends State<BecomeCatcher> {
-  late String _imagePath;
   final _tokenTextController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
   double _progressValue = 0;
 
-  void setProgress(double value) async {
+  XFile? _selectedVideo; // Store the selected video
+
+  void setProgress(double value) {
     setState(() {
       _progressValue = value;
     });
@@ -156,103 +684,136 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(
-          primaryColor: primaryColor,
-        ),
-        home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: primaryColor,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context); // This will navigate back to the previous screen
-              },
-            ),
-            title: const Text('Become a Catcher'),
+      theme: ThemeData(
+        primaryColor: primaryColor,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: primaryColor,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context); // This will navigate back to the previous screen
+            },
           ),
-          body: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-
-                children: [
-
-                  const SizedBox(
-                    height: 52,
+          title: const Text('Request to Become a Catcher'),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                const SizedBox(height: 52),
+                ElevatedButton.icon(
+                  onPressed: () async {
+                    var source = ImageSource.gallery;
+                    XFile? video = await _picker.pickVideo(source: source);
+                    if (video != null) {
+                      setState(() {
+                        _selectedVideo = video;
+                      });
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.yellow[700],
                   ),
-                  TextField(
-                    cursorColor: primaryColor,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white, width: 2.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: primaryColor, width: 2.0),
-                      ),
-                      hintText: 'My video token',
+                  icon: const Icon(Icons.video_library), // Video icon
+                  label: const Text('Select Video'),
+                ),
+                const SizedBox(height: 10),
+                if (_selectedVideo != null)
+                  SizedBox(
+                    width: 200,
+                    height: 200,
+                    child: VideoPlayerWidget(
+                      videoPath: _selectedVideo!.path,
                     ),
-                    controller: _tokenTextController,
                   ),
-                  MaterialButton(
-                    color: primaryColor,
-                    child: const Text(
-                      "Pick Video from Gallery",
-                      style: TextStyle(
-                          color: Colors.white70, fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () async {
-                      var source = ImageSource.gallery;
-                      XFile? image = await _picker.pickVideo(source: source);
-                      if (image != null) {
-                        setState(() {
-                          try {
-                            _imagePath = image.path;
-                          } catch (e) {
-                            log("Failed to get video: $e");
-                          }
-                        });
-                      }
-                    },
+                const SizedBox(height: 20),
+                // Description Box
+                TextFormField(
+                  controller: _tokenTextController,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter description...',
                   ),
-                  MaterialButton(
-                    color: primaryColor,
-                    child: const Text(
-                      "Upload video",
-                      style: TextStyle(
-                          color: Colors.white70, fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () async {
+                ),
+                const SizedBox(height: 20),
+                MaterialButton(
+                  color: Colors.yellow[700],
+                  child: const Text(
+                    "Upload Video",
+                    style: TextStyle(
+                        color: Colors.white70, fontWeight: FontWeight.bold),
+                  ),
+                  onPressed: () async {
+                    if (_selectedVideo != null) {
                       try {
-                        var video =
-                        await ApiVideoUploader.uploadWithUploadToken(
-                            _tokenTextController.text, _imagePath,
+                        var video = await ApiVideoUploader.uploadWithUploadToken(
+                            _tokenTextController.text, _selectedVideo!.path,
                                 (bytesSent, totalByte) {
-                              log("Progress : ${bytesSent / totalByte}");
                               setProgress(bytesSent / totalByte);
                             });
-                        log("Video : $video");
-                        log("Title : ${video.title}");
+                        print("Video : $video");
+                        print("Title : ${video.title}");
+
                       } catch (e) {
-                        log("Failed to upload video: $e");
+                        print("Failed to upload video: $e");
                       }
-                    },
-                  ),
-                  LinearProgressIndicator(
-                    color: primaryColor,
-                    backgroundColor: secondaryColor,
-                    value: _progressValue,
-                  ),
-                ],
-              ),
+                    } else {
+                      print("No video selected.");
+                    }
+
+                  },
+                ),
+
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
-
 }
 
+class VideoPlayerWidget extends StatefulWidget {
+  final String videoPath;
 
+  const VideoPlayerWidget({Key? key, required this.videoPath}) : super(key: key);
 
+  @override
+  _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
+}
+
+class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
+  late VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.file(
+      File(widget.videoPath),
+    )..initialize().then((_) {
+      // Ensure the first frame is shown
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _controller.value.isInitialized
+        ? AspectRatio(
+      aspectRatio: _controller.value.aspectRatio,
+      child: VideoPlayer(_controller),
+    )
+        : const CircularProgressIndicator(); // You can show a loading indicator while the video is loading
+  }
+}
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
