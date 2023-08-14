@@ -21,7 +21,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
 
       backgroundColor: Colors.red[50],
+
       body: Center(
+
         child: Card(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -104,9 +106,11 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+
           Navigator.push(
             context,
             MaterialPageRoute(builder: (
@@ -132,6 +136,7 @@ class _HomePageState extends State<HomePage> {
       buttons: [
         DialogButton(
           onPressed: () {
+            Navigator.pop(context);
             reportPost(context);
             // Perform report action
           },
@@ -165,17 +170,23 @@ class _HomePageState extends State<HomePage> {
       buttons: [
         DialogButton(
           onPressed: () {
-            cancelReport(context);
+            Navigator.pop(context);
+
             // Perform report action
           },
           color: const Color.fromRGBO(0, 179, 134, 1.0),
           child: const Text(
-            "Undo Report",
+            "Back",
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
         ),
         DialogButton(
-          onPressed: () => addReason(context),
+          onPressed: () {
+            Navigator.pop(context);
+            addReason(context);
+
+
+          },
           gradient: const LinearGradient(colors: [
             Color.fromRGBO(116, 116, 191, 1.0),
             Color.fromRGBO(52, 138, 199, 1.0),
@@ -198,6 +209,7 @@ class _HomePageState extends State<HomePage> {
        buttons: [
          DialogButton(
            onPressed: () {
+             Navigator.pop(context);
              Navigator.pushReplacementNamed(context, '/home');
              // Perform report action
            },
@@ -221,6 +233,7 @@ class _HomePageState extends State<HomePage> {
       buttons: [
         DialogButton(
           onPressed: () {
+            Navigator.pop(context);
             reportReceived(context);
             // Perform report action
           },
@@ -233,6 +246,7 @@ class _HomePageState extends State<HomePage> {
         ),
         DialogButton(
           onPressed: () {
+            Navigator.pop(context);
             reportReceived(context);
             // Perform report action
           },
@@ -244,6 +258,7 @@ class _HomePageState extends State<HomePage> {
         ),
         DialogButton(
           onPressed: () {
+            Navigator.pop(context);
             reportReceived(context);
             // Perform report action
           },
@@ -267,6 +282,7 @@ class _HomePageState extends State<HomePage> {
        buttons: [
          DialogButton(
            onPressed: () {
+             Navigator.pop(context);
              Navigator.pushReplacementNamed(context, '/home');
              // Perform report action
            },
@@ -303,7 +319,7 @@ class AddNewPostState extends State<AddNewPost> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add New Post"),
+        title: const Text("Request to Add a New Post"),
       ),
       body: Center(
         child: Column(
@@ -357,7 +373,7 @@ class AddNewPostState extends State<AddNewPost> {
                 backgroundColor: Colors.yellow[700],
               ),
               icon: const Icon(Icons.post_add), // Edit icon
-              label: const Text('Post'),
+              label: const Text('Request'),
 
             ),
 

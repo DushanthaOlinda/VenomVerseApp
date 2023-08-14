@@ -194,6 +194,13 @@ class _BecomeZoologistState extends State<BecomeZoologist> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const SizedBox(height: 52),
+            // Description: Upload a Video to Provide Proof of Qualifications
+            const Text(
+              'Upload a image to provide proof of your qualifications to become a Zoologist.',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 30),
             ElevatedButton.icon(
               onPressed: () async {
                 var pickedImage = await _getFromGallery();
@@ -235,6 +242,18 @@ class _BecomeZoologistState extends State<BecomeZoologist> {
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   hintText: 'Enter graduation year...',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: TextFormField(
+                controller: yearController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  hintText: 'Enter your University...',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -295,7 +314,7 @@ class _myPostsState extends State<myPosts> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
+                 Row(
 
                   children: [
                     const Row(
@@ -320,44 +339,14 @@ class _myPostsState extends State<myPosts> {
                         ),
                       ],
                     ),
-                    const SizedBox(width: 110),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                        color: Colors.grey,
-                        shape: BoxShape.circle,
-                      ),
-                      child: IconButton(
-                        icon: const Icon(Icons.edit, color: Colors.black),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) =>
-                            const EditPost()),
-                          );
-                          // Handle edit icon press
-                        },
-                      ),
+                    const SizedBox(width: 150),
+                    PopupMenuButton<int>(
+                      onSelected: (item) => handleClick(item),
+                      itemBuilder: (context) => [
+                        const PopupMenuItem<int>(value: 0, child: Text('Edit Post')),
+                        const PopupMenuItem<int>(value: 1, child: Text('Delete Post')),
+                      ],
                     ),
-                    const SizedBox(width: 5),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                        color: Colors.grey,
-                        shape: BoxShape.circle,
-                      ),
-                      child: IconButton(
-                        icon: const Icon(Icons.delete, color: Colors.red),
-                        onPressed: () {
-
-                             popUpDeletePost(context);
-
-                          // Handle edit icon press
-                        },
-                      ),
-                    )
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -424,6 +413,7 @@ class _myPostsState extends State<myPosts> {
       buttons: [
         DialogButton(
           onPressed: () {
+            Navigator.pop(context);
             deleteSuccess(context);
             // Perform report action
           },
@@ -457,6 +447,7 @@ class _myPostsState extends State<myPosts> {
       buttons: [
         DialogButton(
           onPressed: () {
+            Navigator.pop(context);
             reportPost(context);
             // Perform report action
           },
@@ -490,17 +481,25 @@ class _myPostsState extends State<myPosts> {
       buttons: [
         DialogButton(
           onPressed: () {
-            cancelReport(context);
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const myPosts()), // Navigate to CardsPage
+            );
             // Perform report action
           },
           color: const Color.fromRGBO(0, 179, 134, 1.0),
           child: const Text(
-            "Undo Report",
+            "Back",
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
         ),
         DialogButton(
-          onPressed: () => addReason(context),
+          onPressed: () {
+            Navigator.pop(context);
+            addReason(context);
+          },
           gradient: const LinearGradient(colors: [
             Color.fromRGBO(116, 116, 191, 1.0),
             Color.fromRGBO(52, 138, 199, 1.0),
@@ -525,6 +524,7 @@ class _myPostsState extends State<myPosts> {
 
           onPressed: ()
     {
+      Navigator.pop(context);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -551,6 +551,7 @@ class _myPostsState extends State<myPosts> {
       buttons: [
         DialogButton(
           onPressed: () {
+            Navigator.pop(context);
             reportReceived(context);
             // Perform report action
           },
@@ -563,6 +564,7 @@ class _myPostsState extends State<myPosts> {
         ),
         DialogButton(
           onPressed: () {
+            Navigator.pop(context);
             reportReceived(context);
             // Perform report action
           },
@@ -574,6 +576,7 @@ class _myPostsState extends State<myPosts> {
         ),
         DialogButton(
           onPressed: () {
+            Navigator.pop(context);
             reportReceived(context);
             // Perform report action
           },
@@ -598,6 +601,7 @@ class _myPostsState extends State<myPosts> {
         DialogButton(
           onPressed: ()
           {
+            Navigator.pop(context);
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -624,6 +628,7 @@ class _myPostsState extends State<myPosts> {
       buttons: [
         DialogButton(
           onPressed: () {
+            Navigator.pop(context);
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -639,6 +644,19 @@ class _myPostsState extends State<myPosts> {
 
       ],
     ).show();
+  }
+
+  void handleClick(int item) {
+    switch (item) {
+      case 0: Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => EditPost()),
+      );
+
+        break;
+      case 1:popUpDeletePost(context);
+        break;
+    }
   }
 
 
@@ -743,13 +761,12 @@ class BecomeCatcher extends StatefulWidget {
 class _BecomeCatcherState extends State<BecomeCatcher> {
   final _tokenTextController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
-  double _progressValue = 0;
 
   XFile? _selectedVideo; // Store the selected video
 
   void setProgress(double value) {
     setState(() {
-      _progressValue = value;
+      // Update the progress state here
     });
   }
 
@@ -776,12 +793,19 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
           ),
           title: const Text('Request to Become a Catcher'),
         ),
+
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
                 const SizedBox(height: 52),
+                // Description: Upload a Video to Provide Proof of Qualifications
+                const Text(
+                  'Upload a video to provide proof of your qualifications to become a catcher.',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 30),
                 ElevatedButton.icon(
                   onPressed: () async {
                     var source = ImageSource.gallery;
@@ -980,6 +1004,54 @@ class _EditProfileState extends State<EditProfile> {
               controller: _passwordController,
               decoration: const InputDecoration(
                 labelText: 'Password',
+              ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 16.0),
+            TextField(
+              controller: _passwordController,
+              decoration: const InputDecoration(
+                labelText: 'Date of birth',
+              ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 16.0),
+            TextField(
+              controller: _passwordController,
+              decoration: const InputDecoration(
+                labelText: 'NIC',
+              ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 16.0),
+            TextField(
+              controller: _passwordController,
+              decoration: const InputDecoration(
+                labelText: 'District',
+              ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 16.0),
+            TextField(
+              controller: _passwordController,
+              decoration: const InputDecoration(
+                labelText: 'Address',
+              ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 16.0),
+            TextField(
+              controller: _passwordController,
+              decoration: const InputDecoration(
+                labelText: 'Contact Number',
+              ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 16.0),
+            TextField(
+              controller: _passwordController,
+              decoration: const InputDecoration(
+                labelText: 'Working Status',
               ),
               obscureText: true,
             ),
