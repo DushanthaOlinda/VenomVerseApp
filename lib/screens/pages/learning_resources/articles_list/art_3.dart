@@ -29,7 +29,7 @@ class _Article3State extends State<Article3> {
               height: 200,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/images/snake image.jpg'),
+                  image: AssetImage('assets/images/snake3.JPG'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -46,17 +46,17 @@ class _Article3State extends State<Article3> {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Having a Companion Could Help Rattlesnakes Stay Calm',
+                    "Venomous Wonders: A Closer Look at Sri Lanka's Poisonous Snakes",
                     style: TextStyle(fontSize: 22, color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 16),
                   Text(
-                    'When rattlesnakes are in the presence of a companion, they’re more resilient to stress, according to new research published this month in the journal Frontiers in Ethology.',
+                    "Sri Lanka, an island nation abundant in biodiversity, is home to a remarkable array of venomous snakes that have intrigued scientists and enthusiasts alike. These serpents, while often feared for their potent venom, play a vital role in maintaining the ecological balance of the island's ecosystems.",
                     style: TextStyle(fontSize: 16, color: Colors.black),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    "Operating off a hunch, a team of scientists decided to monitor rattlesnakes’ heart rates as the animals underwent a stressful situation, with and without another snake nearby. They found snakes that faced stress alone experienced a greater spike in their heart rates than those that had company.",
+                    "Among the prominent venomous snake species found in Sri Lanka are the Common Krait, Russell's Viper, and the Hump-nosed Viper. These species have adapted to a variety of habitats, from forests to agricultural lands, showcasing their ability to thrive in diverse environments.",
                     style: TextStyle(fontSize: 16, color: Colors.black),
                   ),
                   SizedBox(height: 8),

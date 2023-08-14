@@ -280,10 +280,8 @@ class _LearnPageState extends State<LearnPage> {
               // Repeat the same modifications for the other InkWell widgets
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ResultPopup(species: "species", confidence: 100.0)));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const InfoPage()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -317,7 +315,7 @@ class _LearnPageState extends State<LearnPage> {
                       ),
                       const SizedBox(height: 8),
                       const Text(
-                        "Extra",
+                        "Serpents",
                         style: TextStyle(color: Colors.green, fontSize: 18),
                       )
                     ],
