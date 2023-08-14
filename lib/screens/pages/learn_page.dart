@@ -5,9 +5,10 @@ import 'package:VenomVerse/screens/pages/learning_resources/quize_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/resource_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/video_page.dart';
 import 'package:flutter/material.dart';
-import 'package:VenomVerse/screens/pages/learning_resources/e_books_pages.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'learning_resources/articles_page.dart';
+import 'catcher/requestform_details.dart';
+import 'catcher/requests_list.dart';
 import 'catcher/result_popup.dart';
 
 // class LearnPage extends StatefulWidget {
@@ -339,11 +340,11 @@ class _LearnPageState extends State<LearnPage> {
               width: 400,
               child: FloatingActionButton(
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   // MaterialPageRoute(builder: (context) => CatcherRequest(key: UniqueKey())),
-                  //   // MaterialPageRoute(builder: (context) => const ResultPopup(),),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CatcherRequest(key: UniqueKey())),
+
+                  );
                 },
               ),
             ),
