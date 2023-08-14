@@ -1,5 +1,10 @@
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:comment_box/comment/comment.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,34 +19,36 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       backgroundColor: Colors.red[50],
+
       body: Center(
+
         child: Card(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  child: const Text(
-                    'Posted 2 hours ago',
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
-                  ),
-                ),
-              ),
               Container(
                 padding: const EdgeInsets.all(15),
                 child: const Row(
                   children: [
                     CircleAvatar(
-                      backgroundImage:
-                          AssetImage('assets/images/user image.png'),
+                      backgroundImage: AssetImage('assets/images/user image.png'),
                       radius: 30,
                     ),
                     SizedBox(width: 16),
-                    Text(
-                      'Kimutu Kisal',
-                      style: TextStyle(fontSize: 20),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Kimutu Kisal',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        Text(
+                          'Posted 2 hours ago',
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -78,9 +85,7 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  TestMe()), // Navigate to CardsPage
+                          MaterialPageRoute(builder: (context) => const TestMe()),
                         );
                         // Perform comment action
                       },
@@ -91,6 +96,7 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.grey,
                       ),
                       onPressed: () {
+                        popUpReportPost(context);
                         // Perform report action
                       },
                     ),
@@ -100,10 +106,296 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (
+                context) => const AddNewPost()), // Navigate to CardsPage
+          );
+          // Handle the onPressed event for the "Add New Card" button
+          // Perform the desired action here, such as opening a new screen or dialog
+          // to add a new card.
+          // Example:
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => AddCardPage()));
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
+
+  popUpReportPost(context) {
+    Alert(
+      context: context,
+      type: AlertType.warning,
+      title: "REPORT THE POST",
+      desc: "Are you sure to report the post?",
+      buttons: [
+        DialogButton(
+          onPressed: () {
+            Navigator.pop(context);
+            reportPost(context);
+            // Perform report action
+          },
+          color: const Color.fromRGBO(0, 179, 134, 1.0),
+          child: const Text(
+            "Yes",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+        DialogButton(
+          onPressed: () => Navigator.pop(context),
+          gradient: const LinearGradient(colors: [
+            Color.fromRGBO(116, 116, 191, 1.0),
+            Color.fromRGBO(52, 138, 199, 1.0),
+          ]),
+          child: const Text(
+            "No",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        )
+      ],
+    ).show();
+  }
+
+   reportPost(context) {
+    Alert(
+      context: context,
+      type: AlertType.success,
+      title: "Thanks for letting us know.",
+      desc: "We'll send you a notification to view the outcome as soon as possible",
+      buttons: [
+        DialogButton(
+          onPressed: () {
+            Navigator.pop(context);
+
+            // Perform report action
+          },
+          color: const Color.fromRGBO(0, 179, 134, 1.0),
+          child: const Text(
+            "Back",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+        DialogButton(
+          onPressed: () {
+            Navigator.pop(context);
+            addReason(context);
+
+
+          },
+          gradient: const LinearGradient(colors: [
+            Color.fromRGBO(116, 116, 191, 1.0),
+            Color.fromRGBO(52, 138, 199, 1.0),
+          ]),
+          child: const Text(
+            "Add a Reason",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        )
+      ],
+    ).show();
+  }
+
+   cancelReport(context) {
+     Alert(
+       context: context,
+       type: AlertType.error,
+       title: "This report has been cancelled.",
+       desc: "You can report this post again if you change your mind.",
+       buttons: [
+         DialogButton(
+           onPressed: () {
+             Navigator.pop(context);
+             Navigator.pushReplacementNamed(context, '/home');
+             // Perform report action
+           },
+           color: const Color.fromRGBO(0, 179, 134, 1.0),
+           child: const Text(
+             "OK",
+             style: TextStyle(color: Colors.white, fontSize: 18),
+           ),
+         ),
+
+       ],
+     ).show();
+   }
+
+  addReason(context) {
+    Alert(
+      context: context,
+
+      title: "Please select the problem.",
+      desc: " ",
+      buttons: [
+        DialogButton(
+          onPressed: () {
+            Navigator.pop(context);
+            reportReceived(context);
+            // Perform report action
+          },
+
+          color: const Color.fromRGBO(0, 179, 134, 1.0),
+          child: const Text(
+            "Hate speech",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+        DialogButton(
+          onPressed: () {
+            Navigator.pop(context);
+            reportReceived(context);
+            // Perform report action
+          },
+          color: const Color.fromRGBO(0, 179, 134, 1.0),
+          child: const Text(
+            "False Information",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+        DialogButton(
+          onPressed: () {
+            Navigator.pop(context);
+            reportReceived(context);
+            // Perform report action
+          },
+          color: const Color.fromRGBO(0, 179, 134, 1.0),
+          child: const Text(
+            "Spam",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+
+      ],
+    ).show();
+  }
+
+   reportReceived(context) {
+     Alert(
+       context: context,
+       type: AlertType.success,
+       title: "Thank you, we've received your report",
+       desc: " ",
+       buttons: [
+         DialogButton(
+           onPressed: () {
+             Navigator.pop(context);
+             Navigator.pushReplacementNamed(context, '/home');
+             // Perform report action
+           },
+           color: const Color.fromRGBO(0, 179, 134, 1.0),
+           child: const Text(
+             "Back",
+             style: TextStyle(color: Colors.white, fontSize: 18),
+           ),
+         ),
+
+       ],
+     ).show();
+   }
+
 }
+
+
+
+
+class AddNewPost extends StatefulWidget {
+  const AddNewPost({super.key});
+
+  @override
+  State<StatefulWidget> createState() {
+    return AddNewPostState();
+  }
+}
+
+class AddNewPostState extends State<AddNewPost> {
+  File? imageFile;
+  TextEditingController descriptionController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Request to Add a New Post"),
+      ),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ElevatedButton.icon(
+
+              onPressed: () async {
+                var pickedImage = await _getFromGallery();
+                setState(() {
+                  imageFile = pickedImage;
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.yellow[700],
+              ),
+              icon: const Icon(Icons.image), // Edit icon
+              label: const Text('Select Image'),
+            ),
+
+            const SizedBox(height: 10,width: 20,),
+            if (imageFile != null)
+              Image.file(
+                imageFile!,
+                width: 400,
+                height: 200,
+
+              ),
+            const SizedBox(height: 20),
+            // Description Box
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: TextFormField(
+                controller: descriptionController,
+                decoration: const InputDecoration(
+                  hintText: 'Enter description...',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: 3,
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Submit Button
+            ElevatedButton.icon(
+              onPressed: () {
+                // Handle submit here
+                String description = descriptionController.text;
+                // You can now use the 'imageFile' and 'description' for further processing
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.yellow[700],
+              ),
+              icon: const Icon(Icons.post_add), // Edit icon
+              label: const Text('Request'),
+
+            ),
+
+          ],
+        ),
+
+      ),
+    );
+  }
+
+  Future<File?> _getFromGallery() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      return File(pickedFile.path);
+    }
+    return null;
+  }
+}
+
+
+
+
 
 class TestMe extends StatefulWidget {
   const TestMe({super.key});
@@ -190,7 +482,6 @@ class _TestMeState extends State<TestMe> {
         child: CommentBox(
           userImage: CommentBox.commentImageParser(
               imageURLorPath: "assets/img/userpic.jpg"),
-          child: commentChild(filedata),
           labelText: 'Write a comment...',
           errorText: 'Comment cannot be blank',
           withBorder: false,
@@ -201,7 +492,7 @@ class _TestMeState extends State<TestMe> {
                 var value = {
                   'name': 'New User',
                   'pic':
-                      'https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400',
+                  'https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400',
                   'message': commentController.text,
                   'date': '2021-01-01 12:00:00'
                 };
@@ -218,6 +509,7 @@ class _TestMeState extends State<TestMe> {
           backgroundColor: Colors.green,
           textColor: Colors.white,
           sendWidget: const Icon(Icons.send_sharp, size: 30, color: Colors.white),
+          child: commentChild(filedata),
         ),
       ),
     );
