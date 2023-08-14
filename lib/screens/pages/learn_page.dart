@@ -238,10 +238,8 @@ class _LearnPageState extends State<LearnPage> {
               // Repeat the same modifications for the other InkWell widgets
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const QuizePage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const QuizePage(key: null,)));
                 },
                 child: Container(
                   decoration: BoxDecoration(
