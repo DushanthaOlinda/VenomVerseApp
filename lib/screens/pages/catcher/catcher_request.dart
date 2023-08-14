@@ -30,40 +30,74 @@ class CatcherRequestState extends State<CatcherRequest> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            RoundedLoadingButton(
-              color: Colors.amber,
-              successColor: Colors.amber,
-              controller: _btnController2,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const RequestsList()),
-                );
-              },
-              valueColor: Colors.black,
-              borderRadius: 10,
-              child: const Text(
-                'Request to Be a Catcher',
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
+            Container(
+              width: 300,
+              height: 50,
+              // padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 3,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: RoundedLoadingButton(
+                controller: _btnController2,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const RequestsList()),
+                  );
+                },
+                borderRadius: 50,
+                successColor: Colors.amber,
+                valueColor: Colors.black,
+                color: Colors.transparent, // Remove the blue color
+                child: const Text(
+                  'Request to Be a Catcher',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
             const SizedBox(
               height: 40,
             ),
-            RoundedLoadingButton(
-              color: Colors.amber,
-              successColor: Colors.amber,
-              controller: RoundedLoadingButtonController(),
-              onPressed: () {
-                // Add your button onPressed logic
-              },
-              valueColor: Colors.black,
-              borderRadius: 10,
-              child: const Text(
-                'Remove a Snake',
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
+            Container(
+              width: 300,
+              height: 50,
+              // padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 3,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: RoundedLoadingButton(
+                controller: RoundedLoadingButtonController(),
+                onPressed: () {
+                  // Add your button onPressed logic
+                },
+                borderRadius: 50,
+                successColor: Colors.amber,
+                valueColor: Colors.black,
+                color: Colors.transparent,
+                child: const Text(
+                  'Remove a Snake',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ],

@@ -36,9 +36,7 @@ class _LearnPageState extends State<LearnPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => CatcherRequest(key: UniqueKey())),
-                    // MaterialPageRoute(
-                    //   // builder: (context) => const ResultPopup(),
-                    // ),
+
                   );
                 },
               ),
