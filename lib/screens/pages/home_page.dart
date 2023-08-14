@@ -334,10 +334,13 @@ class AddNewPostState extends State<AddNewPost> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.yellow[700],
+                backgroundColor: Colors.green,
+
+
               ),
               icon: const Icon(Icons.image), // Edit icon
               label: const Text('Select Image'),
+               // Adjust padding as needed
             ),
 
             const SizedBox(height: 10,width: 20,),
@@ -370,10 +373,14 @@ class AddNewPostState extends State<AddNewPost> {
                 // You can now use the 'imageFile' and 'description' for further processing
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.yellow[700],
+                backgroundColor: Colors.green,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // Add border radius for button
+                  ),
               ),
               icon: const Icon(Icons.post_add), // Edit icon
-              label: const Text('Request'),
+              label: const Text('Request',style: TextStyle(fontSize: 18, color: Colors.white)),
 
             ),
 

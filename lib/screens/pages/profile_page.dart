@@ -57,10 +57,22 @@ class _ProfilePageState extends State<ProfilePage> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellow[700],
+                  backgroundColor: Colors.green[50],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // Add border radius for button
+                  ),
                 ),
-                icon: const Icon(Icons.edit), // Edit icon
-                label: const Text('Edit Profile'),
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.green, // Set icon color to green
+                ), // Edit icon
+                label: const Text(
+                  'Edit Profile',
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 18,// Set font color to green
+                  ),
+                ),
               ),
             ),
 
@@ -82,16 +94,25 @@ class _ProfilePageState extends State<ProfilePage> {
             Align(
               alignment: Alignment.center,
               child: ElevatedButton(
+
                 onPressed: () {
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => CardsPage()), // Navigate to CardsPage
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellow[700], // Set the button color to yellow
+                  backgroundColor: Colors.green,
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10), // Adjust padding for button size
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // Add border radius for button
+                  ),// Set the button color to yellow
                 ),
-                child: const Text('Payments'),
+                child: const Text(
+                  'Payments',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
               ),
 
             ),
@@ -116,9 +137,17 @@ class _ProfilePageState extends State<ProfilePage> {
                       // Handle button press
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.yellow[700], // Set the button color to yellow
+                      backgroundColor: Colors.green,
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15), // Adjust padding for button size
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10), // Add border radius for button
+                      ),// Set the button color to yellow
                     ),
-                    child: const Text('Become a Catcher'),
+                    child: const Text(
+                      'Become a Catcher',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -129,9 +158,18 @@ class _ProfilePageState extends State<ProfilePage> {
                       // Handle button press
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.yellow[700], // Set the button color to yellow
+
+                      backgroundColor: Colors.green,
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15), // Adjust padding for button size
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10), // Add border radius for button
+                      ),// Set the button color to yellow
                     ),
-                    child: const Text('Become a Zoologist'),
+                    child: const Text(
+                      'Become a Zoologist',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+
                   ),
 
                 ],
@@ -150,7 +188,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   // Handle button press
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellow[700],
+                  backgroundColor: Colors.green,
                   // Set the button color to green
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15), // Adjust padding for button size
                   shape: RoundedRectangleBorder(
@@ -183,6 +221,8 @@ class _BecomeZoologistState extends State<BecomeZoologist> {
   File? imageFile;
   TextEditingController degreeController = TextEditingController();
   TextEditingController yearController = TextEditingController();
+  TextEditingController uniController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -209,7 +249,7 @@ class _BecomeZoologistState extends State<BecomeZoologist> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.yellow[700],
+                backgroundColor: Colors.green,
               ),
               icon: const Icon(Icons.image),
               label: const Text('Select Image'),
@@ -250,8 +290,8 @@ class _BecomeZoologistState extends State<BecomeZoologist> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
-                controller: yearController,
-                keyboardType: TextInputType.number,
+                controller: uniController,
+                keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   hintText: 'Enter your University...',
                   border: OutlineInputBorder(),
@@ -268,10 +308,15 @@ class _BecomeZoologistState extends State<BecomeZoologist> {
                 // You can now use the 'imageFile', 'degree', and 'year' for further processing
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.yellow[700],
+                backgroundColor: Colors.green,
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15), // Adjust padding for button size
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10), // Add border radius for button
+                ),
               ),
               icon: const Icon(Icons.post_add),
-              label: const Text('Request'),
+              label: const Text('Request',style: TextStyle(fontSize: 18, color: Colors.white), // Set font color to green
+              ),
             ),
           ],
         ),
@@ -700,7 +745,7 @@ class _EditPostState extends State<EditPost> {
             const SizedBox(height: 16),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellow[700],
+                  backgroundColor: Colors.green,
                 ),
               onPressed: () async {
                 final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -726,7 +771,7 @@ class _EditPostState extends State<EditPost> {
             const SizedBox(height: 50),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellow[700],
+                  backgroundColor: Colors.green,
                 ),
               onPressed: () {
                 // Update the description
@@ -817,7 +862,7 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.yellow[700],
+                    backgroundColor: Colors.green,
                   ),
                   icon: const Icon(Icons.video_library), // Video icon
                   label: const Text('Select Video'),
@@ -841,12 +886,11 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
                 ),
                 const SizedBox(height: 20),
                 MaterialButton(
-                  color: Colors.yellow[700],
-                  child: const Text(
-                    "Upload Video",
-                    style: TextStyle(
-                        color: Colors.white70, fontWeight: FontWeight.bold),
-                  ),
+                  color: Colors.green,
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // Add border radius for button
+                  ),// Adjust padding as needed
                   onPressed: () async {
                     if (_selectedVideo != null) {
                       try {
@@ -866,6 +910,13 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
                     }
 
                   },
+
+                  child:  const Text(
+                    "Request",
+                    style: TextStyle(
+                        color: Colors.white,fontSize: 18),
+
+                  ),
                 ),
 
               ],
