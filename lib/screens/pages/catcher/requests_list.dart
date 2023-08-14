@@ -69,6 +69,9 @@ class _RequestsListState extends State<RequestsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Pending Requests'),
+      ),
       backgroundColor: Colors.red [50],
       body: SingleChildScrollView(
         child: Column(

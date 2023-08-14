@@ -1,3 +1,5 @@
+import 'package:VenomVerse/screens/pages/catcher/catcher_list.dart';
+import 'package:VenomVerse/screens/pages/catcher/requests_list.dart';
 import 'package:VenomVerse/widgets/generate_body.dart';
 import 'package:app_bar_with_search_switch/app_bar_with_search_switch.dart';
 import 'package:flutter/material.dart';
@@ -46,11 +48,23 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       drawer: SidebarX(
         showToggleButton: false,
-        theme: const SidebarXTheme(width: 200, itemMargin: EdgeInsets.zero),
+        theme: const SidebarXTheme(width: 200, itemMargin: EdgeInsets.zero, decoration: BoxDecoration(color: Colors.greenAccent)),
         controller: _controller,
-        items: const [
-          SidebarXItem(icon: Icons.home, label: 'Home',),
-          SidebarXItem(icon: Icons.search, label: 'Search'),
+        items:  [
+          const SidebarXItem(icon: Icons.home, label: 'Home',),
+          const SidebarXItem(icon: Icons.search, label: 'Search'),
+          SidebarXItem(icon: Icons.person, label: 'Catcher Requests', onTap: ()=>{
+            if (context.mounted)
+              {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>  const RequestsList(),
+                  ),
+                )
+              }
+          }
+          ),
+          const SidebarXItem(icon: Icons.work, label: 'Work')
         ],
         footerItems: [
           SidebarXItem(icon: Icons.logout, label: 'Logout',  onTap: (){

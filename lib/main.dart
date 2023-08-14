@@ -48,7 +48,9 @@ class MyApp extends StatelessWidget {
           // initialRoute: '/selectImage',
           routes: {
             '/': (context) => const LoadingScreen(),
-            '/login': (context) =>  const LoginPage(),
+            '/login': (context) => LoginPage(
+                  camera: camera,
+                ),
             '/home': (context) => const MyHomePage(title: "VenomVerse"),
             '/scan': (context) => ScanImage(
                   camera: camera,

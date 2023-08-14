@@ -947,6 +947,7 @@ class _EditProfileState extends State<EditProfile> {
     String password = _passwordController.text;
     String profilePictureUrl = _profilePictureUrl;
 
+    Navigator.pop(context);
     // Perform saving operations (e.g., update database, send API requests)
     // ...
 
@@ -959,6 +960,7 @@ class _EditProfileState extends State<EditProfile> {
     return Scaffold(
       backgroundColor: Colors.red[50],
       appBar: AppBar(
+        leading: const Icon(Icons.check),
         title: const Text('Edit Profile Details'),
       ),
       body: Center(

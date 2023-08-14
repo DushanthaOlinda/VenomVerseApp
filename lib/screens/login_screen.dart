@@ -1,5 +1,8 @@
 import 'package:VenomVerse/screens/home_screen.dart';
+import 'package:VenomVerse/screens/image_scan/scan_screen.dart';
+import 'package:VenomVerse/screens/pages/profile_page.dart';
 import 'package:VenomVerse/services/api.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
@@ -13,7 +16,9 @@ const users = {
 };
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  const LoginPage({super.key, required this.camera});
+
+  final CameraDescription camera;
 
   Duration get loginTime => const Duration(milliseconds: 2250);
 
@@ -48,7 +53,7 @@ class LoginPage extends StatelessWidget {
     var auth = context.watch<AuthModel>();
 
     if (auth.isAuthorized){
-
+      return ScanImage(camera: camera);
       return const MyHomePage(title: "VenomVerse");
     }
 
@@ -69,11 +74,17 @@ class LoginPage extends StatelessWidget {
       onSignup: (SignupData data) async {
         auth.logout();
         var res = await Api().signup(data.name, data.password);
-        return res;
+        if (context.mounted && res == null) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const EditProfile(),
+            ),
+          );
+        }        return res;
       },
       onSubmitAnimationCompleted: () {
         if (auth.isAuthorized) {
-          Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pushReplacementNamed(context, '/scan');
         } else {
           Navigator.pushReplacementNamed(context, '/login');
         }

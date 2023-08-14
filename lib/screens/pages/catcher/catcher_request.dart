@@ -5,7 +5,8 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'requests_list.dart';
 
 class CatcherRequest extends StatefulWidget {
-  const CatcherRequest({required Key key}) : super(key: key);
+  const CatcherRequest({super.key});
+
 
   @override
   CatcherRequestState createState() => CatcherRequestState();
