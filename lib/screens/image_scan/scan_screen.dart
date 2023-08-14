@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 
 import '../../services/api.dart';
+import '../pages/catcher/catcher_list.dart';
 import '../pages/catcher/result_popup.dart';
 
 class ScanImage extends StatefulWidget {
@@ -149,7 +150,15 @@ class _ScanImageState extends State<ScanImage> {
               }
             } else if (i == 0) {
               Navigator.pushReplacementNamed(context, '/home');
-            }
+            }else if (i == 2) {
+              if (context.mounted)
+              {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const CatcherList(),
+                  ),
+                );
+              }            }
           });
         },
       ),
