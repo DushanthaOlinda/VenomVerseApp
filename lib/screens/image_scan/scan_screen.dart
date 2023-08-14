@@ -78,7 +78,7 @@ class _ScanImageState extends State<ScanImage> {
           ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         // Provide an onPressed callback.
         onPressed: () async {
@@ -114,15 +114,15 @@ class _ScanImageState extends State<ScanImage> {
         child: const Icon(Icons.camera_alt),
       ),
       bottomNavigationBar: AnimatedBottomNavigationBar(
-        gapLocation: GapLocation.center,
+        gapLocation: GapLocation.none,
         inactiveColor: Colors.white,
         activeColor: Colors.white,
         backgroundColor: Colors.green,
-        icons: const [Icons.image_search, Icons.person],
+        icons: const [Icons.home, Icons.image_search, Icons.person],
         activeIndex: 1,
         onTap: (int i) {
           setState(() async {
-            if (i == 0) {
+            if (i == 1) {
               try {
                 final pickedFile =
                     await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -147,8 +147,8 @@ class _ScanImageState extends State<ScanImage> {
                   print(e);
                 }
               }
-            } else if (i == 1) {
-              // TODO: Add contact snake Catcher
+            } else if (i == 0) {
+              Navigator.pushReplacementNamed(context, '/home');
             }
           });
         },
@@ -171,7 +171,9 @@ class DisplayPictureScreen extends StatelessWidget {
       body: Column(
         children: [
           Image.file(File(imagePath)),
-          const SizedBox(height: 40,),
+          const SizedBox(
+            height: 40,
+          ),
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -184,13 +186,17 @@ class DisplayPictureScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.replay),
-                        Text("Retake a Picture",textAlign: TextAlign.center,),
+                        Text(
+                          "Retake a Picture",
+                          textAlign: TextAlign.center,
+                        ),
                       ],
                     ),
                   ),
                   onPressed: () {
                     Navigator.pop(context);
-                  },                        ),
+                  },
+                ),
                 ElevatedButton(
                   child: const SizedBox(
                     width: 100,
@@ -199,7 +205,10 @@ class DisplayPictureScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.send),
-                        Text("Get Species name", textAlign: TextAlign.center,),
+                        Text(
+                          "Get Species name",
+                          textAlign: TextAlign.center,
+                        ),
                       ],
                     ),
                   ),
