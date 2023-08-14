@@ -11,13 +11,15 @@ class NotificationPage extends StatefulWidget {
 class _NotificationPageState extends State<NotificationPage> {
   final List<NotificationCard> _listOfNotification = [
     NotificationCard(
-      date: DateTime.now(),
+      date: DateTime.now(), //notification date
       leading: const Icon(
         Icons.account_circle,
         size: 48,
       ),
-      title: 'OakTree 1',
-      subtitle: 'We believe in the power of mobile computing.',
+
+      title: 'OakTree 1', //notification title
+      subtitle:
+          'We believe in the power of mobile computing.', //notification subtitle
     ),
     NotificationCard(
       date: DateTime.now().subtract(
@@ -68,7 +70,7 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red [50],
+      backgroundColor: Colors.red[50],
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -79,7 +81,52 @@ class _NotificationPageState extends State<NotificationPage> {
                   blurRadius: 2.0,
                 )
               ],
-              notificationCardTitle: 'Message',
+              notificationCardTitle: 'Message', //title
+              notificationCards: [..._listOfNotification],
+              cardColor: const Color(0xFFF1F1F1),
+              padding: 16,
+              actionTitle: const Text(
+                'Notifications',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              showLessAction: const Text(
+                'Show less',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.deepPurple,
+                ),
+              ),
+              onTapClearAll: () {
+                setState(() {
+                  _listOfNotification.clear();
+                });
+              },
+              clearAllNotificationsAction: const Icon(Icons.close),
+              clearAllStacked: const Text('Clear All'),
+              cardClearButton: const Text('clear'),
+              cardViewButton: const Text('view'),
+              onTapClearCallback: (index) {
+                print(index);
+                setState(() {
+                  _listOfNotification.removeAt(index);
+                });
+              },
+              onTapViewCallback: (index) {
+                print(index);
+              },
+            ),
+            StackedNotificationCards(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.25),
+                  blurRadius: 2.0,
+                )
+              ],
+              notificationCardTitle: 'Message', //title
               notificationCards: [..._listOfNotification],
               cardColor: const Color(0xFFF1F1F1),
               padding: 16,
@@ -122,5 +169,4 @@ class _NotificationPageState extends State<NotificationPage> {
       ),
     );
   }
-
 }

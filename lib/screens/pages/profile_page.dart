@@ -1,33 +1,24 @@
-import 'package:flutter/gestures.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:profile/profile.dart';
-
-import 'package:group_list_view/group_list_view.dart';
-import 'package:flutter_credit_card_new/constants.dart';
-import 'package:flutter_credit_card_new/credit_card_animation.dart';
-import 'package:flutter_credit_card_new/credit_card_background.dart';
 import 'package:flutter_credit_card_new/credit_card_brand.dart';
-import 'package:flutter_credit_card_new/credit_card_form.dart';
-import 'package:flutter_credit_card_new/credit_card_model.dart';
-import 'package:flutter_credit_card_new/credit_card_widget.dart';
-import 'package:flutter_credit_card_new/custom_card_type_icon.dart';
 import 'package:flutter_credit_card_new/flutter_credit_card.dart';
-import 'package:flutter_credit_card_new/glassmorphism_config.dart';
-import 'package:flutter_credit_card_new/localized_text_model.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:profile/profile.dart';
+import 'package:video_uploader/video_uploader.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      backgroundColor: Colors.red[50],
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
@@ -45,27 +36,27 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
             ),
-
             Align(
               alignment: Alignment.topRight,
               child: ElevatedButton.icon(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EditProfile()),
+                    MaterialPageRoute(
+                        builder: (context) => const EditProfile()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.yellow[700],
                 ),
-                icon: Icon(Icons.edit), // Edit icon
-                label: Text('Edit Profile'),
+                icon: const Icon(Icons.edit), // Edit icon
+                label: const Text('Edit Profile'),
               ),
             ),
-
             Profile(
+              //profile data
               imageUrl:
-              "https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+                  "https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
 
               name: "Oshadhi Dilthara",
               website: "",
@@ -73,7 +64,6 @@ class _ProfilePageState extends State<ProfilePage> {
               email: 'oshadhi@gmail.com',
               phone_number: '0175773607',
             ),
-
             const SizedBox(height: 20),
             Align(
               alignment: Alignment.center,
@@ -81,19 +71,18 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CardsPage()), // Navigate to CardsPage
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            CardsPage()), // Navigate to CardsPage
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellow[700], // Set the button color to yellow
+                  backgroundColor:
+                      Colors.yellow[700], // Set the button color to yellow
                 ),
                 child: const Text('Payments'),
               ),
             ),
-
-
-
-
             const SizedBox(height: 50),
             Align(
               alignment: Alignment.bottomCenter,
@@ -104,12 +93,15 @@ class _ProfilePageState extends State<ProfilePage> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BecomeCatcher()), // Navigate to CardsPage
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const BecomeCatcher()), // Navigate to CardsPage
                       );
                       // Handle button press
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.yellow[700], // Set the button color to yellow
+                      backgroundColor:
+                          Colors.yellow[700], // Set the button color to yellow
                     ),
                     child: const Text('Become a Catcher'),
                   ),
@@ -118,7 +110,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       // Handle button press
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.yellow[700], // Set the button color to yellow
+                      backgroundColor:
+                          Colors.yellow[700], // Set the button color to yellow
                     ),
                     child: const Text('Become a Zoologist'),
                   ),
@@ -132,22 +125,129 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-class BecomeCatcher extends StatelessWidget {
+const primaryColor = Colors.green;
+const secondaryColor = Colors.green;
+
+class BecomeCatcher extends StatefulWidget {
+  const BecomeCatcher({super.key});
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.red[50],
-        appBar: AppBar(
-        title: const Text('Become a Catcher'),
-        ),
-    );
-
-  }
-
+  _BecomeCatcherState createState() => _BecomeCatcherState();
 }
 
+class _BecomeCatcherState extends State<BecomeCatcher> {
+  late String _imagePath;
+  final _tokenTextController = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
+  double _progressValue = 0;
 
+  void setProgress(double value) async {
+    setState(() {
+      _progressValue = value;
+    });
+  }
 
+  @override
+  void dispose() {
+    _tokenTextController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        theme: ThemeData(
+          primaryColor: primaryColor,
+        ),
+        home: Scaffold(
+          appBar: AppBar(
+            backgroundColor: primaryColor,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(
+                    context); // This will navigate back to the previous screen
+              },
+            ),
+            title: const Text('Become a Catcher'),
+          ),
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 52,
+                  ),
+                  TextField(
+                    cursorColor: primaryColor,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 2.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: primaryColor, width: 2.0),
+                      ),
+                      hintText: 'My video token',
+                    ),
+                    controller: _tokenTextController,
+                  ),
+                  MaterialButton(
+                    color: primaryColor,
+                    child: const Text(
+                      "Pick Video from Gallery",
+                      style: TextStyle(
+                          color: Colors.white70, fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () async {
+                      var source = ImageSource.gallery;
+                      XFile? image = await _picker.pickVideo(source: source);
+                      if (image != null) {
+                        setState(() {
+                          try {
+                            _imagePath = image.path;
+                          } catch (e) {
+                            log("Failed to get video: $e");
+                          }
+                        });
+                      }
+                    },
+                  ),
+                  MaterialButton(
+                    color: primaryColor,
+                    child: const Text(
+                      "Upload video",
+                      style: TextStyle(
+                          color: Colors.white70, fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () async {
+                      try {
+                        var video =
+                            await ApiVideoUploader.uploadWithUploadToken(
+                                _tokenTextController.text, _imagePath,
+                                (bytesSent, totalByte) {
+                          log("Progress : ${bytesSent / totalByte}");
+                          setProgress(bytesSent / totalByte);
+                        });
+                        log("Video : $video");
+                        log("Title : ${video.title}");
+                      } catch (e) {
+                        log("Failed to upload video: $e");
+                      }
+                    },
+                  ),
+                  LinearProgressIndicator(
+                    color: primaryColor,
+                    backgroundColor: secondaryColor,
+                    value: _progressValue,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
+  }
+}
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -157,12 +257,22 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  void _changeProfilePicture() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _profilePictureUrl = pickedFile.path;
+      });
+    }
+  }
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  final String _profilePictureUrl = 'https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'; // Store the profile picture URL here
+  late String _profilePictureUrl =
+      'https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'; // Store the profile picture URL here
 
   // Method to handle saving profile changes
   void _saveChanges() {
@@ -193,21 +303,13 @@ class _EditProfileState extends State<EditProfile> {
             const SizedBox(height: 16.0),
 
             // Profile Picture
-             CircleAvatar(
+            CircleAvatar(
               radius: 60.0,
               backgroundImage: NetworkImage(_profilePictureUrl),
-
-
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () {
-                // Implement the logic to change profile picture here
-                // You can use image picker packages to choose an image from the gallery or camera
-                // For simplicity, we'll assume the URL of the new profile picture is stored in _profilePictureUrl
-
-                setState(() {});
-              },
+              onPressed: _changeProfilePicture,
               child: const Text('Change Profile Picture'),
             ),
             const SizedBox(height: 16.0),
@@ -248,7 +350,6 @@ class _EditProfileState extends State<EditProfile> {
   }
 }
 
-
 class CardsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -283,7 +384,9 @@ class CardsPage extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddNewCard()), // Navigate to CardsPage
+            MaterialPageRoute(
+                builder: (context) =>
+                    const AddNewCard()), // Navigate to CardsPage
           );
           // Handle the onPressed event for the "Add New Card" button
           // Perform the desired action here, such as opening a new screen or dialog
@@ -298,6 +401,8 @@ class CardsPage extends StatelessWidget {
 }
 
 class AddNewCard extends StatefulWidget {
+  const AddNewCard({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return AddNewCardState();
@@ -329,7 +434,6 @@ class AddNewCardState extends State<AddNewCard> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       title: 'Flutter Credit Card View Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -338,13 +442,13 @@ class AddNewCardState extends State<AddNewCard> {
       home: Scaffold(
         backgroundColor: Colors.red[50],
         appBar: AppBar(
-
           title: const Text('Add New Card'),
           backgroundColor: Colors.green,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pop(context); // This will navigate back to the previous screen
+              Navigator.pop(
+                  context); // This will navigate back to the previous screen
             },
           ),
         ),
@@ -353,11 +457,10 @@ class AddNewCardState extends State<AddNewCard> {
           decoration: BoxDecoration(
             image: !useBackgroundImage
                 ? const DecorationImage(
-              image: ExactAssetImage('assets/bg.png'),
-              fit: BoxFit.fill,
-            )
+                    image: ExactAssetImage('assets/bg.png'),
+                    fit: BoxFit.fill,
+                  )
                 : null,
-
           ),
           child: SafeArea(
             child: Column(
@@ -367,7 +470,7 @@ class AddNewCardState extends State<AddNewCard> {
                 ),
                 CreditCardWidget(
                   glassmorphismConfig:
-                  useGlassMorphism ? Glassmorphism.defaultConfig() : null,
+                      useGlassMorphism ? Glassmorphism.defaultConfig() : null,
                   cardNumber: cardNumber,
                   expiryDate: expiryDate,
                   cardHolderName: cardHolderName,
@@ -378,7 +481,7 @@ class AddNewCardState extends State<AddNewCard> {
                   isHolderNameVisible: true,
                   cardBgColor: Colors.red,
                   backgroundImage:
-                  useBackgroundImage ? 'assets/images/card_bg.jpg' : null,
+                      useBackgroundImage ? 'assets/images/card_bg.jpg' : null,
                   isSwipeGestureEnabled: true,
                   onCreditCardWidgetChange:
                       (CreditCardBrand creditCardBrand) {},
@@ -444,8 +547,8 @@ class AddNewCardState extends State<AddNewCard> {
                             labelText: 'Card Holder',
                           ),
                           onCreditCardModelChange: onCreditCardModelChange,
-                          textStyle:
-                          const TextStyle(color: Colors.black, fontSize: 12),
+                          textStyle: const TextStyle(
+                              color: Colors.black, fontSize: 12),
                         ),
                         const SizedBox(
                           height: 20,
@@ -500,7 +603,7 @@ class AddNewCardState extends State<AddNewCard> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            primary: const Color(0xff1b447b),
+                            backgroundColor: const Color(0xff1b447b),
                           ),
                           child: Container(
                             margin: const EdgeInsets.all(12),
@@ -544,9 +647,3 @@ class AddNewCardState extends State<AddNewCard> {
     });
   }
 }
-
-
-
-
-
-

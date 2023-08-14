@@ -1,6 +1,11 @@
+import 'package:VenomVerse/screens/home_screen.dart';
+import 'package:VenomVerse/services/api.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:provider/provider.dart';
 
+import '../models/auth.dart';
 
 const users = {
   'dribbble@gmail.com': '12345',
@@ -12,17 +17,13 @@ class LoginPage extends StatelessWidget {
 
   Duration get loginTime => const Duration(milliseconds: 2250);
 
-  Future<String?> _authUser(LoginData data) {
-    debugPrint('Name: ${data.name}, Password: ${data.password}');
-    return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(data.name)) {
-        return 'User not exists';
-      }
-      if (users[data.name] != data.password) {
-        return 'Password does not match';
-      }
-      return null;
-    });
+  Future<String?> _authUser(LoginData data) async {
+    // debugPrint('Name: ${data.name}, Password: ${data.password}');
+    var res = await Api().login(data.name, data.password);
+    if (kDebugMode) {
+      print(res);
+    }
+    return res;
   }
 
   Future<String?> _signupUser(SignupData data) {
@@ -44,16 +45,45 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var auth = context.watch<AuthModel>();
+
+    if (auth.isAuthorized){
+
+      return const MyHomePage(title: "VenomVerse");
+    }
 
     return FlutterLogin(
-
       logo: const AssetImage('assets/images/logo.png'),
-      onLogin: _authUser,
-      onSignup: _signupUser,
+      onLogin: (LoginData data) async {
+        auth.logout();
+        var res = await Api().login(data.name, data.password);
+        if (res != null) {
+          auth.login(res["token"]);
+        }
+        if (auth.isAuthorized) {
+          return "Login Success";
+        } else {
+          return "Invalid Credentials";
+        }
+      },
+      onSignup: (SignupData data) async {
+        auth.logout();
+        var res = await Api().signup(data.name, data.password);
+        return res;
+      },
       onSubmitAnimationCompleted: () {
-        Navigator.pushReplacementNamed(context, '/home');
+        if (auth.isAuthorized) {
+          Navigator.pushReplacementNamed(context, '/home');
+        } else {
+          Navigator.pushReplacementNamed(context, '/login');
+        }
       },
       onRecoverPassword: _recoverPassword,
     );
   }
+
+  void loadHomePage(BuildContext context) {
+    Navigator.pushReplacementNamed(context, '/home');
+  }
+
 }

@@ -4,7 +4,12 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+
+import '../../services/api.dart';
+import '../pages/catcher/result_popup.dart';
 
 class ScanImage extends StatefulWidget {
   const ScanImage({super.key, required this.camera});
@@ -42,21 +47,36 @@ class _ScanImageState extends State<ScanImage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(title: const Text('Take a picture')),
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
-      body: FutureBuilder<void>(
-        future: _initializeControllerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            // If the Future is complete, display the preview.
-            return CameraPreview(_controller);
-          } else {
-            // Otherwise, display a loading indicator.
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
+      body: Column(
+        children: [
+          FutureBuilder<void>(
+            future: _initializeControllerFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                // If the Future is complete, display the preview.
+                return CameraPreview(_controller);
+              } else {
+                // Otherwise, display a loading indicator.
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              "1. Do not touch or handle any snake. \n2. Stay away from tall grass and piles of leaves when possible. \n3. Avoid climbing on rocks or piles of wood where a snake may be hiding",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15),
+            ),
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -94,8 +114,6 @@ class _ScanImageState extends State<ScanImage> {
         child: const Icon(Icons.camera_alt),
       ),
       bottomNavigationBar: AnimatedBottomNavigationBar(
-        leftCornerRadius: 32,
-        rightCornerRadius: 32,
         gapLocation: GapLocation.center,
         inactiveColor: Colors.white,
         activeColor: Colors.white,
@@ -105,23 +123,24 @@ class _ScanImageState extends State<ScanImage> {
         onTap: (int i) {
           setState(() async {
             if (i == 0) {
-            try {
-              final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-              if (pickedFile != null){
-
-              }
-              if (pickedFile == null) {
-                // TODO: do what if photo is not selected
-              }else{
-                // DisplayPictureScreen(imagePath: pickedFile.path);
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => DisplayPictureScreen(
-                      imagePath: pickedFile.path,
-                    ),
-                  ),
-                );
-              }
+              try {
+                final pickedFile =
+                    await ImagePicker().pickImage(source: ImageSource.gallery);
+                if (pickedFile != null) {}
+                if (pickedFile == null) {
+                  // TODO: do what if photo is not selected
+                } else {
+                  // DisplayPictureScreen(imagePath: pickedFile.path);
+                  if (context.mounted) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => DisplayPictureScreen(
+                          imagePath: pickedFile.path,
+                        ),
+                      ),
+                    );
+                  }
+                }
                 // final image = await _controller.takePicture();
               } catch (e) {
                 if (kDebugMode) {
@@ -147,8 +166,66 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Select Pictures')),
-      body: Image.file(File(imagePath)),
+      backgroundColor: Colors.black,
+      appBar: AppBar(title: const Text('Capture Snake')),
+      body: Column(
+        children: [
+          Image.file(File(imagePath)),
+          const SizedBox(height: 40,),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  child: const SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.replay),
+                        Text("Retake a Picture",textAlign: TextAlign.center,),
+                      ],
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },                        ),
+                ElevatedButton(
+                  child: const SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.send),
+                        Text("Get Species name", textAlign: TextAlign.center,),
+                      ],
+                    ),
+                  ),
+                  onPressed: () => _sendToScan(context),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
+  }
+
+  _sendToScan(BuildContext context) async {
+    EasyLoading.show(status: 'loading...');
+    var result = await Api.scanSnake(File(imagePath));
+    EasyLoading.dismiss();
+    print(result);
+    if (context.mounted) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ResultPopup(
+              species: result['class'], confidence: result['confidence']);
+        },
+      );
+    }
   }
 }
