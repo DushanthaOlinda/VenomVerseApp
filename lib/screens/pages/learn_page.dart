@@ -258,7 +258,7 @@ class _LearnPageState extends State<LearnPage> {
                             InkWell(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const ExtraPage()));
+                      MaterialPageRoute(builder: (context) => const InfoPage()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -292,7 +292,7 @@ class _LearnPageState extends State<LearnPage> {
                       ),
                       const SizedBox(height: 8),
                       const Text(
-                        "Extra",
+                        "Serpents",
                         style: TextStyle(color: Colors.green, fontSize: 18),
                       )
                     ],
