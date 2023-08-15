@@ -19,19 +19,36 @@ class ResultPopup extends StatefulWidget {
 }
 
 class _ResultPopupState extends State<ResultPopup> {
+  String image = 'assets/images/snake_image.png';
+
   @override
   Widget build(BuildContext context) {
+
+    switch (widget.species) {
+      case 'Cobra' : // Enter this block if mark == 0
+        image = "assets/images/sp1.jpeg" ;
+        break;
+      case 'Sri Lankan Krait':
+        image = "assets/images/sp2.jpeg" ;
+        break;
+      case 'Whip snakes':
+        image = "assets/images/sp3.jpeg" ;
+        break;
+      default :
+        image = "assets/images/snake_image.png" ;
+    }
+
     return AlertDialog(
       title: const Text('Snake Detected!'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
-            'assets/images/snake_image.png',
-            width: 100,
+            image,
+            width: 200,
             height: 200,
           ),
-          const SizedBox(height: 100),
+          const SizedBox(height: 50),
           // const Text(
           //   'Predicted Answer: Seems to be a rattle snake',
           //   style: TextStyle(fontWeight: FontWeight.bold),
@@ -46,7 +63,7 @@ class _ResultPopupState extends State<ResultPopup> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 40), // Add a 10-pixel vertical space
+                const SizedBox(height: 20), // Add a 10-pixel vertical space
                 Text(
                   'Seems to be a ${widget.species}!',
                   style: const TextStyle(
@@ -57,7 +74,7 @@ class _ResultPopupState extends State<ResultPopup> {
               ],
             ),
           ),
-          const SizedBox(height: 100),
+          const SizedBox(height: 50),
           Text(
             'Confidence: ${widget.confidence}%',
             style: const TextStyle(fontWeight: FontWeight.bold),
