@@ -1,6 +1,7 @@
-
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:comment_box/comment/comment.dart';
@@ -19,11 +20,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: Colors.red[50],
-
       body: Center(
-
         child: Card(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -33,7 +31,8 @@ class _HomePageState extends State<HomePage> {
                 child: const Row(
                   children: [
                     CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/user image.png'),
+                      backgroundImage:
+                          AssetImage('assets/images/user image.png'),
                       radius: 30,
                     ),
                     SizedBox(width: 16),
@@ -85,7 +84,8 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const TestMe()),
+                          MaterialPageRoute(
+                              builder: (context) => const TestMe()),
                         );
                         // Perform comment action
                       },
@@ -106,15 +106,14 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (
-                context) => const AddNewPost()), // Navigate to CardsPage
+            MaterialPageRoute(
+                builder: (context) =>
+                    const AddNewPost()), // Navigate to CardsPage
           );
           // Handle the onPressed event for the "Add New Card" button
           // Perform the desired action here, such as opening a new screen or dialog
@@ -161,12 +160,13 @@ class _HomePageState extends State<HomePage> {
     ).show();
   }
 
-   reportPost(context) {
+  reportPost(context) {
     Alert(
       context: context,
       type: AlertType.success,
       title: "Thanks for letting us know.",
-      desc: "We'll send you a notification to view the outcome as soon as possible",
+      desc:
+          "We'll send you a notification to view the outcome as soon as possible",
       buttons: [
         DialogButton(
           onPressed: () {
@@ -184,8 +184,6 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {
             Navigator.pop(context);
             addReason(context);
-
-
           },
           gradient: const LinearGradient(colors: [
             Color.fromRGBO(116, 116, 191, 1.0),
@@ -200,34 +198,32 @@ class _HomePageState extends State<HomePage> {
     ).show();
   }
 
-   cancelReport(context) {
-     Alert(
-       context: context,
-       type: AlertType.error,
-       title: "This report has been cancelled.",
-       desc: "You can report this post again if you change your mind.",
-       buttons: [
-         DialogButton(
-           onPressed: () {
-             Navigator.pop(context);
-             Navigator.pushReplacementNamed(context, '/home');
-             // Perform report action
-           },
-           color: const Color.fromRGBO(0, 179, 134, 1.0),
-           child: const Text(
-             "OK",
-             style: TextStyle(color: Colors.white, fontSize: 18),
-           ),
-         ),
-
-       ],
-     ).show();
-   }
+  cancelReport(context) {
+    Alert(
+      context: context,
+      type: AlertType.error,
+      title: "This report has been cancelled.",
+      desc: "You can report this post again if you change your mind.",
+      buttons: [
+        DialogButton(
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, '/home');
+            // Perform report action
+          },
+          color: const Color.fromRGBO(0, 179, 134, 1.0),
+          child: const Text(
+            "OK",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+      ],
+    ).show();
+  }
 
   addReason(context) {
     Alert(
       context: context,
-
       title: "Please select the problem.",
       desc: " ",
       buttons: [
@@ -237,7 +233,6 @@ class _HomePageState extends State<HomePage> {
             reportReceived(context);
             // Perform report action
           },
-
           color: const Color.fromRGBO(0, 179, 134, 1.0),
           child: const Text(
             "Hate speech",
@@ -268,39 +263,33 @@ class _HomePageState extends State<HomePage> {
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
         ),
-
       ],
     ).show();
   }
 
-   reportReceived(context) {
-     Alert(
-       context: context,
-       type: AlertType.success,
-       title: "Thank you, we've received your report",
-       desc: " ",
-       buttons: [
-         DialogButton(
-           onPressed: () {
-             Navigator.pop(context);
-             Navigator.pushReplacementNamed(context, '/home');
-             // Perform report action
-           },
-           color: const Color.fromRGBO(0, 179, 134, 1.0),
-           child: const Text(
-             "Back",
-             style: TextStyle(color: Colors.white, fontSize: 18),
-           ),
-         ),
-
-       ],
-     ).show();
-   }
-
+  reportReceived(context) {
+    Alert(
+      context: context,
+      type: AlertType.success,
+      title: "Thank you, we've received your report",
+      desc: " ",
+      buttons: [
+        DialogButton(
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, '/home');
+            // Perform report action
+          },
+          color: const Color.fromRGBO(0, 179, 134, 1.0),
+          child: const Text(
+            "Back",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+      ],
+    ).show();
+  }
 }
-
-
-
 
 class AddNewPost extends StatefulWidget {
   const AddNewPost({super.key});
@@ -314,9 +303,11 @@ class AddNewPost extends StatefulWidget {
 class AddNewPostState extends State<AddNewPost> {
   File? imageFile;
   TextEditingController descriptionController = TextEditingController();
+  late String dropdownValue;
 
   @override
   Widget build(BuildContext context) {
+    const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
     return Scaffold(
       appBar: AppBar(
         title: const Text("Request to Add a New Post"),
@@ -326,7 +317,6 @@ class AddNewPostState extends State<AddNewPost> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ElevatedButton.icon(
-
               onPressed: () async {
                 var pickedImage = await _getFromGallery();
                 setState(() {
@@ -335,22 +325,36 @@ class AddNewPostState extends State<AddNewPost> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-
-
               ),
               icon: const Icon(Icons.image), // Edit icon
               label: const Text('Select Image'),
-               // Adjust padding as needed
+              // Adjust padding as needed
             ),
 
-            const SizedBox(height: 10,width: 20,),
+            const SizedBox(
+              height: 10,
+              width: 20,
+            ),
             if (imageFile != null)
               Image.file(
                 imageFile!,
                 width: 400,
                 height: 200,
-
               ),
+            const SizedBox(height: 20),
+            DropdownMenu<String>(
+              initialSelection: list.first,
+              onSelected: (String? value) {
+                // This is called when the user selects an item.
+                setState(() {
+                  dropdownValue = value!;
+                });
+              },
+              dropdownMenuEntries:
+                  list.map<DropdownMenuEntry<String>>((String value) {
+                return DropdownMenuEntry<String>(value: value, label: value);
+              }).toList(),
+            ),
             const SizedBox(height: 20),
             // Description Box
             Padding(
@@ -367,42 +371,53 @@ class AddNewPostState extends State<AddNewPost> {
             const SizedBox(height: 20),
             // Submit Button
             ElevatedButton.icon(
-              onPressed: () {
+              onPressed: () async {
                 // Handle submit here
                 String description = descriptionController.text;
+                File? image = imageFile;
+                String fileName =  "images/${DateTime.timestamp()}.png";
+                String imageLink;
+                if (image != null) {
+                  final storage = FirebaseStorage.instance;
+                  final Reference ref = storage.ref().child(fileName);
+
+                  await ref.putFile(image);
+                  imageLink = await ref.getDownloadURL();
+                  if (kDebugMode) {
+                    print(description);
+                    print(imageLink);
+                  }
+                }
                 // You can now use the 'imageFile' and 'description' for further processing
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // Add border radius for button
-                  ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.circular(10), // Add border radius for button
+                ),
               ),
               icon: const Icon(Icons.post_add), // Edit icon
-              label: const Text('Request',style: TextStyle(fontSize: 18, color: Colors.white)),
-
+              label: const Text('Request',
+                  style: TextStyle(fontSize: 18, color: Colors.white)),
             ),
-
           ],
         ),
-
       ),
     );
   }
 
   Future<File?> _getFromGallery() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       return File(pickedFile.path);
     }
     return null;
   }
 }
-
-
-
-
 
 class TestMe extends StatefulWidget {
   const TestMe({super.key});
@@ -451,7 +466,6 @@ class _TestMeState extends State<TestMe> {
               leading: GestureDetector(
                 onTap: () async {
                   // Display the image in large form.
-                  print("Comment Clicked");
                 },
                 child: Container(
                   height: 50.0,
@@ -485,39 +499,39 @@ class _TestMeState extends State<TestMe> {
         title: const Text("Comment Page"),
         backgroundColor: Colors.green,
       ),
-      body: Container(
-        child: CommentBox(
-          userImage: CommentBox.commentImageParser(
-              imageURLorPath: "assets/img/userpic.jpg"),
-          labelText: 'Write a comment...',
-          errorText: 'Comment cannot be blank',
-          withBorder: false,
-          sendButtonMethod: () {
-            if (formKey.currentState!.validate()) {
-              print(commentController.text);
-              setState(() {
-                var value = {
-                  'name': 'New User',
-                  'pic':
-                  'https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400',
-                  'message': commentController.text,
-                  'date': '2021-01-01 12:00:00'
-                };
-                filedata.insert(0, value);
-              });
-              commentController.clear();
-              FocusScope.of(context).unfocus();
-            } else {
+      body: CommentBox(
+        userImage: CommentBox.commentImageParser(
+            imageURLorPath: "assets/img/userpic.jpg"),
+        labelText: 'Write a comment...',
+        errorText: 'Comment cannot be blank',
+        withBorder: false,
+        sendButtonMethod: () {
+          if (formKey.currentState!.validate()) {
+            setState(() {
+              var value = {
+                'name': 'New User',
+                'pic':
+                    'https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400',
+                'message': commentController.text,
+                'date': '2021-01-01 12:00:00'
+              };
+              filedata.insert(0, value);
+            });
+            commentController.clear();
+            FocusScope.of(context).unfocus();
+          } else {
+            if (kDebugMode) {
               print("Not validated");
             }
-          },
-          formKey: formKey,
-          commentController: commentController,
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
-          sendWidget: const Icon(Icons.send_sharp, size: 30, color: Colors.white),
-          child: commentChild(filedata),
-        ),
+          }
+        },
+        formKey: formKey,
+        commentController: commentController,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        sendWidget:
+            const Icon(Icons.send_sharp, size: 30, color: Colors.white),
+        child: commentChild(filedata),
       ),
     );
   }

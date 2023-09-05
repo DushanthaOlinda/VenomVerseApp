@@ -17,7 +17,7 @@ class _NotificationPageState extends State<NotificationPage> {
         size: 48,
       ),
 
-      title: 'OakTree 1', //notification title
+      title: '50 People Liked Your post', //notification title
       subtitle:
           'We believe in the power of mobile computing.', //notification subtitle
     ),
@@ -29,7 +29,7 @@ class _NotificationPageState extends State<NotificationPage> {
         Icons.account_circle,
         size: 48,
       ),
-      title: 'OakTree 2',
+      title: '10 People Liked Your post',
       subtitle: 'We believe in the power of mobile computing.',
     ),
     NotificationCard(
@@ -40,7 +40,7 @@ class _NotificationPageState extends State<NotificationPage> {
         Icons.account_circle,
         size: 48,
       ),
-      title: 'OakTree 3',
+      title: '60 People Liked Your post',
       subtitle: 'We believe in the power of mobile computing.',
     ),
     NotificationCard(
@@ -51,7 +51,7 @@ class _NotificationPageState extends State<NotificationPage> {
         Icons.account_circle,
         size: 48,
       ),
-      title: 'OakTree 4',
+      title: '45',
       subtitle: 'We believe in the power of mobile computing.',
     ),
     NotificationCard(
@@ -62,7 +62,7 @@ class _NotificationPageState extends State<NotificationPage> {
         Icons.account_circle,
         size: 48,
       ),
-      title: 'OakTree 5',
+      title: '32',
       subtitle: 'We believe in the power of mobile computing.',
     ),
   ];
@@ -86,7 +86,7 @@ class _NotificationPageState extends State<NotificationPage> {
               cardColor: const Color(0xFFF1F1F1),
               padding: 16,
               actionTitle: const Text(
-                'Notifications',
+                'Likes',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -131,7 +131,7 @@ class _NotificationPageState extends State<NotificationPage> {
               cardColor: const Color(0xFFF1F1F1),
               padding: 16,
               actionTitle: const Text(
-                'Notifications',
+                'Shares',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
