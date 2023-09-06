@@ -7,6 +7,42 @@ class InfoPage extends StatefulWidget {
   State<InfoPage> createState() => _InfoPageState();
 }
 
+final List<Map<String, dynamic>> articles =  [
+    {
+      'imagePath': 'assets/images/sp1.jpeg',
+      'scientificName': 'YourScientificName1',
+      'englishName': 'YourEnglishName1',
+      'venomous': true,
+      'family': 'YourFamily1',
+      'subFamily': 'YourSubFamily1',
+      'genus': 'YourGenus1',
+      'description': 'YourDescription1',
+      'specialNote': 'YourSpecialNote1',
+    },
+    {
+      'imagePath': 'assets/images/sp2.jpeg',
+      'scientificName': 'YourScientificName2',
+      'englishName': 'YourEnglishName2',
+      'venomous': false,
+      'family': 'YourFamily2',
+      'subFamily': 'YourSubFamily2',
+      'genus': 'YourGenus2',
+      'description': 'YourDescription2',
+      'specialNote': 'YourSpecialNote2',
+    },
+    {
+      'imagePath': 'assets/images/sp3.jpeg',
+      'scientificName': 'YourScientificName3',
+      'englishName': 'YourEnglishName3',
+      'venomous': true,
+      'family': 'YourFamily3',
+      'subFamily': 'YourSubFamily3',
+      'genus': 'YourGenus3',
+      'description': 'YourDescription3',
+      'specialNote': 'YourSpecialNote3',
+    },
+];
+
 class _InfoPageState extends State<InfoPage> {
 @override
 Widget build(BuildContext context) {
@@ -20,51 +56,22 @@ Widget build(BuildContext context) {
         child: SafeArea(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: buildArticleCard(
-                  context,
-                  'assets/images/sp1.jpeg',
-                  "YourScientificName1",
-                  "YourEnglishName1",
-                  true,
-                  "YourFamily1",
-                  "YourSubFamily1",
-                  "YourGenus1",
-                  "YourDescription1",
-                  "YourSpecialNote1",
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: buildArticleCard(
-                  context,
-                  'assets/images/sp2.jpeg',
-                  "YourScientificName2",
-                  "YourEnglishName2",
-                  false,
-                  "YourFamily2",
-                  "YourSubFamily2",
-                  "YourGenus2",
-                  "YourDescription2",
-                  "YourSpecialNote2",
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: buildArticleCard(
-                  context,
-                  'assets/images/sp3.jpeg',
-                  "YourScientificName3",
-                  "YourEnglishName3",
-                  true,
-                  "YourFamily3",
-                  "YourSubFamily3",
-                  "YourGenus3",
-                  "YourDescription3",
-                  "YourSpecialNote3",
-                ),
-              ),
+              for (var article in articles)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: buildArticleCard(
+                      context,
+                      article['imagePath'],
+                      article['scientificName'],
+                      article['englishName'],
+                      article['venomous'],
+                      article['family'],
+                      article['subFamily'],
+                      article['genus'],
+                      article['description'],
+                      article['specialNote'],
+                    ),
+                  ),
             ],
           ),
         ),
