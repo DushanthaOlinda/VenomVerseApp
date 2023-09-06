@@ -247,7 +247,7 @@ class _LearnPageState extends State<LearnPage> {
                       ),
                       const SizedBox(height: 8),
                       const Text(
-                        "Quizzes",
+                        "Quiz",
                         style: TextStyle(color: Colors.green, fontSize: 18),
                       )
                     ],

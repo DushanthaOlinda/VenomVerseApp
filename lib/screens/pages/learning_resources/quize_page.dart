@@ -1,8 +1,28 @@
 import 'package:VenomVerse/screens/pages/learning_resources/attempt_quiz_page.dart';
+import 'package:VenomVerse/screens/pages/learning_resources/review_page.dart';
 import 'package:flutter/material.dart';
 
+final List<Map<String, dynamic>> quizzes = [
+  {
+    'title': 'Basic Snake Classification',
+    'score': '4/5',
+  },
+  {
+    'title': 'Snake Anatomy',
+    'score': '3/5',
+  },
+  {
+    'title': 'Habitats and Habitual Snakes',
+    'score': '2/5',
+  },
+  {
+    'title': 'Snake Behavior',
+    'score': 'Attempt the quiz',
+  },
+];
+
 class QuizePage extends StatefulWidget {
-  const QuizePage({required Key? key}) : super(key: key);
+  const QuizePage({Key? key}) : super(key: key);
 
   @override
   State<QuizePage> createState() => _QuizePageState();
@@ -15,79 +35,98 @@ class _QuizePageState extends State<QuizePage> {
       appBar: AppBar(
         title: const Text("Quiz"),
       ),
-      body: Align(
-        alignment: Alignment.topCenter,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const AttemptQuizPage()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                ),
-                child: const Text("Attempt Quiz"),
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              "Attempted Quizzes:",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-            buildQuizResultCard("01: Venomous or non venomous?", "4/5 marks"),
-            buildQuizResultCard("02: Identifying snakes with pictures", "3/5 marks"),
-            buildQuizResultCard("03: Instructions", "4/5 marks"),
-            buildQuizResultCard("04: Medical treatments", "5/5 marks"),
-          ],
+      body: Padding(
+        padding: const EdgeInsets.only(top: 20.0), // Add padding on top
+        child: ListView.builder(
+          itemCount: quizzes.length,
+          itemBuilder: (context, index) {
+            return buildQuizCard(
+              context,
+              'Topic ${index + 1}',
+              quizzes[index]['title'],
+              quizzes[index]['score'],
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget buildQuizResultCard(String title, String result) {
-    return SizedBox(
-      width: 500, // Set the desired width
-      height: 100, // Set the desired height
-      child: Card(
-        elevation: 3.0,
-        color: Colors.green, // Set the background color to light green
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start, // Align the text to the left
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the text vertically to the middle
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
+  Widget buildQuizCard(BuildContext context, String topic, String title, String score) {
+    bool completed = score != 'Attempt the quiz';
+    Color textColor;
+
+    if (completed) {
+      List<String> scoreParts = score.split('/');
+      int correctAnswers = int.tryParse(scoreParts[0]) ?? 0;
+      int totalQuestions = int.tryParse(scoreParts[1]) ?? 1;
+
+      if (correctAnswers >= totalQuestions * 0.8) {
+        textColor = Colors.green;
+      } else if (correctAnswers >= totalQuestions * 0.5) {
+        textColor = Colors.orange;
+      } else {
+        textColor = Colors.red;
+      }
+    } else {
+      textColor = Colors.grey;
+    }
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        onTap: () {
+          if (completed) {
+            // Navigate to the review page for this quiz
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ReviewPage()),
+            );
+          } else {
+            // Navigate to the attempt quiz page for this quiz
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AttemptQuizPage()),
+            );
+          }
+        },
+        child: Card(
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  topic,
+                  style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end, // Align the text to the right
-                children: [
-                  Text(
-                    result,
-                    style: const TextStyle(
-                      fontSize: 16,
+                const SizedBox(height: 10),
+                Text(
+                  title,
+                  style: const TextStyle(fontSize: 18.0),
+                ),
+                const SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    completed ? 'Completed: $score' : 'Attempt the quiz',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: textColor,
                     ),
                   ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+
+
