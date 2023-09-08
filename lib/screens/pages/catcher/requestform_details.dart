@@ -10,15 +10,25 @@ class RequestForm extends StatefulWidget {
 
 class _RequestFormState extends State<RequestForm> {
   VideoPlayerController? _controller;
+  List<VideoPlayerController> _controllers = [];
+  List<String> videos = [
+    'assets/videos/video.mp4',
+    'assets/videos/video1.mp4',
+    'assets/videos/video2.mp4',
+    // Add more video paths
+  ];
 
+  @override
   @override
   void initState() {
     super.initState();
-    // TODO: Replace the asset with your video file
-    _controller = VideoPlayerController.asset('assets/videos/video.mp4')
-      ..initialize().then((_) {
-        setState(() {});
-      });
+
+    // Initialize each VideoPlayerController with a video
+    _controllers = List.generate(videos.length, (index) {
+      final controller = VideoPlayerController.asset(videos[index]);
+      controller.initialize();
+      return controller;
+    });
   }
 
 
@@ -50,18 +60,47 @@ class _RequestFormState extends State<RequestForm> {
               const SizedBox(height: 16),
 
               // Text details
-              textWidget('Name: John Doe'),
+              textWidget('Name: Senuri Dilshara'),
               textWidget('Age: 38 Years'),
               textWidget('Details: [Add details here]'),
               textWidget('Qualifications: [Add qualifications here]'),
 
               // Video Player
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: _controllers.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                ),
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      // Toggle play/pause when the video player is tapped
+                      setState(() {
+                        if (_controllers[index].value.isPlaying) {
+                          _controllers[index].pause();
+                        } else {
+                          _controllers[index].play();
+                        }
+                      });
+                    },
+                    child: Card(
+                      child: AspectRatio(
+                        aspectRatio: _controllers[index].value.aspectRatio,
+                        child: VideoPlayer(_controllers[index]),
+                      ),
+                    ),
+                  );
+                },
+              ),
+
               const SizedBox(height: 16),
               Center(
-                child: _controller!.value.isInitialized
+                child: _controllers.isNotEmpty && _controllers.first.value.isInitialized
                     ? AspectRatio(
-                  aspectRatio: _controller!.value.aspectRatio,
-                  child: VideoPlayer(_controller!),
+                  aspectRatio: _controllers.first.value.aspectRatio,
+                  child: VideoPlayer(_controllers.first),
                 )
                     : const Text('Video is loading...'),
               ),
@@ -114,6 +153,8 @@ class _RequestFormState extends State<RequestForm> {
   @override
   void dispose() {
     super.dispose();
-    _controller?.dispose();
+    for (final controller in _controllers) {
+      controller.dispose();
+    }
   }
 }

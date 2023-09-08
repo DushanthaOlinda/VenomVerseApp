@@ -1,12 +1,8 @@
-import 'dart:ffi';
 
 import 'package:VenomVerse/screens/pages/catcher/catcher_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
-import 'catcher_request.dart';
 
 class ResultPopup extends StatefulWidget {
   const ResultPopup({Key? key, required this.species, required this.confidence})
@@ -124,6 +120,7 @@ class _PendingCatcherRequestState extends State<PendingCatcherRequest> {
     loadCatcherList(context);
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
