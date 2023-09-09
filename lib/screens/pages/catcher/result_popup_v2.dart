@@ -1,8 +1,6 @@
 
-import 'package:VenomVerse/screens/pages/catcher/catcher_list.dart';
 import 'package:VenomVerse/screens/pages/catcher/result_popup.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 
 class ResultPopupV2 extends StatefulWidget {

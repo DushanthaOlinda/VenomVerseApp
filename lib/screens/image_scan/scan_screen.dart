@@ -7,11 +7,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
 
 import '../../services/api.dart';
 import '../pages/catcher/catcher_list.dart';
-import '../pages/catcher/result_popup.dart';
 
 class ScanImage extends StatefulWidget {
   const ScanImage({super.key, required this.camera});
@@ -243,6 +241,7 @@ class DisplayPictureScreen extends StatelessWidget {
       showDialog(
         context: context,
         builder: (BuildContext context) {
+          // there are two result popups use ResultPopupV2 instead ResultPopup
           return ResultPopupV2(
               species: result['class'], confidence: result['confidence']);
         },
