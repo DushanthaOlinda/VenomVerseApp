@@ -58,7 +58,7 @@ class _ResultPopupV2State extends State<ResultPopupV2> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Image.asset(image, width: 100, height: 200,),
+                Image.asset(image, width: 200, height: 200,),
                 const SizedBox(height: 20),
                 Text(
                   'Predicted Answer: \n\nSeems to be a ${widget.species}!',
@@ -89,8 +89,8 @@ class _ResultPopupV2State extends State<ResultPopupV2> {
                     
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                    side: MaterialStateProperty.all(const BorderSide(color: Colors.white, width: 2)),
+                    backgroundColor: MaterialStateProperty.all(Colors.black),
+                    side: MaterialStateProperty.all(const BorderSide(color: Colors.white, width: 1)),
                     shadowColor: MaterialStateProperty.all(Colors.white),
                     elevation: MaterialStateProperty.all(4),
                     minimumSize: MaterialStateProperty.all(const Size(200, 60)), // Increased button size
@@ -106,8 +106,8 @@ class _ResultPopupV2State extends State<ResultPopupV2> {
                     Navigator.pop(context);
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                    side: MaterialStateProperty.all(const BorderSide(color: Colors.white, width: 2)),
+                    backgroundColor: MaterialStateProperty.all(Colors.black),
+                    side: MaterialStateProperty.all(const BorderSide(color: Colors.white, width: 1)),
                     shadowColor: MaterialStateProperty.all(Colors.white),
                     elevation: MaterialStateProperty.all(4),
                     minimumSize: MaterialStateProperty.all(const Size(150, 40)), // Smaller button size

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:VenomVerse/screens/pages/catcher/result_popup_v2.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
@@ -235,12 +236,14 @@ class DisplayPictureScreen extends StatelessWidget {
     EasyLoading.show(status: 'loading...');
     var result = await Api.scanSnake(File(imagePath));
     EasyLoading.dismiss();
-    print(result);
+    if (kDebugMode) {
+      print(result);
+    }
     if (context.mounted) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return ResultPopup(
+          return ResultPopupV2(
               species: result['class'], confidence: result['confidence']);
         },
       );
