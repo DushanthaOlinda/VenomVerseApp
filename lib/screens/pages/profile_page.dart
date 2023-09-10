@@ -54,19 +54,19 @@ class _ProfilePageState extends State<ProfilePage> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green[50],
+                  backgroundColor: Colors.green,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10), // Add border radius for button
                   ),
                 ),
                 icon: const Icon(
                   Icons.edit,
-                  color: Colors.green, // Set icon color to green
+                  color: Colors.white, // Set icon color to green
                 ), // Edit icon
                 label: const Text(
                   'Edit Profile',
                   style: TextStyle(
-                    color: Colors.green,
+                    color: Colors.white,
                     fontSize: 18,// Set font color to green
                   ),
                 ),
@@ -83,118 +83,134 @@ class _ProfilePageState extends State<ProfilePage> {
               email: 'oshadhi@gmail.com',
               phone_number: '0175773607',
             ),
-            const SizedBox(height: 20),
-
-
 
             Align(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-
-                onPressed: () {
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            CardsPage()), // Navigate to CardsPage
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10), // Adjust padding for button size
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // Add border radius for button
-                  ),// Set the button color to yellow
-                ),
-                child: const Text(
-                  'Payments',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
-              ),
+                alignment: Alignment.center,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const myPosts()), // Navigate to myPosts
+                    );
+                    // Handle button press
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.white, // Set the button background color to white
+                    onPrimary: Colors.green, // Set the button label color to green
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15), // Adjust padding for button size
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15), // Adjust corner radius
+                      side: const BorderSide(color: Colors.green), // Add a green border
+                    ),
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Posts',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 5), // Add spacing between the label and the count
+                      Text(
+                        '5', // Replace with your count value
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
 
             ),
             const SizedBox(height: 20),
             Align(
-              alignment: Alignment.bottomCenter,
+
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                const BecomeCatcher()), // Navigate to CardsPage
+                          builder: (context) => const BecomeCatcher(),
+                        ),
                       );
                       // Handle button press
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15), // Adjust padding for button size
+                      primary: Colors.green[50], // Set the button background color to grey
+                      onPrimary: Colors.green, // Set the button label color to green
+                      padding: const EdgeInsets.all(20), // Adjust padding for button size
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10), // Add border radius for button
-                      ),// Set the button color to yellow
+                      ),
                     ),
-                    child: const Text(
-                      'Become a Catcher',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/snake_catcher.png', // Replace with your image asset path
+                          width: 72, // Adjust the image width as needed
+                          height: 72, // Adjust the image height as needed
+                        ),
+                        const SizedBox(height: 8), // Add some spacing between the image and label
+                        const Text(
+                          'Become a Catcher',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                      ],
                     ),
-
                   ),
+
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BecomeZoologist()), // Navigate to CardsPage
+                        MaterialPageRoute(
+                          builder: (context) => const BecomeZoologist(),
+                        ),
                       );
                       // Handle button press
                     },
                     style: ElevatedButton.styleFrom(
-
-                      backgroundColor: Colors.green,
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15), // Adjust padding for button size
+                      primary: Colors.green[50], // Set the button background color to grey
+                      onPrimary: Colors.green, // Set the button label color to green
+                      padding: const EdgeInsets.all(20), // Adjust padding for button size
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10), // Add border radius for button
-                      ),// Set the button color to yellow
+                      ),
                     ),
-                    child: const Text(
-                      'Become a Zoologist',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/zoologist.png', // Replace with your image asset path
+                          width: 72, // Adjust the image width as needed
+                          height: 72, // Adjust the image height as needed
+                        ),
+                        const SizedBox(height: 8), // Add some spacing between the image and label
+                        const Text(
+                          'Become a Zoologist',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                      ],
                     ),
+                  )
 
-                  ),
+
 
                 ],
 
               ),
             ),
-            const SizedBox(height: 50),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const myPosts()), // Navigate to CardsPage
-                  );
-                  // Handle button press
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  // Set the button color to green
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15), // Adjust padding for button size
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15), // Adjust corner radius
-                  ),
-                ),
-                child: const Text(
-                  'View My Posts',
-                  style: TextStyle(fontSize: 18), // Adjust font size
-                ),
-              ),
-            )
+
+
 
           ],
         ),
@@ -217,7 +233,6 @@ class _BecomeZoologistState extends State<BecomeZoologist> {
   TextEditingController yearController = TextEditingController();
   TextEditingController uniController = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -229,10 +244,27 @@ class _BecomeZoologistState extends State<BecomeZoologist> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 52),
-            // Description: Upload a Video to Provide Proof of Qualifications
+            // Heading: Upload Image
             const Text(
-              'Upload a image to provide proof of your qualifications to become a Zoologist.',
+              'Upload an image to provide proof of your qualifications to become a Zoologist.',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            // Instructions on how to get an image
+            const Text(
+              'Instructions:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            // Instruction 1
+            const Text(
+              '1. Capture a clear image of your zoology degree certificate.',
+              style: TextStyle(fontSize: 16),
+            ),
+            // Instruction 2
+            const Text(
+              '2. Ensure the image shows your degree, graduation year, and university clearly.',
+              style: TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 30),
             ElevatedButton.icon(
@@ -248,7 +280,7 @@ class _BecomeZoologistState extends State<BecomeZoologist> {
               icon: const Icon(Icons.image),
               label: const Text('Select Image'),
             ),
-            const SizedBox(height: 10, width: 20,),
+            const SizedBox(height: 10, width: 20),
             if (imageFile != null)
               Image.file(
                 imageFile!,
@@ -309,7 +341,9 @@ class _BecomeZoologistState extends State<BecomeZoologist> {
                 ),
               ),
               icon: const Icon(Icons.post_add),
-              label: const Text('Request',style: TextStyle(fontSize: 18, color: Colors.white), // Set font color to green
+              label: const Text(
+                'Request',
+                style: TextStyle(fontSize: 18, color: Colors.white), // Set font color to green
               ),
             ),
           ],
@@ -367,7 +401,7 @@ class _myPostsState extends State<myPosts> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Kimutu Kisal',
+                              'Kimuthu Kisal',
                               style: TextStyle(fontSize: 20),
                             ),
                             Text(
@@ -378,7 +412,7 @@ class _myPostsState extends State<myPosts> {
                         ),
                       ],
                     ),
-                    const SizedBox(width: 150),
+                    const SizedBox(width: 120),
                     PopupMenuButton<int>(
                       onSelected: (item) => handleClick(item),
                       itemBuilder: (context) => [
@@ -839,10 +873,32 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
             child: Column(
               children: [
                 const SizedBox(height: 52),
-                // Description: Upload a Video to Provide Proof of Qualifications
+                // Heading: Upload Video
                 const Text(
-                  'Upload a video to provide proof of your qualifications to become a catcher.',
+                  'Upload a video to provide proof of your qualifications to become a Snake Catcher.',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 40),
+                // Instructions on how to get a video
+                const Text(
+                  'Instructions:',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                // Instruction 1
+                const Text(
+                  '1. Capture a video that demonstrates your snake-catching skills.',
+                  style: TextStyle(fontSize: 16),
+                ),
+                // Instruction 2
+                const Text(
+                  '2. Ensure the video includes the entire process, from identifying the snake to safe release.',
+                  style: TextStyle(fontSize: 16),
+                ),
+                // Instruction 3
+                const Text(
+                  '3. Clearly narrate the video to explain your actions and knowledge of snake handling.',
+                  style: TextStyle(fontSize: 16),
                 ),
                 const SizedBox(height: 30),
                 ElevatedButton.icon(
@@ -883,8 +939,8 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
                   color: Colors.green,
                   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // Add border radius for button
-                  ),// Adjust padding as needed
+                    borderRadius: BorderRadius.circular(10), // Add border radius for the button
+                  ), // Adjust padding as needed
                   onPressed: () async {
                     if (_selectedVideo != null) {
                       try {
@@ -895,24 +951,21 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
                             });
                         print("Video : $video");
                         print("Title : ${video.title}");
-
                       } catch (e) {
                         print("Failed to upload video: $e");
                       }
                     } else {
                       print("No video selected.");
                     }
-
                   },
-
-                  child:  const Text(
+                  child: const Text(
                     "Request",
                     style: TextStyle(
-                        color: Colors.white,fontSize: 18),
-
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -921,6 +974,7 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
     );
   }
 }
+
 
 class VideoPlayerWidget extends StatefulWidget {
   final String videoPath;
@@ -983,6 +1037,13 @@ class _EditProfileState extends State<EditProfile> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _dobController = TextEditingController();
+  final TextEditingController _nicController = TextEditingController();
+  final TextEditingController _districtController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _cnumController = TextEditingController();
+  final TextEditingController _wstatusController = TextEditingController();
+
 
   late String _profilePictureUrl =
       'https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'; // Store the profile picture URL here
@@ -993,6 +1054,22 @@ class _EditProfileState extends State<EditProfile> {
     String username = _usernameController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
+    String nic = _nicController.text;
+    String district = _districtController.text;
+    String address = _addressController.text;
+    String cnum = _cnumController.text;
+    String wstatus = _wstatusController.text;
+
+    DateTime? dateOfBirth;
+
+    try {
+      // Parse the date string from the controller and create a DateTime object
+      dateOfBirth = DateTime.parse(_dobController.text);
+    } catch (e) {
+      // Handle parsing errors if the input is not a valid date
+      print("Error parsing date of birth: $e");
+      dateOfBirth = null; // Set to null or another default value
+    }
     String profilePictureUrl = _profilePictureUrl;
 
     Navigator.pop(context);
@@ -1055,7 +1132,7 @@ class _EditProfileState extends State<EditProfile> {
             ),
             const SizedBox(height: 16.0),
             TextField(
-              controller: _passwordController,
+              controller: _dobController,
               decoration: const InputDecoration(
                 labelText: 'Date of birth',
               ),
@@ -1063,7 +1140,7 @@ class _EditProfileState extends State<EditProfile> {
             ),
             const SizedBox(height: 16.0),
             TextField(
-              controller: _passwordController,
+              controller: _nicController,
               decoration: const InputDecoration(
                 labelText: 'NIC',
               ),
@@ -1071,7 +1148,7 @@ class _EditProfileState extends State<EditProfile> {
             ),
             const SizedBox(height: 16.0),
             TextField(
-              controller: _passwordController,
+              controller: _districtController,
               decoration: const InputDecoration(
                 labelText: 'District',
               ),
@@ -1079,7 +1156,7 @@ class _EditProfileState extends State<EditProfile> {
             ),
             const SizedBox(height: 16.0),
             TextField(
-              controller: _passwordController,
+              controller: _addressController,
               decoration: const InputDecoration(
                 labelText: 'Address',
               ),
@@ -1087,7 +1164,7 @@ class _EditProfileState extends State<EditProfile> {
             ),
             const SizedBox(height: 16.0),
             TextField(
-              controller: _passwordController,
+              controller: _cnumController,
               decoration: const InputDecoration(
                 labelText: 'Contact Number',
               ),
@@ -1095,7 +1172,7 @@ class _EditProfileState extends State<EditProfile> {
             ),
             const SizedBox(height: 16.0),
             TextField(
-              controller: _passwordController,
+              controller: _wstatusController,
               decoration: const InputDecoration(
                 labelText: 'Working Status',
               ),

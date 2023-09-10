@@ -6,6 +6,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:comment_box/comment/comment.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+import '../home_screen.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -114,7 +116,7 @@ class _HomePageState extends State<HomePage> {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (
-                context) => const AddNewPost()), // Navigate to CardsPage
+                context) =>  AddNewPost()), // Navigate to CardsPage
           );
           // Handle the onPressed event for the "Add New Card" button
           // Perform the desired action here, such as opening a new screen or dialog
@@ -299,20 +301,13 @@ class _HomePageState extends State<HomePage> {
 
 }
 
-
-
-
 class AddNewPost extends StatefulWidget {
-  const AddNewPost({super.key});
-
   @override
-  State<StatefulWidget> createState() {
-    return AddNewPostState();
-  }
+  AddNewPostState createState() => AddNewPostState();
 }
 
 class AddNewPostState extends State<AddNewPost> {
-  File? imageFile;
+  List<File> imageFiles = [];
   TextEditingController descriptionController = TextEditingController();
 
   @override
@@ -326,31 +321,39 @@ class AddNewPostState extends State<AddNewPost> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ElevatedButton.icon(
-
               onPressed: () async {
-                var pickedImage = await _getFromGallery();
-                setState(() {
-                  imageFile = pickedImage;
-                });
+                var pickedImages = await _getFromGallery();
+                if (pickedImages != null) {
+                  setState(() {
+                    imageFiles.addAll(pickedImages);
+                  });
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-
-
               ),
-              icon: const Icon(Icons.image), // Edit icon
-              label: const Text('Select Image'),
-               // Adjust padding as needed
+              icon: const Icon(Icons.image),
+              label: const Text('Select Images'),
             ),
-
-            const SizedBox(height: 10,width: 20,),
-            if (imageFile != null)
-              Image.file(
-                imageFile!,
-                width: 400,
-                height: 200,
-
+            const SizedBox(height: 10),
+            // Display selected images
+            Container(
+              height: 200,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: imageFiles.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.file(
+                      imageFiles[index],
+                      width: 150,
+                      height: 150,
+                    ),
+                  );
+                },
               ),
+            ),
             const SizedBox(height: 20),
             // Description Box
             Padding(
@@ -368,38 +371,44 @@ class AddNewPostState extends State<AddNewPost> {
             // Submit Button
             ElevatedButton.icon(
               onPressed: () {
-                // Handle submit here
-                String description = descriptionController.text;
-                // You can now use the 'imageFile' and 'description' for further processing
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const MyHomePage(title: 'VenomVerse',)),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // Add border radius for button
-                  ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
-              icon: const Icon(Icons.post_add), // Edit icon
-              label: const Text('Request',style: TextStyle(fontSize: 18, color: Colors.white)),
-
+              icon: const Icon(Icons.post_add),
+              label: const Text(
+                'Request',
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
             ),
-
           ],
         ),
-
       ),
     );
   }
 
-  Future<File?> _getFromGallery() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      return File(pickedFile.path);
+  Future<List<File>?> _getFromGallery() async {
+    final picker = ImagePicker();
+    final pickedImages = await picker.pickMultiImage(
+      imageQuality: 50, // Adjust image quality as needed
+    );
+
+    if (pickedImages != null) {
+      return pickedImages.map((pickedImage) => File(pickedImage.path)).toList();
     }
+
     return null;
   }
 }
-
 
 
 
