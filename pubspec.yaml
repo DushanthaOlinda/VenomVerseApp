@@ -61,6 +61,7 @@ dependencies:
   rounded_loading_button: ^2.1.0
   video_player: ^2.7.0
   stepper_list_view: ^0.0.1
+  art_sweetalert: ^0.0.5
 
 
 dev_dependencies:

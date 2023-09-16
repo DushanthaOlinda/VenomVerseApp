@@ -1,5 +1,8 @@
+import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'alert_approved.dart';
+import 'alert_rejected.dart';
 
 class RequestForm extends StatefulWidget {
   const RequestForm({Key? key}) : super(key: key);
@@ -48,6 +51,19 @@ class _RequestFormState extends State<RequestForm> {
       _controller!.play();
     });
   }
+// Function to navigate to the ApprovedAlert screen
+  void navigateToApprovedAlert() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => ApprovedAlert(key: UniqueKey()),
+    ));
+  }
+
+  // Function to navigate to the RejectedAlert screen
+  void navigateToRejectedAlert() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const RejectedAlert(),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +111,7 @@ class _RequestFormState extends State<RequestForm> {
                           alignment: Alignment.center,
                           child: Text(
                             'Name: Siripala Perera',
-                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white),
                           ),
                         ),
                       ],
@@ -139,29 +155,38 @@ class _RequestFormState extends State<RequestForm> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Material(
-                      // elevation: 2,
-                      shadowColor: Colors.black, // Add a black shadow
+                  Material(
+                  // elevation: 2,
+                  shadowColor: Colors.black, // Add a black shadow
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
                       ),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.green,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                        ),
-                        onPressed: () {
-                          scaffoldMessengerKey.currentState!.showSnackBar(const SnackBar(content: Text('Approve button was pressed')));
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Text('Approve', style: TextStyle(color: Colors.white)),
-                        ),
-                      ),
                     ),
-                    Material(
+                    onPressed: () {
+                      // navigateToApprovedAlert(); // Navigate to the ApprovedAlert screen
+                      ArtSweetAlert.show(
+                        context: context,
+                        artDialogArgs: ArtDialogArgs(
+                          type: ArtSweetAlertType.success,
+                          title: "Approved",
+                          text: "You have Successfully Approved this person as a snake catcher",
+                        ),
+                      );
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text('Approve', style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                ),
+
+            Material(
                       // elevation: 4,
                       shadowColor: Colors.black, // Add a black shadow
                       shape: RoundedRectangleBorder(
@@ -175,7 +200,15 @@ class _RequestFormState extends State<RequestForm> {
                           ),
                         ),
                         onPressed: () {
-                          scaffoldMessengerKey.currentState!.showSnackBar(const SnackBar(content: Text('Reject button was pressed')));
+                          // navigateToRejectedAlert(); // Navigate to the RejectedAlert screen
+                          ArtSweetAlert.show(
+                              context: context,
+                              artDialogArgs: ArtDialogArgs(
+                                  type: ArtSweetAlertType.danger,
+                                  title: "Rejected",
+                                  text: "You have rejected this person"
+                              )
+                          );
                         },
                         child: const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.0),
