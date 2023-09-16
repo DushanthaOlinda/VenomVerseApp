@@ -338,7 +338,7 @@ class _LearnPageState extends State<LearnPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ResultPopup(key: UniqueKey(), species: 'asd', confidence: 10,)),
+                    MaterialPageRoute(builder: (context) => RequestForm(key: UniqueKey())),
 
                   );
                 },
