@@ -14,6 +14,45 @@ class EBooksPage extends StatefulWidget {
 }
 
 class _EBooksPageState extends State<EBooksPage> {
+  final List<Map<String, dynamic>> ebooks = [
+    {
+      'title': "SNAKES OF SRI LANKA",
+      'description': "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
+      'imageUrl': 'assets/images/bk2.png',
+      'ebookPage': const EBook1(),
+    },
+    {
+      'title': "SNAKES OF SRI LANKA",
+      'description': "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
+      'imageUrl': 'assets/images/bk2.png',
+      'ebookPage': const EBook2(),
+    },
+    {
+      'title': "SNAKES OF SRI LANKA",
+      'description': "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
+      'imageUrl': 'assets/images/bk2.png',
+      'ebookPage': const EBook3(),
+    },
+    {
+      'title': "SNAKES OF SRI LANKA",
+      'description': "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
+      'imageUrl': 'assets/images/bk2.png',
+      'ebookPage': const EBook4(),
+    },
+    {
+      'title': "SNAKES OF SRI LANKA",
+      'description': "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
+      'imageUrl': 'assets/images/bk2.png',
+      'ebookPage': const EBook5(),
+    },
+    {
+      'title': "SNAKES OF SRI LANKA",
+      'description': "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
+      'imageUrl': 'assets/images/bk2.png',
+      'ebookPage': const EBook6(),
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,49 +65,14 @@ class _EBooksPageState extends State<EBooksPage> {
           child: SafeArea(
             child: Column(
               children: [
-                buildArticleCard(
-                  context,
-                  "SNAKES OF SRI LANKA",
-                  "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
-                  'assets/images/bk2.png',
-                  const EBook1(),
-                ),
-                buildArticleCard(
-                  context,
-                  "SNAKES OF SRI LANKA",
-                  "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
-                  'assets/images/bk2.png',
-                  const EBook2(),
-                ),
-                buildArticleCard(
-                  context,
-                  "SNAKES OF SRI LANKA",
-                  "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
-                  'assets/images/bk2.png',
-                  const EBook3(),
-                ),
-                buildArticleCard(
-                  context,
-                  "SNAKES OF SRI LANKA",
-                  "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
-                  'assets/images/bk2.png',
-                  const EBook4(),
-                ),
-                buildArticleCard(
-                  context,
-                  "SNAKES OF SRI LANKA",
-                  "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
-                  'assets/images/bk2.png',
-                  const EBook5(),
-                ),
-                buildArticleCard(
-                  context,
-                  "SNAKES OF SRI LANKA",
-                  "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
-                  'assets/images/bk2.png',
-                  const EBook6(),
-                ),
-                // Repeat for other articles...
+                for (var ebook in ebooks)
+                  buildArticleCard(
+                    context,
+                    ebook['title'],
+                    ebook['description'],
+                    ebook['imageUrl'],
+                    ebook['ebookPage'],
+                  ),
               ],
             ),
           ),
@@ -78,22 +82,27 @@ class _EBooksPageState extends State<EBooksPage> {
   }
 
   Widget buildArticleCard(
-      BuildContext context, String title, String description, String imagePath, Widget articlePage) {
+    BuildContext context,
+    String title,
+    String description,
+    String imageUrl,
+    Widget ebookPage,
+  ) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => articlePage));
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ebookPage),
+        );
       },
       child: Card(
         elevation: 3.0,
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              width: 120,
-              height: 200,
-              child: Image.asset(imagePath, fit: BoxFit.cover),
-            ),
-            const SizedBox(width: 15),
-            Expanded(
+            Image.asset(imageUrl),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -103,8 +112,8 @@ class _EBooksPageState extends State<EBooksPage> {
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
-                    maxLines: 2, // Display title in two lines
-                    overflow: TextOverflow.ellipsis, // Truncate text if it exceeds two lines
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -113,12 +122,12 @@ class _EBooksPageState extends State<EBooksPage> {
                       fontSize: 14,
                       color: Colors.grey,
                     ),
-                    maxLines: 2, // Display description in two lines
-                    overflow: TextOverflow.ellipsis, // Truncate text if it exceeds two lines
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 10),
                   const Text(
-                    "Read more...",
+                    "Read More..",
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.blue,
@@ -134,3 +143,4 @@ class _EBooksPageState extends State<EBooksPage> {
     );
   }
 }
+
