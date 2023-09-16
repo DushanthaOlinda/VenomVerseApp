@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Infor_list/inf1.dart';
+
 class InfoPage extends StatefulWidget {
   const InfoPage({super.key});
 
