@@ -7,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:comment_box/comment/comment.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-import '../home_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -294,6 +293,8 @@ class _HomePageState extends State<HomePage> {
 }
 
 class AddNewPost extends StatefulWidget {
+  const AddNewPost({super.key});
+
   @override
   AddNewPostState createState() => AddNewPostState();
 }
@@ -331,7 +332,7 @@ class AddNewPostState extends State<AddNewPost> {
             ),
             const SizedBox(height: 10),
             // Display selected images
-            Container(
+            SizedBox(
               height: 200,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -347,6 +348,7 @@ class AddNewPostState extends State<AddNewPost> {
                   );
                 },
               ),
+    ),
             const SizedBox(height: 20),
             DropdownMenu<String>(
               initialSelection: list.first,
@@ -377,34 +379,29 @@ class AddNewPostState extends State<AddNewPost> {
             const SizedBox(height: 20),
             // Submit Button
             ElevatedButton.icon(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const MyHomePage(title: 'VenomVerse',)),
-                );
               onPressed: () async {
+                // TODO: navigate to home
                 // Handle submit here
                 String description = descriptionController.text;
-                File? image = imageFile;
+                // File? image = imageFile;
+                List<File> images = imageFiles;
+                for (var image in images) {
                 String fileName =  "images/${DateTime.timestamp()}.png";
                 String imageLink;
-                if (image != null) {
-                  final storage = FirebaseStorage.instance;
-                  final Reference ref = storage.ref().child(fileName);
+                final storage = FirebaseStorage.instance;
+                final Reference ref = storage.ref().child(fileName);
 
-                  await ref.putFile(image);
-                  imageLink = await ref.getDownloadURL();
-                  if (kDebugMode) {
-                    print(description);
-                    print(imageLink);
-                  }
+                await ref.putFile(image);
+                imageLink = await ref.getDownloadURL();
+                if (kDebugMode) {
+                  print(description);
+                  print(imageLink);
                 }
-                // You can now use the 'imageFile' and 'description' for further processing
+                }// You can now use the 'imageFile' and 'description' for further processing
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -427,10 +424,7 @@ class AddNewPostState extends State<AddNewPost> {
       imageQuality: 50, // Adjust image quality as needed
     );
 
-    if (pickedImages != null) {
-      return pickedImages.map((pickedImage) => File(pickedImage.path)).toList();
-    }
-    return null;
+    return pickedImages.map((pickedImage) => File(pickedImage.path)).toList();
   }
 }
 
