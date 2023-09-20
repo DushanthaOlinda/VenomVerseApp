@@ -1,8 +1,8 @@
 import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'alert_approved.dart';
-import 'alert_rejected.dart';
+// import 'alert_approved.dart';
+// import 'alert_rejected.dart';
 
 class RequestForm extends StatefulWidget {
   const RequestForm({Key? key}) : super(key: key);
@@ -52,18 +52,18 @@ class _RequestFormState extends State<RequestForm> {
     });
   }
 // Function to navigate to the ApprovedAlert screen
-  void navigateToApprovedAlert() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => ApprovedAlert(key: UniqueKey()),
-    ));
-  }
-
-  // Function to navigate to the RejectedAlert screen
-  void navigateToRejectedAlert() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const RejectedAlert(),
-    ));
-  }
+//   void navigateToApprovedAlert() {
+//     Navigator.of(context).push(MaterialPageRoute(
+//       builder: (context) => ApprovedAlert(key: UniqueKey()),
+//     ));
+//   }
+//
+//   // Function to navigate to the RejectedAlert screen
+//   void navigateToRejectedAlert() {
+//     Navigator.of(context).push(MaterialPageRoute(
+//       builder: (context) => const RejectedAlert(),
+//     ));
+//   }
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +163,7 @@ class _RequestFormState extends State<RequestForm> {
                   ),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.green,
+                      backgroundColor: Colors.green,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
                       ),

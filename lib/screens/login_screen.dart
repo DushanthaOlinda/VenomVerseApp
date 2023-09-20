@@ -52,7 +52,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var auth = context.watch<AuthModel>();
 
-    if (auth.isAuthorized){
+    if (auth.isAuthorized) {
       return ScanImage(camera: camera);
       return const MyHomePage(title: "VenomVerse");
     }
@@ -64,6 +64,7 @@ class LoginPage extends StatelessWidget {
         var res = await Api().login(data.name, data.password);
         if (res != null) {
           auth.login(res["token"]);
+          auth.userSetup(res["username"], res["email"]);
         }
         if (auth.isAuthorized) {
           return "Login Success";
@@ -74,19 +75,17 @@ class LoginPage extends StatelessWidget {
       onSignup: (SignupData data) async {
         auth.logout();
         var res = await Api().signup(data.name, data.password);
-        if (context.mounted && res == null) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const EditProfile(),
-            ),
-          );
-        }        return res;
+        return res;
       },
       onSubmitAnimationCompleted: () {
         if (auth.isAuthorized) {
-          Navigator.pushReplacementNamed(context, '/scan');
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacementNamed(context, '/home');
+          });
         } else {
-          Navigator.pushReplacementNamed(context, '/login');
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacementNamed(context, '/login');
+          });
         }
       },
       onRecoverPassword: _recoverPassword,
@@ -96,5 +95,4 @@ class LoginPage extends StatelessWidget {
   void loadHomePage(BuildContext context) {
     Navigator.pushReplacementNamed(context, '/home');
   }
-
 }

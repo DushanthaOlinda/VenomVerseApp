@@ -28,6 +28,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     var auth = context.watch<AuthModel>();
 
+    if(auth.isAuthorized == false) {
+      auth.logout();
+      Navigator.pushReplacementNamed(context, '/login');
+    }
+
     return Scaffold(
       appBar: AppBarWithSearchSwitch(
         onChanged: (text) {

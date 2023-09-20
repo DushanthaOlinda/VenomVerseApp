@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card_new/credit_card_brand.dart';
 import 'package:flutter_credit_card_new/flutter_credit_card.dart';
@@ -10,10 +11,7 @@ import 'package:profile/profile.dart';
 import 'package:video_uploader/video_uploader.dart';
 import 'package:video_player/video_player.dart';
 
-
 import 'home_page.dart';
-
-
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -56,7 +54,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // Add border radius for button
+                    borderRadius: BorderRadius.circular(
+                        10), // Add border radius for button
                   ),
                 ),
                 icon: const Icon(
@@ -67,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   'Edit Profile',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,// Set font color to green
+                    fontSize: 18, // Set font color to green
                   ),
                 ),
               ),
@@ -83,24 +82,31 @@ class _ProfilePageState extends State<ProfilePage> {
               email: 'oshadhi@gmail.com',
               phone_number: '0175773607',
             ),
-
             Align(
                 alignment: Alignment.center,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const myPosts()), // Navigate to myPosts
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const myPosts()), // Navigate to myPosts
                     );
                     // Handle button press
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.white, // Set the button background color to white
-                    onPrimary: Colors.green, // Set the button label color to green
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15), // Adjust padding for button size
+                    primary: Colors
+                        .white, // Set the button background color to white
+                    onPrimary:
+                        Colors.green, // Set the button label color to green
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 15), // Adjust padding for button size
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15), // Adjust corner radius
-                      side: const BorderSide(color: Colors.green), // Add a green border
+                      borderRadius:
+                          BorderRadius.circular(15), // Adjust corner radius
+                      side: const BorderSide(
+                          color: Colors.green), // Add a green border
                     ),
                   ),
                   child: const Column(
@@ -111,7 +117,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         'Posts',
                         style: TextStyle(fontSize: 18),
                       ),
-                      SizedBox(height: 5), // Add spacing between the label and the count
+                      SizedBox(
+                          height:
+                              5), // Add spacing between the label and the count
                       Text(
                         '5', // Replace with your count value
                         style: TextStyle(
@@ -121,16 +129,12 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ],
                   ),
-                )
-
-            ),
+                )),
             const SizedBox(height: 20),
             Align(
-
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -142,11 +146,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       // Handle button press
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.green[50], // Set the button background color to grey
-                      onPrimary: Colors.green, // Set the button label color to green
-                      padding: const EdgeInsets.all(20), // Adjust padding for button size
+                      primary: Colors
+                          .green[50], // Set the button background color to grey
+                      onPrimary:
+                          Colors.green, // Set the button label color to green
+                      padding: const EdgeInsets.all(
+                          20), // Adjust padding for button size
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10), // Add border radius for button
+                        borderRadius: BorderRadius.circular(
+                            10), // Add border radius for button
                       ),
                     ),
                     child: Column(
@@ -158,7 +166,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           width: 72, // Adjust the image width as needed
                           height: 72, // Adjust the image height as needed
                         ),
-                        const SizedBox(height: 8), // Add some spacing between the image and label
+                        const SizedBox(
+                            height:
+                                8), // Add some spacing between the image and label
                         const Text(
                           'Become a Catcher',
                           style: TextStyle(fontSize: 15),
@@ -166,7 +176,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                   ),
-
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -178,11 +187,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       // Handle button press
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.green[50], // Set the button background color to grey
-                      onPrimary: Colors.green, // Set the button label color to green
-                      padding: const EdgeInsets.all(20), // Adjust padding for button size
+                      primary: Colors
+                          .green[50], // Set the button background color to grey
+                      onPrimary:
+                          Colors.green, // Set the button label color to green
+                      padding: const EdgeInsets.all(
+                          20), // Adjust padding for button size
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10), // Add border radius for button
+                        borderRadius: BorderRadius.circular(
+                            10), // Add border radius for button
                       ),
                     ),
                     child: Column(
@@ -194,7 +207,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           width: 72, // Adjust the image width as needed
                           height: 72, // Adjust the image height as needed
                         ),
-                        const SizedBox(height: 8), // Add some spacing between the image and label
+                        const SizedBox(
+                            height:
+                                8), // Add some spacing between the image and label
                         const Text(
                           'Become a Zoologist',
                           style: TextStyle(fontSize: 15),
@@ -202,22 +217,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                   )
-
-
-
                 ],
-
               ),
             ),
-
-
-
           ],
         ),
       ),
     );
   }
-
 }
 
 class BecomeZoologist extends StatefulWidget {
@@ -335,15 +342,20 @@ class _BecomeZoologistState extends State<BecomeZoologist> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15), // Adjust padding for button size
+                padding: EdgeInsets.symmetric(
+                    horizontal: 30,
+                    vertical: 15), // Adjust padding for button size
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10), // Add border radius for button
+                  borderRadius:
+                      BorderRadius.circular(10), // Add border radius for button
                 ),
               ),
               icon: const Icon(Icons.post_add),
               label: const Text(
                 'Request',
-                style: TextStyle(fontSize: 18, color: Colors.white), // Set font color to green
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white), // Set font color to green
               ),
             ),
           ],
@@ -353,7 +365,8 @@ class _BecomeZoologistState extends State<BecomeZoologist> {
   }
 
   Future<File?> _getFromGallery() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       return File(pickedFile.path);
     }
@@ -380,20 +393,19 @@ class _myPostsState extends State<myPosts> {
       ),
       body: Center(
         child: Card(
-
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 Row(
-
+                Row(
                   children: [
                     const Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage: AssetImage('assets/images/user image.png'),
+                          backgroundImage:
+                              AssetImage('assets/images/user image.png'),
                           radius: 30,
                         ),
                         SizedBox(width: 16),
@@ -406,7 +418,8 @@ class _myPostsState extends State<myPosts> {
                             ),
                             Text(
                               'Posted 2 hours ago',
-                              style: TextStyle(fontSize: 12, color: Colors.grey),
+                              style:
+                                  TextStyle(fontSize: 12, color: Colors.grey),
                             ),
                           ],
                         ),
@@ -416,8 +429,10 @@ class _myPostsState extends State<myPosts> {
                     PopupMenuButton<int>(
                       onSelected: (item) => handleClick(item),
                       itemBuilder: (context) => [
-                        const PopupMenuItem<int>(value: 0, child: Text('Edit Post')),
-                        const PopupMenuItem<int>(value: 1, child: Text('Delete Post')),
+                        const PopupMenuItem<int>(
+                            value: 0, child: Text('Edit Post')),
+                        const PopupMenuItem<int>(
+                            value: 1, child: Text('Delete Post')),
                       ],
                     ),
                   ],
@@ -452,7 +467,8 @@ class _myPostsState extends State<myPosts> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const TestMe()),
+                          MaterialPageRoute(
+                              builder: (context) => const TestMe()),
                         );
                         // Perform comment action
                       },
@@ -480,7 +496,6 @@ class _myPostsState extends State<myPosts> {
   popUpDeletePost(context) {
     Alert(
       context: context,
-
       title: "DELETE THE POST",
       desc: "Are you sure to delete the post?",
       buttons: [
@@ -550,7 +565,8 @@ class _myPostsState extends State<myPosts> {
       context: context,
       type: AlertType.success,
       title: "Thanks for letting us know.",
-      desc: "We'll send you a notification to view the outcome as soon as possible",
+      desc:
+          "We'll send you a notification to view the outcome as soon as possible",
       buttons: [
         DialogButton(
           onPressed: () {
@@ -558,7 +574,8 @@ class _myPostsState extends State<myPosts> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const myPosts()), // Navigate to CardsPage
+                  builder: (context) =>
+                      const myPosts()), // Navigate to CardsPage
             );
             // Perform report action
           },
@@ -594,23 +611,21 @@ class _myPostsState extends State<myPosts> {
       desc: "You can report this post again if you change your mind.",
       buttons: [
         DialogButton(
-
-          onPressed: ()
-    {
-      Navigator.pop(context);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => const myPosts()), // Navigate to CardsPage
-      );
-    },
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      const myPosts()), // Navigate to CardsPage
+            );
+          },
           color: const Color.fromRGBO(0, 179, 134, 1.0),
           child: const Text(
             "OK",
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
         ),
-
       ],
     ).show();
   }
@@ -618,7 +633,6 @@ class _myPostsState extends State<myPosts> {
   addReason(context) {
     Alert(
       context: context,
-
       title: "Please select the problem.",
       desc: " ",
       buttons: [
@@ -628,7 +642,6 @@ class _myPostsState extends State<myPosts> {
             reportReceived(context);
             // Perform report action
           },
-
           color: const Color.fromRGBO(0, 179, 134, 1.0),
           child: const Text(
             "Hate speech",
@@ -659,7 +672,6 @@ class _myPostsState extends State<myPosts> {
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
         ),
-
       ],
     ).show();
   }
@@ -672,13 +684,13 @@ class _myPostsState extends State<myPosts> {
       desc: " ",
       buttons: [
         DialogButton(
-          onPressed: ()
-          {
+          onPressed: () {
             Navigator.pop(context);
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const myPosts()), // Navigate to CardsPage
+                  builder: (context) =>
+                      const myPosts()), // Navigate to CardsPage
             );
           },
           color: const Color.fromRGBO(0, 179, 134, 1.0),
@@ -687,7 +699,6 @@ class _myPostsState extends State<myPosts> {
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
         ),
-
       ],
     ).show();
   }
@@ -705,8 +716,9 @@ class _myPostsState extends State<myPosts> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const myPosts()), // Navigate to CardsPage
-            );            // Perform report action
+                  builder: (context) =>
+                      const myPosts()), // Navigate to CardsPage
+            ); // Perform report action
           },
           color: const Color.fromRGBO(0, 179, 134, 1.0),
           child: const Text(
@@ -714,25 +726,24 @@ class _myPostsState extends State<myPosts> {
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
         ),
-
       ],
     ).show();
   }
 
   void handleClick(int item) {
     switch (item) {
-      case 0: Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => EditPost()),
-      );
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => EditPost()),
+        );
 
         break;
-      case 1:popUpDeletePost(context);
+      case 1:
+        popUpDeletePost(context);
         break;
     }
   }
-
-
 }
 
 class EditPost extends StatefulWidget {
@@ -759,24 +770,25 @@ class _EditPostState extends State<EditPost> {
           children: [
             _imageFile != null
                 ? Image.file(
-              _imageFile!,
-              height: 200,
-              width: 200,
-              fit: BoxFit.cover,
-            )
+                    _imageFile!,
+                    height: 200,
+                    width: 200,
+                    fit: BoxFit.cover,
+                  )
                 : Image.asset(
-              'assets/images/snake image.jpg', // Initial image from assets
-              height: 200,
-              width: 200,
-              fit: BoxFit.cover,
-            ),
+                    'assets/images/snake image.jpg', // Initial image from assets
+                    height: 200,
+                    width: 200,
+                    fit: BoxFit.cover,
+                  ),
             const SizedBox(height: 16),
             ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+              ),
               onPressed: () async {
-                final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+                final pickedFile =
+                    await ImagePicker().pickImage(source: ImageSource.gallery);
 
                 if (pickedFile != null) {
                   setState(() {
@@ -792,15 +804,16 @@ class _EditPostState extends State<EditPost> {
               maxLines: null, // Allow unlimited lines
               keyboardType: TextInputType.multiline,
               decoration: const InputDecoration(
-                hintText: 'A snake is a type of reptile that belongs to the suborder Serpentes. Snakes are known for their elongated, legless bodies covered in scales. They are found in various habitats worldwide, including forests, deserts, grasslands, and even bodies of water.',
+                hintText:
+                    'A snake is a type of reptile that belongs to the suborder Serpentes. Snakes are known for their elongated, legless bodies covered in scales. They are found in various habitats worldwide, including forests, deserts, grasslands, and even bodies of water.',
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 50),
             ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+              ),
               onPressed: () {
                 // Update the description
               },
@@ -818,8 +831,6 @@ class _EditPostState extends State<EditPost> {
     super.dispose();
   }
 }
-
-
 
 const primaryColor = Colors.green;
 const secondaryColor = Colors.green;
@@ -861,12 +872,12 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pop(context); // This will navigate back to the previous screen
+              Navigator.pop(
+                  context); // This will navigate back to the previous screen
             },
           ),
           title: const Text('Request to Become a Catcher'),
         ),
-
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -937,25 +948,36 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
                 const SizedBox(height: 20),
                 MaterialButton(
                   color: Colors.green,
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // Add border radius for the button
+                    borderRadius: BorderRadius.circular(
+                        10), // Add border radius for the button
                   ), // Adjust padding as needed
                   onPressed: () async {
                     if (_selectedVideo != null) {
                       try {
-                        var video = await ApiVideoUploader.uploadWithUploadToken(
-                            _tokenTextController.text, _selectedVideo!.path,
+                        var video =
+                            await ApiVideoUploader.uploadWithUploadToken(
+                                _tokenTextController.text, _selectedVideo!.path,
                                 (bytesSent, totalByte) {
-                              setProgress(bytesSent / totalByte);
-                            });
-                        print("Video : $video");
-                        print("Title : ${video.title}");
+                          setProgress(bytesSent / totalByte);
+                        });
+                        if (kDebugMode) {
+                          print("Video : $video");
+                        }
+                        if (kDebugMode) {
+                          print("Title : ${video.title}");
+                        }
                       } catch (e) {
-                        print("Failed to upload video: $e");
+                        if (kDebugMode) {
+                          print("Failed to upload video: $e");
+                        }
                       }
                     } else {
-                      print("No video selected.");
+                      if (kDebugMode) {
+                        print("No video selected.");
+                      }
                     }
                   },
                   child: const Text(
@@ -975,11 +997,11 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
   }
 }
 
-
 class VideoPlayerWidget extends StatefulWidget {
   final String videoPath;
 
-  const VideoPlayerWidget({Key? key, required this.videoPath}) : super(key: key);
+  const VideoPlayerWidget({Key? key, required this.videoPath})
+      : super(key: key);
 
   @override
   _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
@@ -994,9 +1016,9 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     _controller = VideoPlayerController.file(
       File(widget.videoPath),
     )..initialize().then((_) {
-      // Ensure the first frame is shown
-      setState(() {});
-    });
+        // Ensure the first frame is shown
+        setState(() {});
+      });
   }
 
   @override
@@ -1009,9 +1031,9 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   Widget build(BuildContext context) {
     return _controller.value.isInitialized
         ? AspectRatio(
-      aspectRatio: _controller.value.aspectRatio,
-      child: VideoPlayer(_controller),
-    )
+            aspectRatio: _controller.value.aspectRatio,
+            child: VideoPlayer(_controller),
+          )
         : const CircularProgressIndicator(); // You can show a loading indicator while the video is loading
   }
 }
@@ -1034,9 +1056,9 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  // final TextEditingController _usernameController = TextEditingController();
+  // final TextEditingController _emailController = TextEditingController();
+  // final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
   final TextEditingController _nicController = TextEditingController();
   final TextEditingController _districtController = TextEditingController();
@@ -1044,21 +1066,23 @@ class _EditProfileState extends State<EditProfile> {
   final TextEditingController _cnumController = TextEditingController();
   final TextEditingController _wstatusController = TextEditingController();
 
-
   late String _profilePictureUrl =
       'https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'; // Store the profile picture URL here
 
   // Method to handle saving profile changes
   void _saveChanges() {
+    // No Need to get email, password and username again
     // Implement the logic to save changes here
-    String username = _usernameController.text;
-    String email = _emailController.text;
-    String password = _passwordController.text;
+    // String username = _usernameController.text;
+    // String email = _emailController.text;
+    // String password = _passwordController.text;
     String nic = _nicController.text;
     String district = _districtController.text;
     String address = _addressController.text;
     String cnum = _cnumController.text;
     String wstatus = _wstatusController.text;
+
+    // I created storage to store email and password
 
     DateTime? dateOfBirth;
 
@@ -1067,7 +1091,9 @@ class _EditProfileState extends State<EditProfile> {
       dateOfBirth = DateTime.parse(_dobController.text);
     } catch (e) {
       // Handle parsing errors if the input is not a valid date
-      print("Error parsing date of birth: $e");
+      if (kDebugMode) {
+        print("Error parsing date of birth: $e");
+      }
       dateOfBirth = null; // Set to null or another default value
     }
     String profilePictureUrl = _profilePictureUrl;
@@ -1104,32 +1130,32 @@ class _EditProfileState extends State<EditProfile> {
               onPressed: _changeProfilePicture,
               child: const Text('Change Profile Picture'),
             ),
-            const SizedBox(height: 16.0),
+            // const SizedBox(height: 16.0),
             // Username
-            TextField(
-              controller: _usernameController,
-              decoration: const InputDecoration(
-                labelText: 'Username',
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            // Email Address
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email Address',
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            const SizedBox(height: 16.0),
-            // Password
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-              ),
-              obscureText: true,
-            ),
+            // TextField(
+            //   controller: _usernameController,
+            //   decoration: const InputDecoration(
+            //     labelText: 'Username',
+            //   ),
+            // ),
+            // const SizedBox(height: 16.0),
+            // // Email Address
+            // TextField(
+            //   controller: _emailController,
+            //   decoration: const InputDecoration(
+            //     labelText: 'Email Address',
+            //   ),
+            //   keyboardType: TextInputType.emailAddress,
+            // ),
+            // const SizedBox(height: 16.0),
+            // // Password
+            // TextField(
+            //   controller: _passwordController,
+            //   decoration: const InputDecoration(
+            //     labelText: 'Password',
+            //   ),
+            //   obscureText: true,
+            // ),
             const SizedBox(height: 16.0),
             TextField(
               controller: _dobController,
@@ -1191,6 +1217,8 @@ class _EditProfileState extends State<EditProfile> {
 }
 
 class CardsPage extends StatelessWidget {
+  const CardsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1397,7 +1425,7 @@ class AddNewCardState extends State<AddNewCard> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             const Text(
-                              'Glassmorphism',
+                              'Glass morphism',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
@@ -1459,9 +1487,13 @@ class AddNewCardState extends State<AddNewCard> {
                           ),
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
-                              print('valid!');
+                              if (kDebugMode) {
+                                print('valid!');
+                              }
                             } else {
-                              print('invalid!');
+                              if (kDebugMode) {
+                                print('invalid!');
+                              }
                             }
                           },
                         ),
