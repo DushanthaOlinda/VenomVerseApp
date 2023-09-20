@@ -1,6 +1,12 @@
+import 'package:VenomVerse/screens/pages/addNewArticlelist_page.dart';
+import 'package:VenomVerse/screens/pages/articleRequests_page.dart';
 import 'package:VenomVerse/screens/pages/catcher/requests_list.dart';
 import 'package:VenomVerse/screens/pages/feedback_page.dart';
 import 'package:VenomVerse/screens/pages/instructions_page.dart';
+import 'package:VenomVerse/screens/pages/myArticle_page.dart';
+import 'package:VenomVerse/screens/pages/postRequests_page.dart';
+import 'package:VenomVerse/screens/pages/requests_page.dart';
+import 'package:VenomVerse/screens/pages/zoologistRequests_page.dart';
 import 'package:VenomVerse/widgets/generate_body.dart';
 import 'package:app_bar_with_search_switch/app_bar_with_search_switch.dart';
 import 'package:flutter/material.dart';
@@ -89,6 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         extendedTheme: const SidebarXTheme(
           width: 200,
+
           decoration: BoxDecoration(
             color: canvasColor,
           ),
@@ -112,6 +119,32 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const RequestsList(),
+                  ),
+                );
+              }
+            },
+          ),
+          SidebarXItem(
+            icon: Icons.post_add_sharp,
+            label: 'My Articles',
+            onTap: () {
+              if (context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const MyArticlePage(),
+                  ),
+                );
+              }
+            },
+          ),
+          SidebarXItem(
+            icon: Icons.post_add_sharp,
+            label: 'Add New Article',
+            onTap: () {
+              if (context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const NewArticlePage(),
                   ),
                 );
               }
@@ -143,6 +176,46 @@ class _MyHomePageState extends State<MyHomePage> {
               }
             },
           ),
+          SidebarXItem(
+            icon: Icons.post_add,
+            label: 'Post Requests',
+            onTap: () {
+              if (context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const PostRequestsPage(),
+                  ),
+                );
+              }
+            },
+          ),
+          SidebarXItem(
+            icon: Icons.post_add,
+            label: 'Article requests',
+            onTap: () {
+              if (context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ArticleRequestsPage(),
+                  ),
+                );
+              }
+            },
+          ),
+          SidebarXItem(
+            icon: Icons.person_add_outlined,
+            label: 'Approve Zoologists',
+            onTap: () {
+              if (context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ZoologistRequestsPage(),
+                  ),
+                );
+              }
+            },
+          ),
+
         ],
         footerItems: [
           SidebarXItem(icon: Icons.logout, label: 'Logout',  onTap: (){
