@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthModel extends ChangeNotifier {
   final storage = const FlutterSecureStorage();
@@ -89,7 +90,7 @@ class AuthModel extends ChangeNotifier {
   }
 
 
-  clearUser() {
+  clearUser() async {
     userName = null;
     userEmail = null;
     expertPrivilege = false;
@@ -105,6 +106,11 @@ class AuthModel extends ChangeNotifier {
     storage.delete(key: 'zoologistPrivilege');
     storage.delete(key: 'catcherPrivilege');
     storage.delete(key: 'communityAdminPrivilege');
+
+
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.clear();
+
 
     notifyListeners();
   }

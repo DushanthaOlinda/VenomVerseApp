@@ -42,11 +42,11 @@ class _PostCardState extends State<PostCard> {
                 children: [
                   Text(
                     widget.data["userId"].toString(),
-                    style: TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 20),
                   ),
                   Text(
                       DateTime.now().difference(DateTime.parse(widget.data["dateTime"])).toString(),
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                 ],
               ),
@@ -54,10 +54,10 @@ class _PostCardState extends State<PostCard> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Text(
             widget.data["description"],
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           ),
         ),
         // Image.asset('assets/images/snake image.jpg'),

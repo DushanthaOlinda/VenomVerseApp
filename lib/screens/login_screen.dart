@@ -2,6 +2,7 @@ import 'package:VenomVerse/screens/home_screen.dart';
 import 'package:VenomVerse/screens/image_scan/scan_screen.dart';
 import 'package:VenomVerse/screens/pages/profile_page.dart';
 import 'package:VenomVerse/services/api.dart';
+import 'package:VenomVerse/services/api_user_control.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_login/flutter_login.dart';
 import 'package:provider/provider.dart';
 
 import '../models/auth.dart';
+import '../models/user.dart';
 
 const users = {
   'dribbble@gmail.com': '12345',
@@ -66,7 +68,13 @@ class LoginPage extends StatelessWidget {
           auth.login(res["token"]);
           auth.userSetup(res["username"], res["email"]);
         }
+        print(res["username"]);
         if (auth.isAuthorized) {
+          var usr = await UserApi().getUser(int.parse(res["username"]));
+          if (usr["userId"] != null) {
+            var newUser = User.fromJson(usr);
+            newUser.saveUser();
+          }
           return "Login Success";
         } else {
           return "Invalid Credentials";

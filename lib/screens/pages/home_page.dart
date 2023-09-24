@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -5,8 +6,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:comment_box/comment/comment.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:provider/provider.dart';
 
+import '../../models/auth.dart';
+import '../../services/post_api.dart';
+import '../../widgets/com_post_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,97 +21,29 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isLiked = false;
-
+  late Future<List<dynamic>> cardData;
+  List<PostCard> posts = [];
   @override
   Widget build(BuildContext context) {
+    var auth = context.watch<AuthModel>();
+    Map<String, dynamic> user;
     return Scaffold(
       backgroundColor: Colors.red[50],
-      body: Center(
-        child: Card(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(15),
-                child: const Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundImage:
-                          AssetImage('assets/images/user image.png'),
-                      radius: 30,
-                    ),
-                    SizedBox(width: 16),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Kimutu Kisal',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        Text(
-                          'Posted 2 hours ago',
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'A snake is a type of reptile that belongs to the suborder Serpentes. Snakes are known for their elongated, legless bodies covered in scales. They are found in various habitats worldwide, including forests, deserts, grasslands, and even bodies of water.',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-              Image.asset('assets/images/snake image.jpg'),
-              Container(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        isLiked ? Icons.favorite : Icons.favorite_border,
-                        color: Colors.red,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isLiked = !isLiked;
-                        });
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.comment,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const TestMe()),
-                        );
-                        // Perform comment action
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.report,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {
-                        popUpReportPost(context);
-                        // Perform report action
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+      body:FutureBuilder<List<dynamic>>(
+        future: cardData,
+        builder: (context, snapshot) {
+          return RefreshIndicator(
+            onRefresh: _pullRefresh,
+            child: _listView(snapshot),
+          );
+        },
       ),
+      // Center(
+      //   child: Card(
+      //       child: ListView(
+      //     children: posts,
+      //   )),
+      // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -127,168 +63,33 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  popUpReportPost(context) {
-    Alert(
-      context: context,
-      type: AlertType.warning,
-      title: "REPORT THE POST",
-      desc: "Are you sure to report the post?",
-      buttons: [
-        DialogButton(
-          onPressed: () {
-            Navigator.pop(context);
-            reportPost(context);
-            // Perform report action
-          },
-          color: const Color.fromRGBO(0, 179, 134, 1.0),
-          child: const Text(
-            "Yes",
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-        ),
-        DialogButton(
-          onPressed: () => Navigator.pop(context),
-          gradient: const LinearGradient(colors: [
-            Color.fromRGBO(116, 116, 191, 1.0),
-            Color.fromRGBO(52, 138, 199, 1.0),
-          ]),
-          child: const Text(
-            "No",
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-        )
-      ],
-    ).show();
+  Widget _listView(AsyncSnapshot snapshot) {
+    if (snapshot.hasData) {
+      return ListView.builder(
+        itemCount: snapshot.data.length,
+        itemBuilder: (context, index) {
+          return PostCard(data : snapshot.data[index]);
+        },);
+    }
+    else {
+      return const Center(
+        child: Text('Loading data...'),
+      );
+    }
   }
 
-  reportPost(context) {
-    Alert(
-      context: context,
-      type: AlertType.success,
-      title: "Thanks for letting us know.",
-      desc:
-          "We'll send you a notification to view the outcome as soon as possible",
-      buttons: [
-        DialogButton(
-          onPressed: () {
-            Navigator.pop(context);
+  Future<void> _pullRefresh() async {
+    List newPosts = await PostApi().getAllPosts();
 
-            // Perform report action
-          },
-          color: const Color.fromRGBO(0, 179, 134, 1.0),
-          child: const Text(
-            "Back",
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-        ),
-        DialogButton(
-          onPressed: () {
-            Navigator.pop(context);
-            addReason(context);
-          },
-          gradient: const LinearGradient(colors: [
-            Color.fromRGBO(116, 116, 191, 1.0),
-            Color.fromRGBO(52, 138, 199, 1.0),
-          ]),
-          child: const Text(
-            "Add a Reason",
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-        )
-      ],
-    ).show();
+    setState(() {
+      cardData = Future.value(newPosts);
+    });
   }
 
-  cancelReport(context) {
-    Alert(
-      context: context,
-      type: AlertType.error,
-      title: "This report has been cancelled.",
-      desc: "You can report this post again if you change your mind.",
-      buttons: [
-        DialogButton(
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.pushReplacementNamed(context, '/home');
-            // Perform report action
-          },
-          color: const Color.fromRGBO(0, 179, 134, 1.0),
-          child: const Text(
-            "OK",
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-        ),
-      ],
-    ).show();
-  }
-
-  addReason(context) {
-    Alert(
-      context: context,
-      title: "Please select the problem.",
-      desc: " ",
-      buttons: [
-        DialogButton(
-          onPressed: () {
-            Navigator.pop(context);
-            reportReceived(context);
-            // Perform report action
-          },
-          color: const Color.fromRGBO(0, 179, 134, 1.0),
-          child: const Text(
-            "Hate speech",
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-        ),
-        DialogButton(
-          onPressed: () {
-            Navigator.pop(context);
-            reportReceived(context);
-            // Perform report action
-          },
-          color: const Color.fromRGBO(0, 179, 134, 1.0),
-          child: const Text(
-            "False Information",
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-        ),
-        DialogButton(
-          onPressed: () {
-            Navigator.pop(context);
-            reportReceived(context);
-            // Perform report action
-          },
-          color: const Color.fromRGBO(0, 179, 134, 1.0),
-          child: const Text(
-            "Spam",
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-        ),
-      ],
-    ).show();
-  }
-
-  reportReceived(context) {
-    Alert(
-      context: context,
-      type: AlertType.success,
-      title: "Thank you, we've received your report",
-      desc: " ",
-      buttons: [
-        DialogButton(
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.pushReplacementNamed(context, '/home');
-            // Perform report action
-          },
-          color: const Color.fromRGBO(0, 179, 134, 1.0),
-          child: const Text(
-            "Back",
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-        ),
-      ],
-    ).show();
+  @override
+  void initState() {
+    super.initState();
+    cardData = PostApi().getAllPosts();
   }
 }
 
@@ -348,7 +149,7 @@ class AddNewPostState extends State<AddNewPost> {
                   );
                 },
               ),
-    ),
+            ),
             const SizedBox(height: 20),
             DropdownMenu<String>(
               initialSelection: list.first,
@@ -386,22 +187,23 @@ class AddNewPostState extends State<AddNewPost> {
                 // File? image = imageFile;
                 List<File> images = imageFiles;
                 for (var image in images) {
-                String fileName =  "images/${DateTime.timestamp()}.png";
-                String imageLink;
-                final storage = FirebaseStorage.instance;
-                final Reference ref = storage.ref().child(fileName);
+                  String fileName = "images/${DateTime.timestamp()}.png";
+                  String imageLink;
+                  final storage = FirebaseStorage.instance;
+                  final Reference ref = storage.ref().child(fileName);
 
-                await ref.putFile(image);
-                imageLink = await ref.getDownloadURL();
-                if (kDebugMode) {
-                  print(description);
-                  print(imageLink);
-                }
-                }// You can now use the 'imageFile' and 'description' for further processing
+                  await ref.putFile(image);
+                  imageLink = await ref.getDownloadURL();
+                  if (kDebugMode) {
+                    print(description);
+                    print(imageLink);
+                  }
+                } // You can now use the 'imageFile' and 'description' for further processing
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -538,8 +340,7 @@ class _TestMeState extends State<TestMe> {
         commentController: commentController,
         backgroundColor: Colors.green,
         textColor: Colors.white,
-        sendWidget:
-            const Icon(Icons.send_sharp, size: 30, color: Colors.white),
+        sendWidget: const Icon(Icons.send_sharp, size: 30, color: Colors.white),
         child: commentChild(filedata),
       ),
     );

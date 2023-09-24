@@ -1,6 +1,9 @@
+
+import 'package:VenomVerse/models/user.dart';
 import 'package:VenomVerse/screens/pages/catcher/requests_list.dart';
 import 'package:VenomVerse/screens/pages/feedback_page.dart';
 import 'package:VenomVerse/screens/pages/instructions_page.dart';
+import 'package:VenomVerse/screens/pages/profile_page.dart';
 import 'package:VenomVerse/widgets/generate_body.dart';
 import 'package:app_bar_with_search_switch/app_bar_with_search_switch.dart';
 import 'package:flutter/material.dart';
@@ -29,10 +32,14 @@ class _MyHomePageState extends State<MyHomePage> {
     var auth = context.watch<AuthModel>();
 
     if(auth.isAuthorized == false) {
-      auth.logout();
-      Navigator.pushReplacementNamed(context, '/login');
+      const AlertDialog(content: Text("data"),);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        // Navigator.pushReplacementNamed(context, '/YourRoute');
+        Navigator.pushReplacementNamed(context, '/login');
+      });
+    }else {
+      checkUser();
     }
-
     return Scaffold(
       appBar: AppBarWithSearchSwitch(
         onChanged: (text) {
@@ -159,6 +166,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
     );
 
+  }
+
+  Future<void> checkUser() async {
+    var userDet = await User().loadUserData();
+    print(userDet.userId);
+    if(userDet.userId == null){
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacementNamed(context, '/editProfile');
+          });
+        }
   }
 }
 const primaryColor = Color(0xFF4CAF50);

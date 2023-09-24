@@ -112,7 +112,6 @@ class _RequestsListState extends State<RequestsList> {
               cardClearButton: const Text('clear'),
               cardViewButton: const Text('view'),
               onTapClearCallback: (index) {
-                print(index);
                 setState(() {
                   _listOfNotification.removeAt(index);
                 });
@@ -122,7 +121,6 @@ class _RequestsListState extends State<RequestsList> {
                   context,
                   MaterialPageRoute(builder: (context) => const RequestForm()),
                 );
-                print(index);
               },
             ),
           ],

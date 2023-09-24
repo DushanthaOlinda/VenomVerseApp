@@ -120,45 +120,48 @@ class _ScanImageState extends State<ScanImage> {
         backgroundColor: Colors.green,
         icons: const [Icons.home, Icons.image_search, Icons.person],
         activeIndex: 1,
-        onTap: (int i) {
-          setState(() async {
-            if (i == 1) {
-              try {
-                final pickedFile =
-                    await ImagePicker().pickImage(source: ImageSource.gallery);
-                if (pickedFile != null) {}
-                if (pickedFile == null) {
-                  // TODO: do what if photo is not selected
-                } else {
-                  // DisplayPictureScreen(imagePath: pickedFile.path);
-                  if (context.mounted) {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => DisplayPictureScreen(
-                          imagePath: pickedFile.path,
-                        ),
+        onTap: (int i) async {
+          print(i);
+          if (i == 1) {
+            try {
+              final pickedFile =
+                  await ImagePicker().pickImage(source: ImageSource.gallery);
+              if (pickedFile != null) {}
+              if (pickedFile == null) {
+                // TODO: do what if photo is not selected
+              } else {
+                // DisplayPictureScreen(imagePath: pickedFile.path);
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DisplayPictureScreen(
+                        imagePath: pickedFile.path,
                       ),
-                    );
-                  }
-                }
-                // final image = await _controller.takePicture();
-              } catch (e) {
-                if (kDebugMode) {
-                  print(e);
+                    ),
+                  );
                 }
               }
-            } else if (i == 0) {
-              Navigator.pushReplacementNamed(context, '/home');
-            }else if (i == 2) {
-              if (context.mounted)
-              {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const CatcherList(),
-                  ),
-                );
-              }            }
-          });
+              // final image = await _controller.takePicture();
+            } catch (e) {
+              if (kDebugMode) {
+                print(e);
+              }
+            }
+          } else if (i == 0) {
+            if (kDebugMode) {
+              print("imHere");
+            }
+            Navigator.pushReplacementNamed(context, '/home');
+          } else if (i == 2) {
+            if (context.mounted) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const CatcherList(),
+                ),
+              );
+            }
+          }
+          setState(() => {});
         },
       ),
     );
