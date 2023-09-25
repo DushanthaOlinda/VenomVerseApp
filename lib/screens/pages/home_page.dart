@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:VenomVerse/models/user.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,10 @@ import 'package:comment_box/comment/comment.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/auth.dart';
+import '../../models/post.dart';
 import '../../services/post_api.dart';
 import '../../widgets/com_post_card.dart';
+import '../../widgets/generate_body.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,7 +32,7 @@ class _HomePageState extends State<HomePage> {
     Map<String, dynamic> user;
     return Scaffold(
       backgroundColor: Colors.red[50],
-      body:FutureBuilder<List<dynamic>>(
+      body: FutureBuilder<List<dynamic>>(
         future: cardData,
         builder: (context, snapshot) {
           return RefreshIndicator(
@@ -68,10 +71,10 @@ class _HomePageState extends State<HomePage> {
       return ListView.builder(
         itemCount: snapshot.data.length,
         itemBuilder: (context, index) {
-          return PostCard(data : snapshot.data[index]);
-        },);
-    }
-    else {
+          return PostCard(data: snapshot.data[index]);
+        },
+      );
+    } else {
       return const Center(
         child: Text('Loading data...'),
       );
@@ -107,7 +110,7 @@ class AddNewPostState extends State<AddNewPost> {
 
   @override
   Widget build(BuildContext context) {
-    const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
+    const List<String> list = <String>['Cobra', 'Ahatulla', 'Viper', 'Python'];
     return Scaffold(
       appBar: AppBar(
         title: const Text("Request to Add a New Post"),
@@ -184,21 +187,40 @@ class AddNewPostState extends State<AddNewPost> {
                 // TODO: navigate to home
                 // Handle submit here
                 String description = descriptionController.text;
+                String imageLink = '';
                 // File? image = imageFile;
                 List<File> images = imageFiles;
+                List<String> imageLinks = [];
                 for (var image in images) {
                   String fileName = "images/${DateTime.timestamp()}.png";
-                  String imageLink;
                   final storage = FirebaseStorage.instance;
                   final Reference ref = storage.ref().child(fileName);
 
                   await ref.putFile(image);
                   imageLink = await ref.getDownloadURL();
-                  if (kDebugMode) {
-                    print(description);
-                    print(imageLink);
-                  }
+                  imageLinks.add(imageLink);
                 } // You can now use the 'imageFile' and 'description' for further processing
+
+                var userId = await User.getUserName().then((value) => value);
+                if (kDebugMode) {
+                  print(userId);
+                  print(dropdownValue);
+                  print(description);
+                  print(imageLink);
+                }
+
+                var post = Post(
+                    int.parse(userId!), dropdownValue, description, imageLinks);
+
+                await PostApi.createPost(post.toJson())
+                    .then((value) => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => GenerateBody(
+                                  role: 'User',
+                                  userId: int.parse(
+                                      userId))), // Navigate to CardsPage
+                        ));
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
@@ -231,7 +253,9 @@ class AddNewPostState extends State<AddNewPost> {
 }
 
 class TestMe extends StatefulWidget {
-  const TestMe({super.key});
+  const TestMe({super.key, required this.postId, required this.comments});
+  final int postId;
+  final List comments;
 
   @override
   State<TestMe> createState() => _TestMeState();
@@ -240,32 +264,33 @@ class TestMe extends StatefulWidget {
 class _TestMeState extends State<TestMe> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController commentController = TextEditingController();
-  List filedata = [
-    {
-      'name': 'Chuks Okwuenu',
-      'pic': 'https://picsum.photos/300/30',
-      'message': 'I love to code',
-      'date': '2021-01-01 12:00:00'
-    },
-    {
-      'name': 'Biggi Man',
-      'pic': 'https://www.adeleyeayodeji.com/img/IMG_20200522_121756_834_2.jpg',
-      'message': 'Very cool',
-      'date': '2021-01-01 12:00:00'
-    },
-    {
-      'name': 'Tunde Martins',
-      'pic': 'assets/img/userpic.jpg',
-      'message': 'Very cool',
-      'date': '2021-01-01 12:00:00'
-    },
-    {
-      'name': 'Biggi Man',
-      'pic': 'https://picsum.photos/300/30',
-      'message': 'Very cool',
-      'date': '2021-01-01 12:00:00'
-    },
-  ];
+  // List filedata = [
+  //   {
+  //     'name': 'Chuks Okwuenu',
+  //     'pic': 'https://picsum.photos/300/30',
+  //     'message': 'I love to code',
+  //     'date': '2021-01-01 12:00:00'
+  //   },
+  //   {
+  //     'name': 'Biggi Man',
+  //     'pic': 'https://www.adeleyeayodeji.com/img/IMG_20200522_121756_834_2.jpg',
+  //     'message': 'Very cool',
+  //     'date': '2021-01-01 12:00:00'
+  //   },
+  //   {
+  //     'name': 'Tunde Martins',
+  //     'pic': 'assets/img/userpic.jpg',
+  //     'message': 'Very cool',
+  //     'date': '2021-01-01 12:00:00'
+  //   },
+  //   {
+  //     'name': 'Biggi Man',
+  //     'pic': 'https://picsum.photos/300/30',
+  //     'message': 'Very cool',
+  //     'date': '2021-01-01 12:00:00'
+  //   },
+  // ];
+
 
   Widget commentChild(data) {
     return ListView(
@@ -284,19 +309,20 @@ class _TestMeState extends State<TestMe> {
                   decoration: const BoxDecoration(
                       color: Colors.blue,
                       borderRadius: BorderRadius.all(Radius.circular(50))),
-                  child: CircleAvatar(
+                  child: const CircleAvatar(
                       radius: 50,
-                      backgroundImage: CommentBox.commentImageParser(
-                          imageURLorPath: data[i]['pic'])),
+                      // backgroundImage: CommentBox.commentImageParser(
+                      //     imageURLorPath: data[i]['pic'])
+                  ),
                 ),
               ),
               title: Text(
-                data[i]['name'],
+                data[i]['userId'].toString(),
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text(data[i]['message']),
+              subtitle: Text(data[i]['comment']),
               trailing:
-                  Text(data[i]['date'], style: const TextStyle(fontSize: 10)),
+                  Text(data[i]['dateTime'], style: const TextStyle(fontSize: 10)),
             ),
           )
       ],
@@ -305,6 +331,9 @@ class _TestMeState extends State<TestMe> {
 
   @override
   Widget build(BuildContext context) {
+    List filedata = widget.comments;
+    var auth = context.watch<AuthModel>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Comment Page"),
@@ -328,6 +357,10 @@ class _TestMeState extends State<TestMe> {
               };
               filedata.insert(0, value);
             });
+
+            setComment(widget.postId, commentController.text, int.parse(auth.userName!));
+
+
             commentController.clear();
             FocusScope.of(context).unfocus();
           } else {
@@ -344,5 +377,10 @@ class _TestMeState extends State<TestMe> {
         child: commentChild(filedata),
       ),
     );
+  }
+
+  Future<void> setComment(int postId, String text, int uid) async {
+    var comment = Comment(postId, uid, text);
+    PostApi.setComment(comment.toJson());
   }
 }

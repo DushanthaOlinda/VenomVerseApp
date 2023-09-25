@@ -29,7 +29,8 @@ class User {
       this.contactNo,
       this.workingStatus,
       this.accountStatus,
-      this.currentMarks});
+      this.currentMarks
+      });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -66,11 +67,11 @@ class User {
     prefs.setString('address', address!);
     prefs.setString('contactNo', contactNo!);
     prefs.setString('workingStatus', workingStatus!);
-    prefs.setString('accountStatus', accountStatus!);
+    prefs.setString('accountStatus', accountStatus ?? "None");
     prefs.setInt('currentMarks', currentMarks!);
   }
 
-  loadUserData() async {
+  static loadUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return User(
       userId: prefs.getInt('userId'),
@@ -81,10 +82,34 @@ class User {
       nic: prefs.getString('nic'),
       dob: prefs.getString('dob'),
       district: prefs.getString('district'),
+      address: prefs.getString('address'),
       contactNo: prefs.getString('contactNo'),
       workingStatus: prefs.getString('workingStatus'),
       accountStatus: prefs.getString('accountStatus'),
       currentMarks: prefs.getInt('currentMarks'),
     );
+  }
+
+  static Future<String?> getUserName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userName');
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'userId': userId,
+      'userName': userName,
+      'firstName': firstName,
+      'lastName': lastName,
+      'userEmail': userEmail,
+      'nic': nic,
+      'dob': dob,
+      'district': district,
+      'address': address,
+      'contactNo': contactNo,
+      'workingStatus': workingStatus,
+      'accountStatus': accountStatus,
+      'currentMarks': currentMarks,
+    };
   }
 }

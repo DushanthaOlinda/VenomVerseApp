@@ -63,7 +63,6 @@ class MyApp extends StatelessWidget {
                   camera: camera,
                 ),
             '/selectImage': (context) => const SelectImageFromGallery(),
-            '/editProfile': (context) => const EditProfile(),
           },
         ));
   }

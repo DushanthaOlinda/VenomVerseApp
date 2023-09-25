@@ -1,17 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:async/async.dart';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 import 'package:path/path.dart';
 // import 'package:async/async.dart';
-import '../models/auth.dart';
+
+String mainUrl = "https://venomverser.azurewebsites.net/";
 
 class Api {
 
-  String mainUrl = "https://venomverser.azurewebsites.net/";
   signup(String? email, String? password) async {
     if (email == null || password == null) {
       return "Invalid email or password";

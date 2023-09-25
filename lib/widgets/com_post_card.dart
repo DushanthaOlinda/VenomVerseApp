@@ -1,7 +1,10 @@
-import 'package:flutter/cupertino.dart';
+
+import 'package:VenomVerse/models/post.dart';
+import 'package:VenomVerse/services/post_api.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+import '../models/auth.dart';
 import '../screens/pages/home_page.dart';
 
 
@@ -61,7 +64,31 @@ class _PostCardState extends State<PostCard> {
           ),
         ),
         // Image.asset('assets/images/snake image.jpg'),
-        Image.network(widget.data["media"][0]),
+        Builder(
+          builder: (context) {
+
+            return SizedBox(
+              height: 200,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: widget.data["media"].length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.network(
+                      widget.data["media"][index],
+                    ),
+                  );
+                },
+              ),
+            );
+            //
+            // widget.data["media"].forEach((element) => {
+            //   Image.network(element)
+            // });
+            // return const SizedBox();
+          }
+        ),
         Container(
           padding: const EdgeInsets.all(16),
           child: Row(
@@ -86,7 +113,7 @@ class _PostCardState extends State<PostCard> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const TestMe()),
+                    MaterialPageRoute(builder: (context) => TestMe(postId: widget.data["postId"], comments: widget.data["comments"],)),
                   );
                   // Perform comment action
                 },
@@ -97,7 +124,7 @@ class _PostCardState extends State<PostCard> {
                   color: Colors.grey,
                 ),
                 onPressed: () {
-                  popUpReportPost(context);
+                  popUpReportPost(context, widget.data["postId"]);
                   // Perform report action
                 },
               ),
@@ -108,7 +135,7 @@ class _PostCardState extends State<PostCard> {
     );
   }
 
-  popUpReportPost(context) {
+  popUpReportPost(context,int id) {
     Alert(
       context: context,
       type: AlertType.warning,
@@ -118,7 +145,7 @@ class _PostCardState extends State<PostCard> {
         DialogButton(
           onPressed: () {
             Navigator.pop(context);
-            reportPost(context);
+            reportPost(context, id);
             // Perform report action
           },
           color: const Color.fromRGBO(0, 179, 134, 1.0),
@@ -142,7 +169,7 @@ class _PostCardState extends State<PostCard> {
     ).show();
   }
 
-  reportPost(context) {
+  reportPost(context, int id) {
     Alert(
       context: context,
       type: AlertType.success,
@@ -165,7 +192,7 @@ class _PostCardState extends State<PostCard> {
         DialogButton(
           onPressed: () {
             Navigator.pop(context);
-            addReason(context);
+            addReason(context, id);
           },
           gradient: const LinearGradient(colors: [
             Color.fromRGBO(116, 116, 191, 1.0),
@@ -203,7 +230,7 @@ class _PostCardState extends State<PostCard> {
     ).show();
   }
 
-  addReason(context) {
+  addReason(context, int id) {
     Alert(
       context: context,
       title: "Please select the problem.",
@@ -212,7 +239,7 @@ class _PostCardState extends State<PostCard> {
         DialogButton(
           onPressed: () {
             Navigator.pop(context);
-            reportReceived(context);
+            reportReceived(context, id, "Hate speech");
             // Perform report action
           },
           color: const Color.fromRGBO(0, 179, 134, 1.0),
@@ -224,7 +251,7 @@ class _PostCardState extends State<PostCard> {
         DialogButton(
           onPressed: () {
             Navigator.pop(context);
-            reportReceived(context);
+            reportReceived(context, id, "False Information");
             // Perform report action
           },
           color: const Color.fromRGBO(0, 179, 134, 1.0),
@@ -236,7 +263,7 @@ class _PostCardState extends State<PostCard> {
         DialogButton(
           onPressed: () {
             Navigator.pop(context);
-            reportReceived(context);
+            reportReceived(context, id, "Spam");
             // Perform report action
           },
           color: const Color.fromRGBO(0, 179, 134, 1.0),
@@ -249,15 +276,18 @@ class _PostCardState extends State<PostCard> {
     ).show();
   }
 
-  reportReceived(context) {
+  reportReceived(context, int id, String reason) async {
+    var auth = await context.watch<AuthModel>();
     Alert(
-      context: context,
+    context: context,
       type: AlertType.success,
       title: "Thank you, we've received your report",
       desc: " ",
       buttons: [
         DialogButton(
           onPressed: () {
+            var report = Report(id, auth.userName, reason);
+            PostApi.report(report.toJson());
             Navigator.pop(context);
             Navigator.pushReplacementNamed(context, '/home');
             // Perform report action

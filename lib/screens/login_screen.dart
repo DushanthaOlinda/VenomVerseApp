@@ -68,12 +68,12 @@ class LoginPage extends StatelessWidget {
           auth.login(res["token"]);
           auth.userSetup(res["username"], res["email"]);
         }
-        print(res["username"]);
+        // print(res["username"]);
         if (auth.isAuthorized) {
           var usr = await UserApi().getUser(int.parse(res["username"]));
           if (usr["userId"] != null) {
             var newUser = User.fromJson(usr);
-            newUser.saveUser();
+            await newUser.saveUser();
           }
           return "Login Success";
         } else {

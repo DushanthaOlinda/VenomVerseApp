@@ -19,31 +19,28 @@ class AuthModel extends ChangeNotifier {
   bool catcherPrivilege = false;
   bool communityAdminPrivilege = false;
 
-
-
-
   init() async {
     _token = await storage.read(key: 'token');
 
     isAuthorized = _token != null;
 
-
-    userName = await storage.read(key: 'userName');
-    userEmail = await storage.read(key: 'userEmail');
-    // isAuthorized = _token != null;
-    if(await storage.read(key: 'expertPrivilege') == null){
-      expertPrivilege = false;
+    if (isAuthorized) {
+      userName = await storage.read(key: 'userName');
+      userEmail = await storage.read(key: 'userEmail');
+      // isAuthorized = _token != null;
+      if (await storage.read(key: 'expertPrivilege') == null) {
+        expertPrivilege = false;
+      }
+      if (await storage.read(key: 'zoologistPrivilege') == null) {
+        zoologistPrivilege = false;
+      }
+      if (await storage.read(key: 'communityAdminPrivilege') == null) {
+        communityAdminPrivilege = false;
+      }
+      if (await storage.read(key: 'catcherPrivilege') == null) {
+        catcherPrivilege = false;
+      }
     }
-    if (await storage.read(key: 'zoologistPrivilege') == null){
-      zoologistPrivilege = false;
-    }
-    if (await storage.read(key: 'communityAdminPrivilege') == null){
-      communityAdminPrivilege = false;
-    }
-    if (await storage.read(key: 'catcherPrivilege') == null){
-      catcherPrivilege = false;
-    }
-
     notifyListeners();
   }
 
@@ -66,29 +63,32 @@ class AuthModel extends ChangeNotifier {
     notifyListeners();
   }
 
-
-  userSetup(String userName, String userEmail, {bool expert = false, bool zoologist = false, bool catcher = false, bool comAdmin = false}) async {    // storage.write(key: 'token', value: token);
+  userSetup(String userName, String userEmail,
+      {bool expert = false,
+      bool zoologist = false,
+      bool catcher = false,
+      bool comAdmin = false}) async {
+    // storage.write(key: 'token', value: token);
 
     // setting keys in the storage
 
     storage.write(key: 'userName', value: userName);
     storage.write(key: 'userEmail', value: userEmail);
 
-    if (expert){
+    if (expert) {
       storage.write(key: 'expertPrivilege', value: 'true');
     }
-    if (zoologist){
+    if (zoologist) {
       storage.write(key: 'zoologistPrivilege', value: 'true');
     }
-    if (catcher){
+    if (catcher) {
       storage.write(key: 'catcherPrivilege', value: 'true');
     }
-    if(comAdmin){
+    if (comAdmin) {
       storage.write(key: 'communityAdminPrivilege', value: 'true');
     }
     notifyListeners();
   }
-
 
   clearUser() async {
     userName = null;
@@ -107,13 +107,13 @@ class AuthModel extends ChangeNotifier {
     storage.delete(key: 'catcherPrivilege');
     storage.delete(key: 'communityAdminPrivilege');
 
-
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.clear();
-
 
     notifyListeners();
   }
 
-
+  Future<String?> getUsrName() async {
+    return userName ?? await storage.read(key: 'userName');
+  }
 }

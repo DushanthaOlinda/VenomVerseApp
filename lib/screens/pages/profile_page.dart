@@ -1,21 +1,25 @@
-import 'dart:developer';
 import 'dart:io';
 
+import 'package:VenomVerse/models/user.dart';
+import 'package:VenomVerse/services/api_user_control.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card_new/credit_card_brand.dart';
 import 'package:flutter_credit_card_new/flutter_credit_card.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:profile/profile.dart';
 import 'package:video_uploader/video_uploader.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../models/auth.dart';
 import 'home_page.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
-
+  const ProfilePage({Key? key, required this.userId}) : super(key: key);
+  final int userId;
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
@@ -44,12 +48,18 @@ class _ProfilePageState extends State<ProfilePage> {
             Align(
               alignment: Alignment.topRight,
               child: ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const EditProfile()),
-                  );
+                onPressed: () async {
+                  User currentUser = await User.loadUserData();
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditProfile(
+                              userId: widget.userId,
+                              usrData: currentUser.toJson())),
+                    );
+                  });
+                  // TODO: add user
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
@@ -95,10 +105,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     // Handle button press
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors
-                        .white, // Set the button background color to white
-                    onPrimary:
-                        Colors.green, // Set the button label color to green
+                    foregroundColor: Colors.green,
+                    backgroundColor:
+                        Colors.white, // Set the button label color to green
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 15), // Adjust padding for button size
@@ -146,10 +155,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       // Handle button press
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors
-                          .green[50], // Set the button background color to grey
-                      onPrimary:
-                          Colors.green, // Set the button label color to green
+                      foregroundColor: Colors.green,
+                      backgroundColor: Colors
+                          .green[50], // Set the button label color to green
                       padding: const EdgeInsets.all(
                           20), // Adjust padding for button size
                       shape: RoundedRectangleBorder(
@@ -187,10 +195,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       // Handle button press
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors
-                          .green[50], // Set the button background color to grey
-                      onPrimary:
-                          Colors.green, // Set the button label color to green
+                      foregroundColor: Colors.green,
+                      backgroundColor: Colors
+                          .green[50], // Set the button label color to green
                       padding: const EdgeInsets.all(
                           20), // Adjust padding for button size
                       shape: RoundedRectangleBorder(
@@ -224,6 +231,12 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
     );
+  }
+
+  Future<void> loadUserData() async {
+    User currentUser = await User.loadUserData();
+    print("currentUser");
+    print(currentUser.toJson());
   }
 }
 
@@ -342,7 +355,7 @@ class _BecomeZoologistState extends State<BecomeZoologist> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                     horizontal: 30,
                     vertical: 15), // Adjust padding for button size
                 shape: RoundedRectangleBorder(
@@ -468,7 +481,10 @@ class _myPostsState extends State<myPosts> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const TestMe()),
+                              builder: (context) => const TestMe(
+                                    postId: 1,
+                                    comments: [],
+                                  )),
                         );
                         // Perform comment action
                       },
@@ -735,7 +751,7 @@ class _myPostsState extends State<myPosts> {
       case 0:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => EditPost()),
+          MaterialPageRoute(builder: (context) => const EditPost()),
         );
 
         break;
@@ -1039,7 +1055,11 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 }
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({super.key});
+  const EditProfile({super.key, required this.userId, this.usrData});
+
+  final int userId;
+
+  final Map<String, dynamic>? usrData;
 
   @override
   _EditProfileState createState() => _EditProfileState();
@@ -1056,8 +1076,10 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
-  // final TextEditingController _usernameController = TextEditingController();
-  // final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   // final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
   final TextEditingController _nicController = TextEditingController();
@@ -1067,14 +1089,34 @@ class _EditProfileState extends State<EditProfile> {
   final TextEditingController _wstatusController = TextEditingController();
 
   late String _profilePictureUrl =
-      'https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'; // Store the profile picture URL here
+      'https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameController.text = widget.userId.toString();
+    _firstNameController.text = widget.usrData?["firstName"] ?? "";
+    _lastNameController.text = widget.usrData?["lastName"] ?? "";
+    _dobController.text = widget.usrData?["dob"] ?? "";
+    _nicController.text = widget.usrData?["nic"] ?? "";
+    _districtController.text = widget.usrData?["district"] ?? "";
+    _addressController.text = widget.usrData?["address"] ?? "";
+    _cnumController.text = widget.usrData?["contactNo"] ?? "";
+    _wstatusController.text = widget.usrData?["workingStatus"] ?? "";
+    print(widget.usrData);
+  } // Store the profile picture URL here
 
   // Method to handle saving profile changes
+
   void _saveChanges() {
+    print("Edit Page");
+
     // No Need to get email, password and username again
     // Implement the logic to save changes here
     // String username = _usernameController.text;
-    // String email = _emailController.text;
+    String firstName = _firstNameController.text;
+    String lastName = _lastNameController.text;
+    String? email = _emailController.text;
     // String password = _passwordController.text;
     String nic = _nicController.text;
     String district = _districtController.text;
@@ -1083,7 +1125,7 @@ class _EditProfileState extends State<EditProfile> {
     String wstatus = _wstatusController.text;
 
     // I created storage to store email and password
-
+    
     DateTime? dateOfBirth;
 
     try {
@@ -1098,6 +1140,28 @@ class _EditProfileState extends State<EditProfile> {
     }
     String profilePictureUrl = _profilePictureUrl;
 
+    var editedUser = User(
+      userId: widget.userId,
+      userName: widget.usrData?["userName"]?? widget.userId.toString(),
+      firstName: firstName,
+      lastName: lastName,
+      userEmail: email,
+      nic: nic,
+      dob: DateFormat('yyyy-MM-dd').format(dateOfBirth!),
+      district: district,
+      address: address,
+      contactNo: cnum,
+      workingStatus: wstatus,
+      currentMarks: widget.usrData?["currentMarks"] ?? 0,
+    );
+
+    print(editedUser.toJson());
+    if(widget.usrData == null) {
+      UserApi.addNewUser(editedUser.toJson());
+    }else{
+      UserApi.editUser(editedUser.toJson());
+    }
+    
     Navigator.pop(context);
     // Perform saving operations (e.g., update database, send API requests)
     // ...
@@ -1108,6 +1172,7 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    _emailController.text = context.watch<AuthModel>().userEmail!;
     return Scaffold(
       backgroundColor: Colors.red[50],
       appBar: AppBar(
@@ -1130,25 +1195,34 @@ class _EditProfileState extends State<EditProfile> {
               onPressed: _changeProfilePicture,
               child: const Text('Change Profile Picture'),
             ),
-            // const SizedBox(height: 16.0),
-            // Username
+            const SizedBox(height: 16.0),
+
+            TextField(
+              controller: _firstNameController,
+              decoration: const InputDecoration(
+                labelText: 'Username',
+              ),
+            ),
+            const SizedBox(height: 16.0),
+
+            TextField(
+              controller: _lastNameController,
+              decoration: const InputDecoration(
+                labelText: 'Username',
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            // Email Address
             // TextField(
-            //   controller: _usernameController,
-            //   decoration: const InputDecoration(
-            //     labelText: 'Username',
-            //   ),
-            // ),
-            // const SizedBox(height: 16.0),
-            // // Email Address
-            // TextField(
+            //   readOnly: true,
             //   controller: _emailController,
             //   decoration: const InputDecoration(
             //     labelText: 'Email Address',
             //   ),
-            //   keyboardType: TextInputType.emailAddress,
             // ),
-            // const SizedBox(height: 16.0),
-            // // Password
+            Text(context.watch<AuthModel>().userEmail!),
+            const SizedBox(height: 16.0),
+            // Password
             // TextField(
             //   controller: _passwordController,
             //   decoration: const InputDecoration(
@@ -1156,13 +1230,13 @@ class _EditProfileState extends State<EditProfile> {
             //   ),
             //   obscureText: true,
             // ),
-            const SizedBox(height: 16.0),
+            // const SizedBox(height: 16.0),
             TextField(
               controller: _dobController,
               decoration: const InputDecoration(
                 labelText: 'Date of birth',
               ),
-              obscureText: true,
+              keyboardType: TextInputType.datetime,
             ),
             const SizedBox(height: 16.0),
             TextField(
@@ -1170,7 +1244,6 @@ class _EditProfileState extends State<EditProfile> {
               decoration: const InputDecoration(
                 labelText: 'NIC',
               ),
-              obscureText: true,
             ),
             const SizedBox(height: 16.0),
             TextField(
@@ -1178,7 +1251,6 @@ class _EditProfileState extends State<EditProfile> {
               decoration: const InputDecoration(
                 labelText: 'District',
               ),
-              obscureText: true,
             ),
             const SizedBox(height: 16.0),
             TextField(
@@ -1186,7 +1258,6 @@ class _EditProfileState extends State<EditProfile> {
               decoration: const InputDecoration(
                 labelText: 'Address',
               ),
-              obscureText: true,
             ),
             const SizedBox(height: 16.0),
             TextField(
@@ -1194,7 +1265,6 @@ class _EditProfileState extends State<EditProfile> {
               decoration: const InputDecoration(
                 labelText: 'Contact Number',
               ),
-              obscureText: true,
             ),
             const SizedBox(height: 16.0),
             TextField(
@@ -1202,7 +1272,6 @@ class _EditProfileState extends State<EditProfile> {
               decoration: const InputDecoration(
                 labelText: 'Working Status',
               ),
-              obscureText: true,
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(

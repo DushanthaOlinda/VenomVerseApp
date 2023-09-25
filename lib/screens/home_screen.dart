@@ -1,4 +1,3 @@
-
 import 'package:VenomVerse/models/user.dart';
 import 'package:VenomVerse/screens/pages/catcher/requests_list.dart';
 import 'package:VenomVerse/screens/pages/feedback_page.dart';
@@ -37,8 +36,9 @@ class _MyHomePageState extends State<MyHomePage> {
         // Navigator.pushReplacementNamed(context, '/YourRoute');
         Navigator.pushReplacementNamed(context, '/login');
       });
+      return const Text("Pls login");
     }else {
-      checkUser();
+      checkUser(auth.userName!);
     }
     return Scaffold(
       appBar: AppBarWithSearchSwitch(
@@ -55,8 +55,9 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         },
       ),
-      body: const GenerateBody(
+      body: GenerateBody(
         role: 'role',
+        userId: int.parse(auth.userName!),
       ),
       drawer: SidebarX(
         controller: _controller,
@@ -157,25 +158,33 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
         footerItems: [
-          SidebarXItem(icon: Icons.logout, label: 'Logout',  onTap: (){
-            auth.logout();
-            Navigator.pushReplacementNamed(context, '/login');
-          }),
+          SidebarXItem(
+              icon: Icons.logout,
+              label: 'Logout',
+              onTap: () {
+                auth.logout();
+                Navigator.pushReplacementNamed(context, '/login');
+              }),
         ],
       ),
-
     );
 
   }
 
-  Future<void> checkUser() async {
-    var userDet = await User().loadUserData();
+  Future<void> checkUser(String userName) async {
+    var userDet = await User.loadUserData();
     print(userDet.userId);
-    if(userDet.userId == null){
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pushReplacementNamed(context, '/editProfile');
-          });
-        }
+    if (userDet.userId == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => EditProfile(
+                    userId: int.parse(userName),
+                  )),
+        );
+      });
+    }
   }
 }
 const primaryColor = Color(0xFF4CAF50);
