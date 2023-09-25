@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 import '../models/auth.dart';
+import '../services/api_user_control.dart';
 // import '../widgets/generate_body.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -25,13 +26,17 @@ class _MyHomePageState extends State<MyHomePage> {
   final _controller = SidebarXController(selectedIndex: 0, extended: true);
   String get role => "TestUser";
   String page = "Home";
+  late AuthModel auth;
+
 
   @override
   Widget build(BuildContext context) {
-    var auth = context.watch<AuthModel>();
+    final auth = context.watch<AuthModel>();
 
-    if(auth.isAuthorized == false) {
-      const AlertDialog(content: Text("data"),);
+    if (auth.isAuthorized == false) {
+      const AlertDialog(
+        content: Text("data"),
+      );
       WidgetsBinding.instance.addPostFrameCallback((_) {
         // Navigator.pushReplacementNamed(context, '/YourRoute');
         Navigator.pushReplacementNamed(context, '/login');
@@ -168,10 +173,17 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
     );
-
   }
 
   Future<void> checkUser(String userName) async {
+    var auth = context.watch<AuthModel>();
+    var usr = await UserApi().getUser(int.parse(auth.userName!));
+
+    if (usr["userId"] != null) {
+      var newUser = User.fromJson(usr);
+      await newUser.saveUser();
+    }
+
     var userDet = await User.loadUserData();
     print(userDet.userId);
     if (userDet.userId == null) {
@@ -187,6 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 }
+
 const primaryColor = Color(0xFF4CAF50);
 const canvasColor = Color(0xFF4CAF50);
 const scaffoldBackgroundColor = Color(0xFF1B5E20);

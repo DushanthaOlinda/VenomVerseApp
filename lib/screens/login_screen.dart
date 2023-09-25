@@ -50,12 +50,15 @@ class LoginPage extends StatelessWidget {
     });
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     var auth = context.watch<AuthModel>();
 
     if (auth.isAuthorized) {
-      return ScanImage(camera: camera);
+      // return ScanImage(camera: camera);
       return const MyHomePage(title: "VenomVerse");
     }
 
@@ -65,8 +68,8 @@ class LoginPage extends StatelessWidget {
         auth.logout();
         var res = await Api().login(data.name, data.password);
         if (res != null) {
-          auth.login(res["token"]);
-          auth.userSetup(res["username"], res["email"]);
+          await auth.login(res["token"]);
+          await auth.userSetup(res["username"], res["email"]);
         }
         // print(res["username"]);
         if (auth.isAuthorized) {

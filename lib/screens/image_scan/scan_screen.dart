@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:VenomVerse/screens/home_screen.dart';
 import 'package:VenomVerse/screens/pages/catcher/result_popup_v2.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:camera/camera.dart';
@@ -151,7 +152,12 @@ class _ScanImageState extends State<ScanImage> {
             if (kDebugMode) {
               print("imHere");
             }
-            Navigator.pushReplacementNamed(context, '/home');
+            // Navigator.pushReplacementNamed(context, '/home');
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const MyHomePage(title: "VenomVerse",),
+              ),
+            );
           } else if (i == 2) {
             if (context.mounted) {
               Navigator.of(context).push(

@@ -85,7 +85,7 @@ class User {
       address: prefs.getString('address'),
       contactNo: prefs.getString('contactNo'),
       workingStatus: prefs.getString('workingStatus'),
-      accountStatus: prefs.getString('accountStatus'),
+      accountStatus: prefs.getString('accountStatus') ?? "1",
       currentMarks: prefs.getInt('currentMarks'),
     );
   }

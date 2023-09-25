@@ -1108,7 +1108,7 @@ class _EditProfileState extends State<EditProfile> {
 
   // Method to handle saving profile changes
 
-  void _saveChanges() {
+  Future<void> _saveChanges() async {
     print("Edit Page");
 
     // No Need to get email, password and username again
@@ -1152,6 +1152,7 @@ class _EditProfileState extends State<EditProfile> {
       address: address,
       contactNo: cnum,
       workingStatus: wstatus,
+      accountStatus: '0',
       currentMarks: widget.usrData?["currentMarks"] ?? 0,
     );
 
@@ -1161,7 +1162,18 @@ class _EditProfileState extends State<EditProfile> {
     }else{
       UserApi.editUser(editedUser.toJson());
     }
-    
+
+
+    var auth = context.watch<AuthModel>();
+    var usr = await UserApi().getUser(int.parse(auth.userName!));
+
+    if (usr["userId"] != null) {
+      var newUser = User.fromJson(usr);
+      await newUser.saveUser();
+    }
+
+
+
     Navigator.pop(context);
     // Perform saving operations (e.g., update database, send API requests)
     // ...

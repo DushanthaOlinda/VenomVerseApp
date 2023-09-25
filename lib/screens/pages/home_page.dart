@@ -212,15 +212,8 @@ class AddNewPostState extends State<AddNewPost> {
                 var post = Post(
                     int.parse(userId!), dropdownValue, description, imageLinks);
 
-                await PostApi.createPost(post.toJson())
-                    .then((value) => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => GenerateBody(
-                                  role: 'User',
-                                  userId: int.parse(
-                                      userId))), // Navigate to CardsPage
-                        ));
+                await PostApi.createPost(post.toJson()).then((value) =>
+                    Navigator.pushReplacementNamed(context, '/home'));
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
@@ -291,7 +284,6 @@ class _TestMeState extends State<TestMe> {
   //   },
   // ];
 
-
   Widget commentChild(data) {
     return ListView(
       children: [
@@ -310,9 +302,9 @@ class _TestMeState extends State<TestMe> {
                       color: Colors.blue,
                       borderRadius: BorderRadius.all(Radius.circular(50))),
                   child: const CircleAvatar(
-                      radius: 50,
-                      // backgroundImage: CommentBox.commentImageParser(
-                      //     imageURLorPath: data[i]['pic'])
+                    radius: 50,
+                    // backgroundImage: CommentBox.commentImageParser(
+                    //     imageURLorPath: data[i]['pic'])
                   ),
                 ),
               ),
@@ -320,9 +312,9 @@ class _TestMeState extends State<TestMe> {
                 data[i]['userId'].toString(),
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text(data[i]['comment']),
-              trailing:
-                  Text(data[i]['dateTime'], style: const TextStyle(fontSize: 10)),
+              subtitle: Text(data[i]['comment'] ?? ""),
+              trailing: Text(data[i]['dateTime'] ?? "",
+                  style: const TextStyle(fontSize: 10)),
             ),
           )
       ],
@@ -349,17 +341,17 @@ class _TestMeState extends State<TestMe> {
           if (formKey.currentState!.validate()) {
             setState(() {
               var value = {
-                'name': 'New User',
+                'userId': auth.userName,
                 'pic':
                     'https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400',
-                'message': commentController.text,
-                'date': '2021-01-01 12:00:00'
+                'comment': commentController.text,
+                'dateTime': '2021-01-01 12:00:00'
               };
               filedata.insert(0, value);
             });
 
-            setComment(widget.postId, commentController.text, int.parse(auth.userName!));
-
+            setComment(widget.postId, commentController.text,
+                int.parse(auth.userName!));
 
             commentController.clear();
             FocusScope.of(context).unfocus();

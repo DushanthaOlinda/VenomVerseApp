@@ -45,7 +45,7 @@ class AuthModel extends ChangeNotifier {
   }
 
   login(String token) async {
-    storage.write(key: 'token', value: token);
+    await storage.write(key: 'token', value: token);
 
     _token = token;
     isAuthorized = true;
@@ -70,22 +70,24 @@ class AuthModel extends ChangeNotifier {
       bool comAdmin = false}) async {
     // storage.write(key: 'token', value: token);
 
+    this.userName = userName;
+    this.userEmail = userEmail;
     // setting keys in the storage
 
-    storage.write(key: 'userName', value: userName);
-    storage.write(key: 'userEmail', value: userEmail);
+    await storage.write(key: 'userName', value: userName);
+    await storage.write(key: 'userEmail', value: userEmail);
 
     if (expert) {
-      storage.write(key: 'expertPrivilege', value: 'true');
+      await storage.write(key: 'expertPrivilege', value: 'true');
     }
     if (zoologist) {
-      storage.write(key: 'zoologistPrivilege', value: 'true');
+      await storage.write(key: 'zoologistPrivilege', value: 'true');
     }
     if (catcher) {
-      storage.write(key: 'catcherPrivilege', value: 'true');
+      await storage.write(key: 'catcherPrivilege', value: 'true');
     }
     if (comAdmin) {
-      storage.write(key: 'communityAdminPrivilege', value: 'true');
+      await storage.write(key: 'communityAdminPrivilege', value: 'true');
     }
     notifyListeners();
   }
