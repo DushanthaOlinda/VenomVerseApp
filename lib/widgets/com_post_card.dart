@@ -44,7 +44,7 @@ class _PostCardState extends State<PostCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.data["userId"].toString(),
+                    '${widget.data["firstName"]} ${widget.data["lastName"]}',
                     style: const TextStyle(fontSize: 20),
                   ),
                   Text(
