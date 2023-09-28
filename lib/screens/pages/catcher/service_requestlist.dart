@@ -109,7 +109,7 @@ class _ServiceRequestsState extends State<ServiceRequests> {
                 ),
               ),
               cardViewButton: const Text(
-                'ඉල්ලීම බලන්න',
+                'බලන්න',
                 style: TextStyle(
                   color: Colors.black, // Set the text color to black
                 ),
