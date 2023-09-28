@@ -62,6 +62,7 @@ dependencies:
   video_player: ^2.7.0
   stepper_list_view: ^0.0.1
   art_sweetalert: ^0.0.5
+  multiviewlist: ^0.0.1
 
 
 dev_dependencies:
