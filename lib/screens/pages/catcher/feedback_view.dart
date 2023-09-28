@@ -8,7 +8,9 @@ class FeedbackView extends StatefulWidget {
 }
 
 class FeedbackViewState extends State<FeedbackView> {
+  // Define a list to hold the generated reviews
   List<Review> reviews = [
+
     Review(
       userImage: 'assets/images/feedbackuserimage.jpeg',
       userName: 'සිරිපාල පෙරේරා',
@@ -37,7 +39,33 @@ class FeedbackViewState extends State<FeedbackView> {
       date: '2022-01-02',
       comment: 'එය විශාල සර්පයෙක් විය. ඔහු එය ඉතා පරිස්සමින් හැසිරවිය',
     ),
+
+
+
+
   ];
+
+  // Generate reviews using a for loop
+  void generateReviews() {
+    for (int i = 1; i <= 5; i++) {
+      reviews.add(
+        Review(
+          userImage: 'assets/images/feedbackuserimage.jpeg',
+          userName: 'User $i',
+          starRating: i.toDouble(),
+          date: '2022-01-0$i',
+          comment: 'This is review number $i.',
+        ),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    // Call the generateReviews method to populate the list
+    generateReviews();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,16 +111,16 @@ class ReviewItem extends StatelessWidget {
       color: const Color(0xFF50C878),
       elevation: 4,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12), // Increase the border radius as needed
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Container(
-        height: 180, // Adjust the height as needed
+        height: 190,
         padding: const EdgeInsets.all(10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(12), // Increase the border radius as needed
+              borderRadius: BorderRadius.circular(12),
               child: Image.asset(
                 review.userImage,
                 width: 120,
@@ -105,7 +133,7 @@ class ReviewItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 8), // Add spacing between name and other details
+                  const SizedBox(height: 8),
                   Text(
                     review.userName,
                     style: const TextStyle(
@@ -142,4 +170,10 @@ class ReviewItem extends StatelessWidget {
       ),
     );
   }
+}
+
+void main() {
+  runApp(const MaterialApp(
+    home: FeedbackView(),
+  ));
 }
