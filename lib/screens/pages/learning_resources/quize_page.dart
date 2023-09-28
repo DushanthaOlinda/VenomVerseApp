@@ -1,5 +1,6 @@
 import 'package:VenomVerse/screens/pages/learning_resources/attempt_quiz_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/review_page.dart';
+import 'package:VenomVerse/screens/pages/learning_resources/viewallquiz_page.dart';
 import 'package:flutter/material.dart';
 
 final List<Map<String, dynamic>> quizzes = [
@@ -128,5 +129,3 @@ class _QuizePageState extends State<QuizePage> {
     );
   }
 }
-
-
