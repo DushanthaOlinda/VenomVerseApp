@@ -27,10 +27,7 @@ class _QuizePageState extends State<QuizePage> {
                     padding: const EdgeInsets.only(top: 16.0),
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const AttemptQuizPage()),
-                        );
+                        _showConfirmationDialog(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
@@ -113,3 +110,35 @@ class _QuizePageState extends State<QuizePage> {
     );
   }
 }
+Future<void> _showConfirmationDialog(BuildContext context) async {
+  return showDialog(
+    context: context,
+    barrierDismissible: false, // Disallow tapping outside the dialog to dismiss
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Confirm Attempt"),
+        content: Text("Are you sure you want to attempt the quiz?"),
+        actions: <Widget>[
+          TextButton(
+            child: Text("Cancel"),
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog
+            },
+          ),
+          TextButton(
+            child: Text("Yes"),
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog
+              // Navigate to the quiz page here
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AttemptQuizPage()),
+              );
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
