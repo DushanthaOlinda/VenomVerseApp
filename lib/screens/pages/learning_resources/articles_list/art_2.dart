@@ -28,7 +28,7 @@ class _Article2State extends State<Article2> {
               height: 200,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/images/snake image.jpg'),
+                  image: AssetImage('assets/images/snake2.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -40,27 +40,27 @@ class _Article2State extends State<Article2> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'By Will Sullivan',
+                    'By Chaminda Jayalal',
                     style: TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Having a Companion Could Help Rattlesnakes Stay Calm',
+                    'Diverse Serpents of Sri Lanka: An Overview of Snake Specie',
                     style: TextStyle(fontSize: 22, color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 16),
                   Text(
-                    'When rattlesnakes are in the presence of a companion, they’re more resilient to stress, according to new research published this month in the journal Frontiers in Ethology.',
+                    'One prominent group is the family Colubridae, comprising non-venomous snakes like the Green Vine Snake and the Checkered Keelback. These agile creatures play a crucial role in maintaining ecological balance by controlling rodent populations.',
                     style: TextStyle(fontSize: 16, color: Colors.black),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    "Operating off a hunch, a team of scientists decided to monitor rattlesnakes’ heart rates as the animals underwent a stressful situation, with and without another snake nearby. They found snakes that faced stress alone experienced a greater spike in their heart rates than those that had company.",
+                    "The island's endemic species are particularly intriguing, like the Hump-nosed Viper and the Sri Lankan Shieldtail Snake, which have evolved in isolation. Sadly, many of these unique species face habitat degradation and human encroachment, highlighting the urgent need for conservation efforts.",
                     style: TextStyle(fontSize: 16, color: Colors.black),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Because snakes are solitary foragers, scientists typically consider the animals to be asocial, the study authors write. But some research has found examples of snake behaviors that appear more social, such as male snakes guarding female mates and female snakes grouping together during gestation.',
+                    'Exploring the diverse serpents of Sri Lanka allows us to delve into the intricate connections between these reptiles and their surroundings. By studying their behaviors, ecological roles, and vulnerabilities, we gain insights that contribute not only to our understanding of snake biology but also to the broader field of biodiversity conservation.',
                     style: TextStyle(fontSize: 16, color: Colors.black),
                   ),
                 ],

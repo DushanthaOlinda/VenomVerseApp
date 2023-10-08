@@ -1,11 +1,16 @@
 import 'package:VenomVerse/screens/home_screen.dart';
+import 'package:VenomVerse/screens/image_scan/scan_screen.dart';
+import 'package:VenomVerse/screens/pages/profile_page.dart';
 import 'package:VenomVerse/services/api.dart';
+import 'package:VenomVerse/services/api_user_control.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:provider/provider.dart';
 
 import '../models/auth.dart';
+import '../models/user.dart';
 
 const users = {
   'dribbble@gmail.com': '12345',
@@ -13,7 +18,9 @@ const users = {
 };
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  const LoginPage({super.key, required this.camera});
+
+  final CameraDescription camera;
 
   Duration get loginTime => const Duration(milliseconds: 2250);
 
@@ -43,12 +50,15 @@ class LoginPage extends StatelessWidget {
     });
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     var auth = context.watch<AuthModel>();
 
-    if (auth.isAuthorized){
-
+    if (auth.isAuthorized) {
+      // return ScanImage(camera: camera);
       return const MyHomePage(title: "VenomVerse");
     }
 
@@ -58,9 +68,16 @@ class LoginPage extends StatelessWidget {
         auth.logout();
         var res = await Api().login(data.name, data.password);
         if (res != null) {
-          auth.login(res["token"]);
+          await auth.login(res["token"]);
+          await auth.userSetup(res["username"], res["email"]);
         }
+        // print(res["username"]);
         if (auth.isAuthorized) {
+          var usr = await UserApi().getUser(int.parse(res["username"]));
+          if (usr["userId"] != null) {
+            var newUser = User.fromJson(usr);
+            await newUser.saveUser();
+          }
           return "Login Success";
         } else {
           return "Invalid Credentials";
@@ -73,9 +90,13 @@ class LoginPage extends StatelessWidget {
       },
       onSubmitAnimationCompleted: () {
         if (auth.isAuthorized) {
-          Navigator.pushReplacementNamed(context, '/home');
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacementNamed(context, '/home');
+          });
         } else {
-          Navigator.pushReplacementNamed(context, '/login');
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacementNamed(context, '/login');
+          });
         }
       },
       onRecoverPassword: _recoverPassword,
@@ -85,5 +106,4 @@ class LoginPage extends StatelessWidget {
   void loadHomePage(BuildContext context) {
     Navigator.pushReplacementNamed(context, '/home');
   }
-
 }

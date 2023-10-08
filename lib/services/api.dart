@@ -1,49 +1,46 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:async/async.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 import 'package:path/path.dart';
 // import 'package:async/async.dart';
-import '../models/auth.dart';
+
+String mainUrl = "https://venomverser.azurewebsites.net/";
 
 class Api {
+
   signup(String? email, String? password) async {
     if (email == null || password == null) {
       return "Invalid email or password";
     }
-    var fullUrl = 'https://venomverseapi.azurewebsites.net/Auth/register';
-    // var fullUrl = 'https://google.com/';
-    // print(fullUrl);
-    // Response response = await http.get(
-    //   Uri.parse(fullUrl),
-    // );
+    var fullUrl = "${mainUrl}Auth/register";
+
+    String username = DateTime.now().millisecondsSinceEpoch.toString();
     Response response = await http.post(
       Uri.parse(fullUrl),
       body: jsonEncode({
         "registrationRequestId": 0,
         "email": email,
-        "username": email,
+        "username": username,
         "password": password
       }),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
+
+    print(response.statusCode);
     if (response.statusCode == 201) return null;
     Map<String, dynamic> jsonMap = json.decode(response.body);
     Iterable list = jsonMap.values;
+    print(list.first);
     return list.elementAtOrNull(0).toString();
   }
 
   login(String email, String password) async {
-    var fullUrl = 'https://venomverseapi.azurewebsites.net/Auth/login';
-    // var fullUrl = 'https://google.com/';
-    // print(fullUrl);
-    // Response response = await http.get(
-    //   Uri.parse(fullUrl),
-    // );
+    var fullUrl = '${mainUrl}Auth/login';
+
     Response response = await http.post(
       Uri.parse(fullUrl),
       body: jsonEncode({"email": email, "password": password}),
@@ -60,8 +57,8 @@ class Api {
   }
 
   logout() async {
-    var fullUrl = 'https://venomverseapi.azurewebsites.net/Auth/login';
-
+    // var fullUrl = 'https://venomverseapi.azurewebsites.net/Auth/login';
+    var fullUrl = '${mainUrl}Auth/Logout';
     Response response = await http.post(
       Uri.parse(fullUrl),
       headers: <String, String>{
@@ -102,16 +99,4 @@ class Api {
     return jsonDecode(responseBody);
     return {"class": 'Not Detected', 'message': '0'};
   }
-  //
-  //   Response response = await http.post(
-  //
-  //     body: jsonEncode({"file": File(imagePath)}),
-  //     headers: <String, String>{
-  //       'Content-Type': 'application/json; charset=UTF-8',
-  //     },
-  //   );
-  //
-  //   print(jsonDecode(response.body));
-  //
-  // }
 }

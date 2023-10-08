@@ -1,15 +1,16 @@
 import 'dart:io';
 
+import 'package:VenomVerse/screens/home_screen.dart';
+import 'package:VenomVerse/screens/pages/catcher/result_popup_v2.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
 
 import '../../services/api.dart';
-import '../pages/catcher/result_popup.dart';
+import '../pages/catcher/catcher_list.dart';
 
 class ScanImage extends StatefulWidget {
   const ScanImage({super.key, required this.camera});
@@ -78,7 +79,7 @@ class _ScanImageState extends State<ScanImage> {
           ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         // Provide an onPressed callback.
         onPressed: () async {
@@ -114,43 +115,59 @@ class _ScanImageState extends State<ScanImage> {
         child: const Icon(Icons.camera_alt),
       ),
       bottomNavigationBar: AnimatedBottomNavigationBar(
-        gapLocation: GapLocation.center,
+        gapLocation: GapLocation.none,
         inactiveColor: Colors.white,
         activeColor: Colors.white,
         backgroundColor: Colors.green,
-        icons: const [Icons.image_search, Icons.person],
+        icons: const [Icons.home, Icons.image_search, Icons.person],
         activeIndex: 1,
-        onTap: (int i) {
-          setState(() async {
-            if (i == 0) {
-              try {
-                final pickedFile =
-                    await ImagePicker().pickImage(source: ImageSource.gallery);
-                if (pickedFile != null) {}
-                if (pickedFile == null) {
-                  // TODO: do what if photo is not selected
-                } else {
-                  // DisplayPictureScreen(imagePath: pickedFile.path);
-                  if (context.mounted) {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => DisplayPictureScreen(
-                          imagePath: pickedFile.path,
-                        ),
+        onTap: (int i) async {
+          print(i);
+          if (i == 1) {
+            try {
+              final pickedFile =
+                  await ImagePicker().pickImage(source: ImageSource.gallery);
+              if (pickedFile != null) {}
+              if (pickedFile == null) {
+                // TODO: do what if photo is not selected
+              } else {
+                // DisplayPictureScreen(imagePath: pickedFile.path);
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DisplayPictureScreen(
+                        imagePath: pickedFile.path,
                       ),
-                    );
-                  }
-                }
-                // final image = await _controller.takePicture();
-              } catch (e) {
-                if (kDebugMode) {
-                  print(e);
+                    ),
+                  );
                 }
               }
-            } else if (i == 1) {
-              // TODO: Add contact snake Catcher
+              // final image = await _controller.takePicture();
+            } catch (e) {
+              if (kDebugMode) {
+                print(e);
+              }
             }
-          });
+          } else if (i == 0) {
+            if (kDebugMode) {
+              print("imHere");
+            }
+            // Navigator.pushReplacementNamed(context, '/home');
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const MyHomePage(title: "VenomVerse",),
+              ),
+            );
+          } else if (i == 2) {
+            if (context.mounted) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const CatcherList(),
+                ),
+              );
+            }
+          }
+          setState(() => {});
         },
       ),
     );
@@ -171,7 +188,9 @@ class DisplayPictureScreen extends StatelessWidget {
       body: Column(
         children: [
           Image.file(File(imagePath)),
-          const SizedBox(height: 40,),
+          const SizedBox(
+            height: 40,
+          ),
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -184,13 +203,17 @@ class DisplayPictureScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.replay),
-                        Text("Retake a Picture",textAlign: TextAlign.center,),
+                        Text(
+                          "Retake a Picture",
+                          textAlign: TextAlign.center,
+                        ),
                       ],
                     ),
                   ),
                   onPressed: () {
                     Navigator.pop(context);
-                  },                        ),
+                  },
+                ),
                 ElevatedButton(
                   child: const SizedBox(
                     width: 100,
@@ -199,7 +222,10 @@ class DisplayPictureScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.send),
-                        Text("Get Species name", textAlign: TextAlign.center,),
+                        Text(
+                          "Get Species name",
+                          textAlign: TextAlign.center,
+                        ),
                       ],
                     ),
                   ),
@@ -217,12 +243,15 @@ class DisplayPictureScreen extends StatelessWidget {
     EasyLoading.show(status: 'loading...');
     var result = await Api.scanSnake(File(imagePath));
     EasyLoading.dismiss();
-    print(result);
+    if (kDebugMode) {
+      print(result);
+    }
     if (context.mounted) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return ResultPopup(
+          // there are two result popups use ResultPopupV2 instead ResultPopup
+          return ResultPopupV2(
               species: result['class'], confidence: result['confidence']);
         },
       );

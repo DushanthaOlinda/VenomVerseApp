@@ -1,14 +1,14 @@
-import 'dart:ffi';
 
 import 'package:VenomVerse/screens/pages/learning_resources/extra_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/quize_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/resource_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/video_page.dart';
 import 'package:flutter/material.dart';
-import 'package:VenomVerse/screens/pages/learning_resources/e_books_pages.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'catcher/requestform_details.dart';
 import 'learning_resources/articles_page.dart';
 import 'catcher/result_popup.dart';
+import 'learning_resources/e_books_pages.dart';
 
 // class LearnPage extends StatefulWidget {
 //   const LearnPage({Key? key}) : super(key: key);
@@ -233,10 +233,8 @@ class _LearnPageState extends State<LearnPage> {
               // Repeat the same modifications for the other InkWell widgets
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const QuizePage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const QuizePage(key: null,)));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -270,7 +268,7 @@ class _LearnPageState extends State<LearnPage> {
                       ),
                       const SizedBox(height: 8),
                       const Text(
-                        "Quizzes",
+                        "Quiz",
                         style: TextStyle(color: Colors.green, fontSize: 18),
                       )
                     ],
@@ -280,10 +278,8 @@ class _LearnPageState extends State<LearnPage> {
               // Repeat the same modifications for the other InkWell widgets
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ResultPopup(species: "species", confidence: 100.0)));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const InfoPage()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -317,7 +313,7 @@ class _LearnPageState extends State<LearnPage> {
                       ),
                       const SizedBox(height: 8),
                       const Text(
-                        "Extra",
+                        "Serpents",
                         style: TextStyle(color: Colors.green, fontSize: 18),
                       )
                     ],
@@ -341,11 +337,11 @@ class _LearnPageState extends State<LearnPage> {
               width: 400,
               child: FloatingActionButton(
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   // MaterialPageRoute(builder: (context) => CatcherRequest(key: UniqueKey())),
-                  //   // MaterialPageRoute(builder: (context) => const ResultPopup(),),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RequestForm(key: UniqueKey())),
+
+                  );
                 },
               ),
             ),

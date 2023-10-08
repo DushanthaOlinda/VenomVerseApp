@@ -29,7 +29,7 @@ class _Article4State extends State<Article4> {
               height: 200,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/images/snake image.jpg'),
+                  image: AssetImage('assets/images/snake4.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -46,7 +46,7 @@ class _Article4State extends State<Article4> {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Having a Companion Could Help Rattlesnakes Stay Calm',
+                    'Cultural Significance of Snakes in Sri Lanka: Myths and Realities',
                     style: TextStyle(fontSize: 22, color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 16),
