@@ -4,6 +4,7 @@ import 'package:VenomVerse/screens/pages/learning_resources/articles_list/art_3.
 import 'package:VenomVerse/screens/pages/learning_resources/articles_list/art_4.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/articles_list/art_5.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/articles_list/art_6.dart';
+import 'package:VenomVerse/services/learn_content_api.dart';
 import 'package:flutter/material.dart';
 
 class ArticlesPage extends StatefulWidget {
@@ -14,6 +15,7 @@ class ArticlesPage extends StatefulWidget {
 }
 
 class _ArticlesPageState extends State<ArticlesPage> {
+  final _articles = LearnContentApi.getAllArticles();
   final List<Map<String, dynamic>> articles = [
     {
       'title': "Having a Companion Could Help Rattlesnakes Stay Calm",
@@ -56,29 +58,35 @@ class _ArticlesPageState extends State<ArticlesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Articles"),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: SafeArea(
-            child: Column(
-              children: [
-                for (var article in articles)
-                  buildArticleCard(
-                    context,
-                    article['title'],
-                    article['description'],
-                    article['imagePath'],
-                    article['articlePage'],
-                  ),
-              ],
+    return FutureBuilder<List<dynamic>>(
+      future: _articles,
+      builder: (context, snapshot) {
+        print(snapshot.data);
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text("Articles"),
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: SafeArea(
+                child: Column(
+                  children: [
+                    for (var article in snapshot.data ?? articles)
+                      buildArticleCard(
+                        context,
+                        article['communityArticleId'].toString(),
+                        article['description'],
+                        article['imagePath'] ?? 'assets/images/snake image.jpg',
+                        article['articlePage'] ?? const Article2(),
+                      ),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      }
     );
   }
 

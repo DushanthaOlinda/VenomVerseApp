@@ -48,26 +48,28 @@ class _addQuizQuestionsPageState extends State<addQuizQuestionsPage> {
         itemBuilder: (context, index) {
           final question = questions[index];
           // Pass the question number to the QuestionForm
-          return QuestionForm(
-            questionNumber: index + 1, // Add 1 to make it 1-based index
-            question: question,
-            onNextPressed: () {
-              if (currentPage < questions.length - 1) {
-                _pageController.nextPage(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                );
-              }
-            },
-            isLastPage: index == questions.length - 1,
-            onDonePressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => viewAllQuizesPage(), // Replace with the actual widget for quizPage
-                ),
-              );// Handle "Done" button click
-            },
+          return SingleChildScrollView(
+            child: QuestionForm(
+              questionNumber: index + 1, // Add 1 to make it 1-based index
+              question: question,
+              onNextPressed: () {
+                if (currentPage < questions.length - 1) {
+                  _pageController.nextPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                }
+              },
+              isLastPage: index == questions.length - 1,
+              onDonePressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const viewAllQuizesPage(), // Replace with the actual widget for quizPage
+                  ),
+                );// Handle "Done" button click
+              },
+            ),
           );
         },
       ),

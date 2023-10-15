@@ -156,7 +156,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const BecomeCatcher(),
+                                  builder: (context) => BecomeCatcher(userId: widget.userId,),
                                 ),
                               );
                               // Handle button press
@@ -197,7 +197,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const BecomeZoologist(),
+                                  builder: (context) => BecomeZoologist(userId: widget.userId),
                                 ),
                               );
                               // Handle button press
@@ -246,14 +246,19 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> loadUserData() async {
     User currentUser = await User.loadUserData();
-    print("currentUser");
-    print(currentUser.toJson());
+    if (kDebugMode) {
+      print("currentUser");
+    }
+    if (kDebugMode) {
+      print(currentUser.toJson());
+    }
   }
 }
 
 class BecomeZoologist extends StatefulWidget {
-  const BecomeZoologist({super.key});
+  const BecomeZoologist({super.key, required this.userId});
 
+  final int userId;
   @override
   _BecomeZoologistState createState() => _BecomeZoologistState();
 }
@@ -360,8 +365,12 @@ class _BecomeZoologistState extends State<BecomeZoologist> {
             ElevatedButton.icon(
               onPressed: () {
                 // Handle submit here
+
+                // TODO: add Image to the bucket
                 String degree = degreeController.text;
                 String year = yearController.text;
+                String university = uniController.text;
+                UserApi.reqToBeZoologist(DateTime.timestamp().millisecondsSinceEpoch, widget.userId, ["evidence"], degree, year, university);
                 // You can now use the 'imageFile', 'degree', and 'year' for further processing
               },
               style: ElevatedButton.styleFrom(
@@ -863,8 +872,8 @@ const primaryColor = Colors.green;
 const secondaryColor = Colors.green;
 
 class BecomeCatcher extends StatefulWidget {
-  const BecomeCatcher({super.key});
-
+  const BecomeCatcher({super.key, required this.userId});
+  final int userId;
   @override
   _BecomeCatcherState createState() => _BecomeCatcherState();
 }
@@ -984,6 +993,7 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
                   onPressed: () async {
                     if (_selectedVideo != null) {
                       try {
+                        // TODO: add video to bucket
                         var video =
                             await ApiVideoUploader.uploadWithUploadToken(
                                 _tokenTextController.text, _selectedVideo!.path,
@@ -996,6 +1006,8 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
                         if (kDebugMode) {
                           print("Title : ${video.title}");
                         }
+
+                        UserApi.reqToBeCatcher(DateTime.timestamp().millisecondsSinceEpoch, widget.userId, ["Link"]);
                       } catch (e) {
                         if (kDebugMode) {
                           print("Failed to upload video: $e");

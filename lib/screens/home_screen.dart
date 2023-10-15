@@ -1,7 +1,10 @@
 import 'package:VenomVerse/models/user.dart';
 import 'package:VenomVerse/screens/pages/catcher/requests_list.dart';
+import 'package:VenomVerse/screens/pages/catcher/service_requestlist.dart';
 import 'package:VenomVerse/screens/pages/feedback_page.dart';
 import 'package:VenomVerse/screens/pages/instructions_page.dart';
+import 'package:VenomVerse/screens/pages/learning_resources/addquiz_page.dart';
+import 'package:VenomVerse/screens/pages/learning_resources/viewallquiz_page.dart';
 import 'package:VenomVerse/screens/pages/profile_page.dart';
 import 'package:VenomVerse/widgets/generate_body.dart';
 import 'package:app_bar_with_search_switch/app_bar_with_search_switch.dart';
@@ -143,6 +146,32 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const FeedbackPage(),
+                  ),
+                );
+              }
+            },
+          ),
+          SidebarXItem(
+            icon: Icons.quiz,
+            label: 'Manage Quiz',
+            onTap: () {
+              if (context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const viewAllQuizesPage(),
+                  ),
+                );
+              }
+            },
+          ),
+          SidebarXItem(
+            icon: Icons.feedback,
+            label: 'Service List',
+            onTap: () {
+              if (context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ServiceRequests(),
                   ),
                 );
               }

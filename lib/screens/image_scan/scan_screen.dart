@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:VenomVerse/models/user.dart';
 import 'package:VenomVerse/screens/home_screen.dart';
 import 'package:VenomVerse/screens/pages/catcher/result_popup_v2.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:camera/camera.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -241,7 +243,20 @@ class DisplayPictureScreen extends StatelessWidget {
 
   _sendToScan(BuildContext context) async {
     EasyLoading.show(status: 'loading...');
+
     var result = await Api.scanSnake(File(imagePath));
+    var image = File(imagePath);
+    String fileName = "ScannedImages/${DateTime.timestamp()}.png";
+    final storage = FirebaseStorage.instance;
+    final Reference ref = storage.ref().child(fileName);
+
+    await ref.putFile(image);
+    var imageLink = await ref.getDownloadURL();
+    print(imageLink);
+    var userName = await User.getUserName();
+    print(userName);
+    var recId = await Api.saveScannedImage(int.parse(userName!), imageLink, 1, result['confidence'], "", "");
+
     EasyLoading.dismiss();
     if (kDebugMode) {
       print(result);
@@ -252,7 +267,7 @@ class DisplayPictureScreen extends StatelessWidget {
         builder: (BuildContext context) {
           // there are two result popups use ResultPopupV2 instead ResultPopup
           return ResultPopupV2(
-              species: result['class'], confidence: result['confidence']);
+              species: result['class'], confidence: result['confidence'], resultRecordId: 1,);
         },
       );
     }

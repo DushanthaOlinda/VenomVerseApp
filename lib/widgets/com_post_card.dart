@@ -71,7 +71,7 @@ class _PostCardState extends State<PostCard> {
               height: 200,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: widget.data["media"].length,
+                itemCount: widget.data["media"]?.length ?? 0,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),

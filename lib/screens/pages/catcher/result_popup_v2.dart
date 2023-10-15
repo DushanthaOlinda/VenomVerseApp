@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 
 
 class ResultPopupV2 extends StatefulWidget {
-  const ResultPopupV2({Key? key, required this.species, required this.confidence})
+  const ResultPopupV2({Key? key, required this.species, required this.confidence, required this.resultRecordId})
       : super(key: key);
 
   final String species;
   final double confidence;
+  final int resultRecordId;
   @override
   State<ResultPopupV2> createState() => _ResultPopupV2State();
 }
@@ -59,7 +60,7 @@ class _ResultPopupV2State extends State<ResultPopupV2> {
                 Image.asset(image, width: 200, height: 200,),
                 const SizedBox(height: 20),
                 Text(
-                  'Predicted Answer: \n\nSeems to be a ${widget.species}!',
+                  'Predicted Answer: \n\nSeems to be a ${widget.species}!${widget.resultRecordId}',
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -77,6 +78,67 @@ class UserApi extends Api {
 
     if (response.statusCode != 201) {
       print("Error: ${response.body}");
+    }
+  }
+
+  static Future<void> reqToBeCatcher(
+      int reqId, int userId, List<String> list) async {
+    String fullUrl = "${mainUrl}UserDetail/becameCatcher";
+    Response response = Response("Before Req", 404);
+
+    try {
+      var data = {
+        "reqId": reqId,
+        "reqCatcher": userId,
+        "catcherEvidence": list
+      };
+      response = await http.post(Uri.parse(fullUrl),
+          body: jsonEncode(data),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          });
+    } on Exception catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+
+    if (response.statusCode != 201) {
+      if (kDebugMode) {
+        print("Error: ${response.body}");
+      }
+    }
+  }
+
+
+  static Future<void> reqToBeZoologist(int reqId, int userId, List<String> evidence, String degreeName, String year, String university) async {
+    String fullUrl = "${mainUrl}UserDetail/becomeZoologist";
+    Response response = Response("Before Req", 404);
+
+    try {
+      var data = {
+        "requestToBeZoologistEvidenceId": reqId,
+        "zoologistId": userId,
+        "degreeEvidence": evidence,
+        "degreeName": degreeName,
+        "graduatedYear": year,
+        "university": university
+      };
+      response = await http.post(Uri.parse(fullUrl),
+          body: jsonEncode(data),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          });
+    } on Exception catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+
+    if (response.statusCode != 201) {
+      if (kDebugMode) {
+        print("Error: ${response.body}");
+      }
     }
   }
 }

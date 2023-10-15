@@ -99,4 +99,29 @@ class Api {
     return jsonDecode(responseBody);
     return {"class": 'Not Detected', 'message': '0'};
   }
+
+  static saveScannedImage(int parse, String imageLink, int i, result, String firstName, String lastName) async {
+    var fullUrl = "$mainUrl/ScanImage";
+    Response response = await http.post(
+      Uri.parse(fullUrl),
+      body: jsonEncode({
+        "scannedImageId": 0,
+        "uploadedUserId": parse,
+        "scannedImageMedia": imageLink,
+        "predictedSerpentType": i,
+        "accuracy": result,
+        "actualSerpentType": null,
+        "predictionSuccess": null
+      }),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      return null;
+    }
+  }
 }
