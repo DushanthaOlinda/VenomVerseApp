@@ -93,7 +93,7 @@ class _QuizePageState extends State<QuizePage> {
       child: InkWell(
         onTap: () async {
           int uid = int.parse(await User.getUserName()?? "0");
-          List quizData = await QuizApi.getQuizDetails(uid, quizDetailId);
+          Map quizData = await QuizApi.getQuizDetails(uid, quizDetailId);
           if (mounted) {
             if (quizData.length == 2) {
               // Navigate to the review page for this quiz

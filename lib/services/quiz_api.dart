@@ -24,7 +24,7 @@ class QuizApi extends Api {
     return jsonMap;
   }
 
-  static Future<List> getQuizDetails(int uid, int qid) async {
+  static Future<Map> getQuizDetails(int uid, int qid) async {
     Map<String, dynamic> posts = {};
     String fullUrl = "${mainUrl}Quiz/GetQuestions/$uid/$qid";
     // TODO: need to replace with correct url
@@ -41,7 +41,7 @@ class QuizApi extends Api {
       // return posts;
     }
     // List<Map<String, dynamic>> jsonMap = json.decode(response.body);
-    List<dynamic> jsonMap = json.decode(response.body);
+    Map<dynamic, dynamic> jsonMap = json.decode(response.body);
     print(jsonMap);
     return jsonMap;
   }

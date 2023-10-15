@@ -38,7 +38,7 @@ class ReviewPage extends StatelessWidget {
 
   int quizDetailId;
 
-  List quizDataa;
+  Map quizDataa;
 
   ReviewPage(this.quizDetailId, this.quizDataa, {Key? key}) : super(key: key);
 

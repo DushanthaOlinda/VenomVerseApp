@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AttemptQuizPage extends StatefulWidget {
   final int quizDetailId;
 
-  final List quizData;
+  final Map quizData;
 
   const AttemptQuizPage(this.quizDetailId, this.quizData, {Key? key}) : super(key: key);
 
