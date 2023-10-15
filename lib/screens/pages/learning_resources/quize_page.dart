@@ -1,5 +1,7 @@
+import 'package:VenomVerse/models/user.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/attempt_quiz_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/review_page.dart';
+import 'package:VenomVerse/services/quiz_api.dart';
 import 'package:flutter/material.dart';
 
 final List<Map<String, dynamic>> quizzes = [
@@ -29,6 +31,11 @@ class QuizePage extends StatefulWidget {
 }
 
 class _QuizePageState extends State<QuizePage> {
+
+  // var completedQuestions = QuizApi.getCompletedQuiz();
+  // var pendingQuestions = QuizApi.getPendingQuiz();
+  var allQuiz = QuizApi.getQuizList();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,23 +44,32 @@ class _QuizePageState extends State<QuizePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 20.0), // Add padding on top
-        child: ListView.builder(
-          itemCount: quizzes.length,
-          itemBuilder: (context, index) {
-            return buildQuizCard(
-              context,
-              'Topic ${index + 1}',
-              quizzes[index]['title'],
-              quizzes[index]['score'],
+        child: FutureBuilder<List>(
+          future: allQuiz,
+          builder: (context, snapshot) {
+            return ListView.builder(
+              itemCount: snapshot.data?.length ?? 0,
+              itemBuilder: (context, index) {
+                return buildQuizCard(
+                  context,
+                  'Topic ${index + 1}',
+                  snapshot.data?[index]['quizTopic'] ?? "Loading",
+                  snapshot.data?[index]['quizTopicSinhala'] ?? "Loading",
+                  snapshot.data?[index]['quizDetailId'] ?? "Loading",
+                  // quizzes[index]['title'],
+                  // quizzes[index]['score'],
+                );
+              },
             );
-          },
+          }
         ),
       ),
     );
   }
 
-  Widget buildQuizCard(BuildContext context, String topic, String title, String score) {
+  Widget buildQuizCard(BuildContext context, String topic, String title, String score, int quizDetailId ) {
     bool completed = score != 'Attempt the quiz';
+    completed = false;
     Color textColor;
 
     if (completed) {
@@ -75,19 +91,23 @@ class _QuizePageState extends State<QuizePage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: () {
-          if (completed) {
-            // Navigate to the review page for this quiz
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ReviewPage()),
-            );
-          } else {
-            // Navigate to the attempt quiz page for this quiz
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const AttemptQuizPage()),
-            );
+        onTap: () async {
+          int uid = int.parse(await User.getUserName()?? "0");
+          List quizData = await QuizApi.getQuizDetails(uid, quizDetailId);
+          if (mounted) {
+            if (quizData.length == 2) {
+              // Navigate to the review page for this quiz
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ReviewPage(quizDetailId,quizData)),
+              );
+            } else {
+              // Navigate to the attempt quiz page for this quiz
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AttemptQuizPage(quizDetailId, quizData)),
+              );
+            }
           }
         },
         child: Card(
@@ -109,6 +129,10 @@ class _QuizePageState extends State<QuizePage> {
                   title,
                   style: const TextStyle(fontSize: 18.0),
                 ),
+                Text(
+                  score,
+                  style: const TextStyle(fontSize: 18.0),
+                ),
                 const SizedBox(height: 10),
                 Align(
                   alignment: Alignment.centerRight,
@@ -128,5 +152,3 @@ class _QuizePageState extends State<QuizePage> {
     );
   }
 }
-
-

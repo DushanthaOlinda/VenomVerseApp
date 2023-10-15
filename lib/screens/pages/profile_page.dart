@@ -27,222 +27,238 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            const Align(
-              alignment: Alignment.topLeft,
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8),
-              child: Text(
-                'Profile',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: ElevatedButton.icon(
-                onPressed: () async {
-                  User currentUser = await User.loadUserData();
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditProfile(
-                              userId: widget.userId,
-                              usrData: currentUser.toJson())),
-                    );
-                  });
-                  // TODO: add user
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                        10), // Add border radius for button
-                  ),
-                ),
-                icon: const Icon(
-                  Icons.edit,
-                  color: Colors.white, // Set icon color to green
-                ), // Edit icon
-                label: const Text(
-                  'Edit Profile',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18, // Set font color to green
-                  ),
-                ),
-              ),
-            ),
-            Profile(
-              //profile data
-              imageUrl:
-                  "https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-
-              name: "Oshadhi Dilthara",
-              website: "",
-              designation: 'No, 22, Galle rd, Matara',
-              email: 'oshadhi@gmail.com',
-              phone_number: '0175773607',
-            ),
-            Align(
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const myPosts()), // Navigate to myPosts
-                    );
-                    // Handle button press
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.green,
-                    backgroundColor:
-                        Colors.white, // Set the button label color to green
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 15), // Adjust padding for button size
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(15), // Adjust corner radius
-                      side: const BorderSide(
-                          color: Colors.green), // Add a green border
+    return FutureBuilder<dynamic>(
+        future: User.loadUserData(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const CircularProgressIndicator();
+          } else {
+            // print(sn)
+            return Scaffold(
+              body: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    const Align(
+                      alignment: Alignment.topLeft,
                     ),
-                  ),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Posts',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(
-                          height:
-                              5), // Add spacing between the label and the count
-                      Text(
-                        '5', // Replace with your count value
+                    const Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Text(
+                        'Profile',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ],
-                  ),
-                )),
-            const SizedBox(height: 20),
-            Align(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const BecomeCatcher(),
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: ElevatedButton.icon(
+                        onPressed: () async {
+                          User currentUser = await User.loadUserData();
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditProfile(
+                                      userId: widget.userId,
+                                      usrData: currentUser.toJson())),
+                            );
+                          });
+                          // TODO: add user
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                10), // Add border radius for button
+                          ),
                         ),
-                      );
-                      // Handle button press
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.green,
-                      backgroundColor: Colors
-                          .green[50], // Set the button label color to green
-                      padding: const EdgeInsets.all(
-                          20), // Adjust padding for button size
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            10), // Add border radius for button
+                        icon: const Icon(
+                          Icons.edit,
+                          color: Colors.white, // Set icon color to green
+                        ), // Edit icon
+                        label: const Text(
+                          'Edit Profile',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18, // Set font color to green
+                          ),
+                        ),
                       ),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/snake_catcher.png', // Replace with your image asset path
-                          width: 72, // Adjust the image width as needed
-                          height: 72, // Adjust the image height as needed
-                        ),
-                        const SizedBox(
-                            height:
-                                8), // Add some spacing between the image and label
-                        const Text(
-                          'Become a Catcher',
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ],
+                    Profile(
+                      //profile data
+                      imageUrl:
+                          "https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+
+                      name: "${snapshot.data?.firstName} ${snapshot.data?.lastName}",
+                      website: "",
+                      designation: snapshot.data?.address ?? "",
+                      email: snapshot.data?.userEmail ?? "",
+                      phone_number: snapshot.data?.contactNo ?? "",
                     ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const BecomeZoologist(),
-                        ),
-                      );
-                      // Handle button press
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.green,
-                      backgroundColor: Colors
-                          .green[50], // Set the button label color to green
-                      padding: const EdgeInsets.all(
-                          20), // Adjust padding for button size
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            10), // Add border radius for button
+                    Align(
+                        alignment: Alignment.center,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const myPosts()), // Navigate to myPosts
+                            );
+                            // Handle button press
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.green,
+                            backgroundColor: Colors
+                                .white, // Set the button label color to green
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 15), // Adjust padding for button size
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  15), // Adjust corner radius
+                              side: const BorderSide(
+                                  color: Colors.green), // Add a green border
+                            ),
+                          ),
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Posts',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              SizedBox(
+                                  height:
+                                      5), // Add spacing between the label and the count
+                              Text(
+                                '5', // Replace with your count value
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )),
+                    const SizedBox(height: 20),
+                    Align(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BecomeCatcher(userId: widget.userId,),
+                                ),
+                              );
+                              // Handle button press
+                            },
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.green,
+                              backgroundColor: Colors.green[
+                                  50], // Set the button label color to green
+                              padding: const EdgeInsets.all(
+                                  20), // Adjust padding for button size
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    10), // Add border radius for button
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/snake_catcher.png', // Replace with your image asset path
+                                  width: 72, // Adjust the image width as needed
+                                  height:
+                                      72, // Adjust the image height as needed
+                                ),
+                                const SizedBox(
+                                    height:
+                                        8), // Add some spacing between the image and label
+                                const Text(
+                                  'Become a Catcher',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ],
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BecomeZoologist(userId: widget.userId),
+                                ),
+                              );
+                              // Handle button press
+                            },
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.green,
+                              backgroundColor: Colors.green[
+                                  50], // Set the button label color to green
+                              padding: const EdgeInsets.all(
+                                  20), // Adjust padding for button size
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    10), // Add border radius for button
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/zoologist.png', // Replace with your image asset path
+                                  width: 72, // Adjust the image width as needed
+                                  height:
+                                      72, // Adjust the image height as needed
+                                ),
+                                const SizedBox(
+                                    height:
+                                        8), // Add some spacing between the image and label
+                                const Text(
+                                  'Become a Zoologist',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/zoologist.png', // Replace with your image asset path
-                          width: 72, // Adjust the image width as needed
-                          height: 72, // Adjust the image height as needed
-                        ),
-                        const SizedBox(
-                            height:
-                                8), // Add some spacing between the image and label
-                        const Text(
-                          'Become a Zoologist',
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
+            );
+          }
+        });
   }
 
   Future<void> loadUserData() async {
     User currentUser = await User.loadUserData();
-    print("currentUser");
-    print(currentUser.toJson());
+    if (kDebugMode) {
+      print("currentUser");
+    }
+    if (kDebugMode) {
+      print(currentUser.toJson());
+    }
   }
 }
 
 class BecomeZoologist extends StatefulWidget {
-  const BecomeZoologist({super.key});
+  const BecomeZoologist({super.key, required this.userId});
 
+  final int userId;
   @override
   _BecomeZoologistState createState() => _BecomeZoologistState();
 }
@@ -349,8 +365,12 @@ class _BecomeZoologistState extends State<BecomeZoologist> {
             ElevatedButton.icon(
               onPressed: () {
                 // Handle submit here
+
+                // TODO: add Image to the bucket
                 String degree = degreeController.text;
                 String year = yearController.text;
+                String university = uniController.text;
+                UserApi.reqToBeZoologist(DateTime.timestamp().millisecondsSinceEpoch, widget.userId, ["evidence"], degree, year, university);
                 // You can now use the 'imageFile', 'degree', and 'year' for further processing
               },
               style: ElevatedButton.styleFrom(
@@ -852,8 +872,8 @@ const primaryColor = Colors.green;
 const secondaryColor = Colors.green;
 
 class BecomeCatcher extends StatefulWidget {
-  const BecomeCatcher({super.key});
-
+  const BecomeCatcher({super.key, required this.userId});
+  final int userId;
   @override
   _BecomeCatcherState createState() => _BecomeCatcherState();
 }
@@ -973,6 +993,7 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
                   onPressed: () async {
                     if (_selectedVideo != null) {
                       try {
+                        // TODO: add video to bucket
                         var video =
                             await ApiVideoUploader.uploadWithUploadToken(
                                 _tokenTextController.text, _selectedVideo!.path,
@@ -985,6 +1006,8 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
                         if (kDebugMode) {
                           print("Title : ${video.title}");
                         }
+
+                        UserApi.reqToBeCatcher(DateTime.timestamp().millisecondsSinceEpoch, widget.userId, ["Link"]);
                       } catch (e) {
                         if (kDebugMode) {
                           print("Failed to upload video: $e");
@@ -1125,7 +1148,7 @@ class _EditProfileState extends State<EditProfile> {
     String wstatus = _wstatusController.text;
 
     // I created storage to store email and password
-    
+
     DateTime? dateOfBirth;
 
     try {
@@ -1142,7 +1165,7 @@ class _EditProfileState extends State<EditProfile> {
 
     var editedUser = User(
       userId: widget.userId,
-      userName: widget.usrData?["userName"]?? widget.userId.toString(),
+      userName: widget.usrData?["userName"] ?? widget.userId.toString(),
       firstName: firstName,
       lastName: lastName,
       userEmail: email,
@@ -1157,12 +1180,11 @@ class _EditProfileState extends State<EditProfile> {
     );
 
     print(editedUser.toJson());
-    if(widget.usrData == null) {
+    if (widget.usrData == null) {
       UserApi.addNewUser(editedUser.toJson());
-    }else{
+    } else {
       UserApi.editUser(editedUser.toJson());
     }
-
 
     var auth = context.watch<AuthModel>();
     var usr = await UserApi().getUser(int.parse(auth.userName!));
@@ -1171,8 +1193,6 @@ class _EditProfileState extends State<EditProfile> {
       var newUser = User.fromJson(usr);
       await newUser.saveUser();
     }
-
-
 
     Navigator.pop(context);
     // Perform saving operations (e.g., update database, send API requests)
