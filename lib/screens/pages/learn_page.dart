@@ -8,6 +8,7 @@ import 'catcher/feedback_view.dart';
 import 'catcher/requestform_details.dart';
 import 'catcher/requests_list.dart';
 import 'catcher/result_popup.dart';
+import 'catcher/service_history.dart';
 import 'catcher/service_requestlist.dart';
 
 // class LearnPage extends StatefulWidget {
@@ -38,7 +39,7 @@ class _LearnPageState extends State<LearnPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => FeedbackView(key: UniqueKey())),
+                    MaterialPageRoute(builder: (context) => ServiceHistory(key: UniqueKey())),
 
                   );
                 },
