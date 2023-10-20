@@ -5,6 +5,7 @@ import 'package:VenomVerse/screens/pages/learning_resources/articles_list/art_4.
 import 'package:VenomVerse/screens/pages/learning_resources/articles_list/art_5.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/articles_list/art_6.dart';
 import 'package:VenomVerse/services/learn_content_api.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ArticlesPage extends StatefulWidget {
@@ -61,7 +62,9 @@ class _ArticlesPageState extends State<ArticlesPage> {
     return FutureBuilder<List<dynamic>>(
       future: _articles,
       builder: (context, snapshot) {
-        print(snapshot.data);
+        if (kDebugMode) {
+          print(snapshot.data);
+        }
         return Scaffold(
           appBar: AppBar(
             title: const Text("Articles"),
