@@ -1,6 +1,7 @@
 import 'package:VenomVerse/models/user.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/attempt_quiz_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/review_page.dart';
+import 'package:VenomVerse/screens/pages/learning_resources/viewallquiz_page.dart';
 import 'package:VenomVerse/services/quiz_api.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,6 @@ class QuizePage extends StatefulWidget {
 }
 
 class _QuizePageState extends State<QuizePage> {
-
   // var completedQuestions = QuizApi.getCompletedQuiz();
   // var pendingQuestions = QuizApi.getPendingQuiz();
   var allQuiz = QuizApi.getQuizList();
@@ -49,70 +49,80 @@ class _QuizePageState extends State<QuizePage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        _showConfirmationDialog(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                      ),
-                      child: const Text("Attempt Quiz"),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    "Attempted Quizzes:",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
+                  //me set ekama one na
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 16.0),
+                  //   child: ElevatedButton(
+                  //     onPressed: () {
+                  //       // _showConfirmationDialog(context);
+                  //     },
+                  //     style: ElevatedButton.styleFrom(
+                  //       backgroundColor: Colors.green,
+                  //     ),
+                  //     child: const Text("Attempt Quiz"),
+                  //   ),
+                  // ),  // meka epa
+                  // const SizedBox(height: 16), // meka epa
+                  // const Text(
+                  //   "Attempted Quizzes:",
+                  //   style: TextStyle(
+                  //     fontSize: 18,
+                  //     fontWeight: FontWeight.bold,
+                  //   ),
+                  // ), // meka epa
+                  // const SizedBox(height: 16), // meka epa
+
+                  // methanin passe tika danna
                   FutureBuilder<List>(
                       future: allQuiz,
                       builder: (context, snapshot) {
                         return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
                           itemCount: snapshot.data?.length ?? 0,
                           itemBuilder: (context, index) {
                             return buildQuizCard(
                               context,
                               'Topic ${index + 1}',
                               snapshot.data?[index]['quizTopic'] ?? "Loading",
-                              snapshot.data?[index]['quizTopicSinhala'] ?? "Loading",
-                              snapshot.data?[index]['quizDetailId'] ?? "Loading",
+                              snapshot.data?[index]['quizTopicSinhala'] ??
+                                  "Loading",
+                              snapshot.data?[index]['quizDetailId'] ??
+                                  "Loading",
                               // quizzes[index]['title'],
                               // quizzes[index]['score'],
                             );
                           },
                         );
-                      }
-                  ),
-                  buildQuizResultCard("01: Venomous or non venomous?", "4/5 marks"),
-                  buildQuizResultCard("02: Identifying snakes with pictures", "3/5 marks"),
-                  buildQuizResultCard("03: Instructions", "4/5 marks"),
-                  buildQuizResultCard("04: Medical treatments", "5/5 marks"),
+                      }),
+                  // buildQuizResultCard(
+                  //     "01: Venomous or non venomous?", "4/5 marks"),
+                  // buildQuizResultCard(
+                      // "02: Identifying snakes with pictures", "3/5 marks"),
+                  // buildQuizResultCard("03: Instructions", "4/5 marks"),
+                  // buildQuizResultCard("04: Medical treatments", "5/5 marks"),
                 ],
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const viewAllQuizesPage()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                // Change the button color as needed
-              ),
-              child: const Text("View All"),
-            ),
-          ),
+          // me pahala padding eka oneth na
+          // Padding(
+          //   padding: const EdgeInsets.all(16.0),
+          //   child: ElevatedButton(
+          //     onPressed: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //             builder: (context) => const viewAllQuizesPage()),
+          //       );
+          //     },
+          //     style: ElevatedButton.styleFrom(
+          //       backgroundColor: Colors.green,
+          //       // Change the button color as needed
+          //     ),
+          //     child: const Text("View All"),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -128,39 +138,48 @@ class _QuizePageState extends State<QuizePage> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start, // Align the text to the left
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the text vertically to the middle
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Align the text to the left
+            mainAxisAlignment: MainAxisAlignment
+                .spaceBetween, // Align the text vertically to the middle
             children: [
               Text(
                 title,
                 style: const TextStyle(
                   fontSize: 16,
-      body: Padding(
-        padding: const EdgeInsets.only(top: 20.0), // Add padding on top
-        child: FutureBuilder<List>(
-          future: allQuiz,
-          builder: (context, snapshot) {
-            return ListView.builder(
-              itemCount: snapshot.data?.length ?? 0,
-              itemBuilder: (context, index) {
-                return buildQuizCard(
-                  context,
-                  'Topic ${index + 1}',
-                  snapshot.data?[index]['quizTopic'] ?? "Loading",
-                  snapshot.data?[index]['quizTopicSinhala'] ?? "Loading",
-                  snapshot.data?[index]['quizDetailId'] ?? "Loading",
-                  // quizzes[index]['title'],
-                  // quizzes[index]['score'],
-                );
-              },
-            );
-          }
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0), // Add padding on top
+                child: FutureBuilder<List>(
+                    future: allQuiz,
+                    builder: (context, snapshot) {
+                      return ListView.builder(
+                        itemCount: snapshot.data?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return buildQuizCard(
+                            context,
+                            'Topic ${index + 1}',
+                            snapshot.data?[index]['quizTopic'] ?? "Loading",
+                            snapshot.data?[index]['quizTopicSinhala'] ??
+                                "Loading",
+                            snapshot.data?[index]['quizDetailId'] ?? "Loading",
+                            // quizzes[index]['title'],
+                            // quizzes[index]['score'],
+                          );
+                        },
+                      );
+                    }),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget buildQuizCard(BuildContext context, String topic, String title, String score, int quizDetailId ) {
+  Widget buildQuizCard(BuildContext context, String topic, String title,
+      String score, int quizDetailId) {
     bool completed = score != 'Attempt the quiz';
     completed = false;
     Color textColor;
@@ -185,21 +204,25 @@ class _QuizePageState extends State<QuizePage> {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () async {
-          int uid = int.parse(await User.getUserName()?? "0");
+          int uid = int.parse(await User.getUserName() ?? "0");
           Map quizData = await QuizApi.getQuizDetails(uid, quizDetailId);
           if (mounted) {
             if (quizData.length == 2) {
               // Navigate to the review page for this quiz
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ReviewPage(quizDetailId,quizData)),
+                MaterialPageRoute(
+                    builder: (context) => ReviewPage(quizDetailId, quizData)),
               );
             } else {
+              _showConfirmationDialog(context, quizDetailId, quizData);
               // Navigate to the attempt quiz page for this quiz
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AttemptQuizPage(quizDetailId, quizData)),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //       builder: (context) =>
+              //           AttemptQuizPage(quizDetailId, quizData)),
+              // );
             }
           }
         },
@@ -215,7 +238,8 @@ class _QuizePageState extends State<QuizePage> {
               children: [
                 Text(
                   topic,
-                  style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
                 Text(
@@ -245,29 +269,33 @@ class _QuizePageState extends State<QuizePage> {
     );
   }
 }
-Future<void> _showConfirmationDialog(BuildContext context) async {
+
+Future<void> _showConfirmationDialog(BuildContext context, int quizDetailId,
+    Map<dynamic, dynamic> quizData) async {
   return showDialog(
     context: context,
     barrierDismissible: false, // Disallow tapping outside the dialog to dismiss
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("Confirm Attempt"),
-        content: Text("Are you sure you want to attempt the quiz?"),
+        title: const Text("Confirm Attempt"),
+        content: const Text("Are you sure you want to attempt the quiz?"),
         actions: <Widget>[
           TextButton(
-            child: Text("Cancel"),
+            child: const Text("Cancel"),
             onPressed: () {
               Navigator.of(context).pop(); // Close the dialog
             },
           ),
           TextButton(
-            child: Text("Yes"),
+            child: const Text("Yes"),
             onPressed: () {
               Navigator.of(context).pop(); // Close the dialog
               // Navigate to the quiz page here
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const AttemptQuizPage()),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        AttemptQuizPage(quizDetailId, quizData)),
               );
             },
           ),
@@ -276,4 +304,3 @@ Future<void> _showConfirmationDialog(BuildContext context) async {
     },
   );
 }
-
