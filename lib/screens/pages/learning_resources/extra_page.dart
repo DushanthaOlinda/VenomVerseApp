@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Infor_list/inf1.dart';
+
 class InfoPage extends StatefulWidget {
   const InfoPage({super.key});
 
@@ -8,153 +10,133 @@ class InfoPage extends StatefulWidget {
 }
 
 class _InfoPageState extends State<InfoPage> {
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: const Text("Serpents"),
-    ),
-    body: SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: buildArticleCard(
-                  context,
-                  'assets/images/sp1.jpeg',
-                  "YourScientificName1",
-                  "YourEnglishName1",
-                  true,
-                  "YourFamily1",
-                  "YourSubFamily1",
-                  "YourGenus1",
-                  "YourDescription1",
-                  "YourSpecialNote1",
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: buildArticleCard(
-                  context,
-                  'assets/images/sp2.jpeg',
-                  "YourScientificName2",
-                  "YourEnglishName2",
-                  false,
-                  "YourFamily2",
-                  "YourSubFamily2",
-                  "YourGenus2",
-                  "YourDescription2",
-                  "YourSpecialNote2",
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: buildArticleCard(
-                  context,
-                  'assets/images/sp3.jpeg',
-                  "YourScientificName3",
-                  "YourEnglishName3",
-                  true,
-                  "YourFamily3",
-                  "YourSubFamily3",
-                  "YourGenus3",
-                  "YourDescription3",
-                  "YourSpecialNote3",
-                ),
-              ),
-            ],
+  final List<Map<String, dynamic>> inforPage = [
+    {
+      'title': "YourEnglishName1",
+      'description': "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
+      'imageUrl': 'assets/images/sp1.jpeg',
+      'infoPage': const InforPage(),
+    },
+    {
+      'title': "YourEnglishName1",
+      'description': "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
+      'imageUrl': 'assets/images/sp1.jpeg',
+      'infoPage': const InforPage(),
+    },
+    {
+      'title': "YourEnglishName1",
+      'description': "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
+      'imageUrl': 'assets/images/sp1.jpeg',
+      'infoPage': const InforPage(),
+    },
+    {
+      'title': "YourEnglishName1",
+      'description': "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
+      'imageUrl': 'assets/images/sp1.jpeg',
+      'infoPage': const InforPage(),
+    },
+    {
+      'title': "YourEnglishName1",
+      'description': "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
+      'imageUrl': 'assets/images/sp1.jpeg',
+      'infoPage': const InforPage(),
+    },
+    {
+      'title': "YourEnglishName1",
+      'description': "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
+      'imageUrl': 'assets/images/sp1.jpeg',
+      'infoPage': const InforPage(),
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Serpents"),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: SafeArea(
+            child: Column(
+              children: [
+                for (var infor in inforPage)
+                  buildArticleCard(
+                    context,
+                    infor['title'],
+                    infor['description'],
+                    infor['imageUrl'],
+                    infor['infoPage'],
+                  ),
+              ],
+            ),
           ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
 Widget buildArticleCard(
   BuildContext context,
-  String imagePath,
-  String scientificName,
-  String englishName,
-  bool venomous,
-  String family,
-  String subFamily,
-  String genus,
+  String title,
   String description,
-  String specialNote,
+  String imageUrl,
+  Widget infoPage,
 ) {
-  return Card(
-    elevation: 3.0,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AspectRatio(
-          aspectRatio: 16 / 9,
-          child: Image.asset(
-            imagePath,
-            fit: BoxFit.contain,
+  return InkWell(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => infoPage),
+      );
+    },
+    child: Card(
+      elevation: 3.0,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center( // Added Center widget here
+            child: Image.asset(imageUrl),
           ),
-        ),
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Scientific Name: $scientificName",
-                style: const TextStyle(
-                  fontSize: 16,
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-              Text(
-                "English Name: $englishName",
-                style: const TextStyle(
-                  fontSize: 16,
+                const SizedBox(height: 8),
+                Text(
+                  description,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-              Text(
-                "Venomous: ${venomous ? 'Yes' : 'No'}",
-                style: const TextStyle(
-                  fontSize: 16,
+                const SizedBox(height: 10),
+                const Text(
+                  "Read More..",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Text(
-                "Family: $family",
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              Text(
-                "Sub Family: $subFamily",
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              Text(
-                "Genus: $genus",
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              Text(
-                "Description: $description",
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              Text(
-                "Special Note: $specialNote",
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }

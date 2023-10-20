@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 // import '../widgets/generate_body.dart';
 
 class GenerateBody extends StatefulWidget {
-  const GenerateBody({super.key, required this.role});
+  const GenerateBody({super.key, required this.role, required this.userId});
 
   final String role;
-
+  final int userId;
   @override
   State<GenerateBody> createState() => _GenerateBodyState();
 }
@@ -18,20 +18,36 @@ class GenerateBody extends StatefulWidget {
 class _GenerateBodyState extends State<GenerateBody> {
   int _selectedIndex = 0;
 
+  late int uid;
+
   int get selectedIndex => _selectedIndex;
 
   set selectedIndex(int value) {
     _selectedIndex = value;
   }
 
-  Map pages = {
-    'Home': const HomePage(),
-    'Notifications': const NotificationPage(),
-    'Learn':  const LearnPage(),
-    'Profile': const ProfilePage(),
-  };
+
+
+
+  Map pages = {};
 
   String currentPage = "Home";
+
+  @override
+  void initState() {
+    super.initState();
+    uid = widget.userId;
+    pages = {
+      // 'Home': const HomePage(
+      //   title: 'VenomVerse',
+      // ),
+      'Home': const HomePage(),
+      'Notifications': const NotificationPage(),
+      'Learn': const LearnPage(),
+      'Profile': ProfilePage(userId: uid,),
+    };
+  }
+
 
   @override
   Widget build(BuildContext context) {
