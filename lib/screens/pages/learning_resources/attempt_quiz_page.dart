@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AttemptQuizPage extends StatefulWidget {
-  const AttemptQuizPage({Key? key}) : super(key: key);
+
+  AttemptQuizPage( {Key? key}) : super(key: key);
 
   @override
   State<AttemptQuizPage> createState() => _AttemptQuizPageState();

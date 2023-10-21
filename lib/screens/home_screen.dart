@@ -150,32 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
               }
             },
           ),
-          SidebarXItem(
-            icon: Icons.feedback,
-            label: 'Feedback',
-            onTap: () {
-              if (context.mounted) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const FeedbackPage(),
-                  ),
-                );
-              }
-            },
-          ),
-          SidebarXItem(
-            icon: Icons.integration_instructions,
-            label: 'Instructions',
-            onTap: () {
-              if (context.mounted) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const InstructionsPage(),
-                  ),
-                );
-              }
-            },
-          ),
+
           SidebarXItem(
             icon: Icons.post_add,
             label: 'Post Requests',
@@ -215,7 +190,32 @@ class _MyHomePageState extends State<MyHomePage> {
               }
             },
           ),
-
+          SidebarXItem(
+            icon: Icons.feedback,
+            label: 'Feedback',
+            onTap: () {
+              if (context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const FeedbackPage(),
+                  ),
+                );
+              }
+            },
+          ),
+          SidebarXItem(
+            icon: Icons.integration_instructions,
+            label: 'Instructions',
+            onTap: () {
+              if (context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const InstructionsPage(),
+                  ),
+                );
+              }
+            },
+          ),
         ],
         footerItems: [
           SidebarXItem(icon: Icons.logout, label: 'Logout',  onTap: (){
