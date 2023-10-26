@@ -1,7 +1,6 @@
 import 'package:VenomVerse/models/user.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/attempt_quiz_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/review_page.dart';
-import 'package:VenomVerse/screens/pages/learning_resources/viewallquiz_page.dart';
 import 'package:VenomVerse/services/quiz_api.dart';
 import 'package:flutter/material.dart';
 
