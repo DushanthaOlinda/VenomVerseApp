@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:stepper_list_view/stepper_list_view.dart';
 
-class CatcherList extends StatefulWidget {
-  const CatcherList({super.key});
+class ServiceHistory extends StatefulWidget {
+  const ServiceHistory({super.key});
 
   @override
-  State<CatcherList> createState() => _CatcherListState();
+  State<ServiceHistory> createState() => _ServiceHistoryState();
 }
 
-class _CatcherListState extends State<CatcherList> {
+class _ServiceHistoryState extends State<ServiceHistory> {
   final _stepperData = List.generate(
       10,
           (index) => StepperItemData(
         id: '$index',
         content: ({
-          'name': 'Subhash Chandra Shukla',
-          'occupation': '297 K B Christie Perera Mawatha, 13',
-          'mobileNumber': '7318459902',
-          'email': 'subhashchandras7318@gmail.com',
+          'name': 'නිමල් පෙරේරා',
+          'snake': 'නාගයා',
+          'mobileNumber': '0748596874',
+          'location': '68/7,පන්සල පාර, මහරගම',
         }),
         avatar: 'assets/images/man.jpg',
       )
@@ -27,12 +27,11 @@ class _CatcherListState extends State<CatcherList> {
   void _launchURL(String url) async {
     // You can use url_launcher package here to launch the URL
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Snake Catchers:'),
+        title: const Text('සේවා ඉතිහාසය:'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -83,7 +82,7 @@ class _CatcherListState extends State<CatcherList> {
                         ),
                         Expanded(
                           flex: 7,
-                          child: Text(stepData.content['occupation'] ?? ''),
+                          child: Text(stepData.content['snake'] ?? ''),
                         ),
                       ],
                     ),
@@ -113,7 +112,7 @@ class _CatcherListState extends State<CatcherList> {
                         ),
                         Expanded(
                           flex: 7,
-                          child: Text(stepData.content['email'] ?? ''),
+                          child: Text(stepData.content['location'] ?? ''),
                         ),
                       ],
                     ),

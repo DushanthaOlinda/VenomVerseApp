@@ -13,6 +13,8 @@ import 'catcher/feedback_view.dart';
 import 'catcher/requestform_details.dart';
 import 'learning_resources/articles_page.dart';
 import 'catcher/result_popup.dart';
+import 'catcher/service_cancellation.dart';
+import 'catcher/service_history.dart';
 import 'catcher/service_requestlist.dart';
 import 'learning_resources/e_books_pages.dart';
 
@@ -344,7 +346,7 @@ class _LearnPageState extends State<LearnPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => FeedbackView(key: UniqueKey())),
+                    MaterialPageRoute(builder: (context) => CancelReasonDialog(key: UniqueKey())),
 
                   );
                 },
