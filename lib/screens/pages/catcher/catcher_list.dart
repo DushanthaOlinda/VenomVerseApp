@@ -1,3 +1,4 @@
+import 'package:VenomVerse/screens/pages/catcher/view_history.dart';
 import 'package:flutter/material.dart';
 import 'package:stepper_list_view/stepper_list_view.dart';
 
@@ -19,6 +20,7 @@ class _CatcherListState extends State<CatcherList> {
           'mobileNumber': '7318459902',
           'email': 'subhashchandras7318@gmail.com',
           'born_date': '12\nAug',
+          'rating': '5.0',
         }),
         avatar: 'assets/images/man.jpg',
       )
@@ -62,71 +64,102 @@ class _CatcherListState extends State<CatcherList> {
               padding: const EdgeInsets.all(
                 15,
               ),
-              child: ListTile(
-                contentPadding: const EdgeInsets.all(7),
-                visualDensity: const VisualDensity(
-                  vertical: -4,
-                  horizontal: -4,
-                ),
-                title: Text(stepData.content['name'] ?? ''),
-                subtitle: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 10,
+              child: Column(
+                children: [
+                  ListTile(
+                    contentPadding: const EdgeInsets.all(7),
+                    visualDensity: const VisualDensity(
+                      vertical: -4,
+                      horizontal: -4,
                     ),
-                    Row(
+                    title: Text(stepData.content['name'] ?? ''),
+                    subtitle: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Expanded(
-                          flex: 3,
-                          child: Icon(Icons.work),
+                        const SizedBox(
+                          height: 10,
                         ),
-                        Expanded(
-                          flex: 7,
-                          child: Text(stepData.content['occupation'] ?? ''),
+                        Row(
+                          children: [
+                            const Expanded(
+                              flex: 3,
+                              child: Icon(Icons.work),
+                            ),
+                            Expanded(
+                              flex: 7,
+                              child: Text(stepData.content['occupation'] ?? ''),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            const Expanded(
+                              flex: 3,
+                              child: Icon(Icons.phone),
+                            ),
+                            Expanded(
+                              flex: 7,
+                              child: Text(stepData.content['mobileNumber'] ?? ''),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            const Expanded(
+                              flex: 3,
+                              child: Icon(Icons.email),
+                            ),
+                            Expanded(
+                              flex: 7,
+                              child: Text(stepData.content['email'] ?? ''),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            const Expanded(
+                              flex: 3,
+                              child: Icon(Icons.star),
+                            ),
+                            Expanded(
+                              flex: 7,
+                              child: Text(stepData.content['rating'] ?? ''),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const ViewHistoryPage()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green, // Set the button background color to green.
                     ),
-                    Row(
-                      children: [
-                        const Expanded(
-                          flex: 3,
-                          child: Icon(Icons.phone),
-                        ),
-                        Expanded(
-                          flex: 7,
-                          child: Text(stepData.content['mobileNumber'] ?? ''),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        const Expanded(
-                          flex: 3,
-                          child: Icon(Icons.email),
-                        ),
-                        Expanded(
-                          flex: 7,
-                          child: Text(stepData.content['email'] ?? ''),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                  ],
-                ),
+                    child: const Text('View & Request'), // Text on the button.
+                  ),
+                ],
               ),
             );
           },
+
         ),
       ),
     );
