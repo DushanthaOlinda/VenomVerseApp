@@ -1,3 +1,4 @@
+import 'package:VenomVerse/screens/pages/zoologistRequests_page.dart';
 import 'package:flutter/material.dart';
 
 class ZoologistRequestForm extends StatefulWidget {
@@ -7,7 +8,46 @@ class ZoologistRequestForm extends StatefulWidget {
   State<ZoologistRequestForm> createState() => _ZoologistRequestFormState();
 }
 
+class Zoologist {
+  final String name;
+  final int age;
+  final String nicNumber;
+  final String contactNumber;
+  final String degreeName;
+  final String graduationYear;
+  final String university;
+  final String zoologistImage;
+  final String graduationCertificateImage;
+
+  Zoologist({
+    required this.name,
+    required this.age,
+    required this.nicNumber,
+    required this.contactNumber,
+    required this.degreeName,
+    required this.graduationYear,
+    required this.university,
+    required this.zoologistImage,
+    required this.graduationCertificateImage,
+  });
+}
+
 class _ZoologistRequestFormState extends State<ZoologistRequestForm> {
+  final List<Zoologist> zoologists = [
+    Zoologist(
+      name: "John Doe",
+      age: 30,
+      nicNumber: "12345-67890",
+      contactNumber: "123-456-7890",
+      degreeName: "Master of Zoology",
+      graduationYear: "2022",
+      university: "University of Wildlife",
+      zoologistImage: "assets/images/zoologistImage1.jpeg",
+      graduationCertificateImage: "assets/images/graduationImage.jpeg",
+    ),
+    // Add more Zoologist objects for each request
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,31 +56,21 @@ class _ZoologistRequestFormState extends State<ZoologistRequestForm> {
       ),
       body: ListView(
         padding: EdgeInsets.all(16.0),
-        children: const [
-          RequestCard(
-            degreeName: "Master of Zoology",
-            graduationYear: "2022",
-            university: "University of Wildlife",
-            imagePath: "assets/images/graduationImage.jpeg",
-          ),
-          // Add more RequestCard widgets for each request
-        ],
+        children: zoologists.map((zoologist) {
+          return RequestCard(
+            zoologist: zoologist,
+          );
+        }).toList(),
       ),
     );
   }
 }
 
 class RequestCard extends StatelessWidget {
-  final String degreeName;
-  final String graduationYear;
-  final String university;
-  final String imagePath;
+  final Zoologist zoologist;
 
   const RequestCard({
-    required this.degreeName,
-    required this.graduationYear,
-    required this.university,
-    required this.imagePath,
+    required this.zoologist,
   });
 
   @override
@@ -51,7 +81,7 @@ class RequestCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.asset(
-            imagePath,
+            zoologist.zoologistImage,
             fit: BoxFit.cover,
           ),
           Padding(
@@ -60,25 +90,34 @@ class RequestCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Degree: $degreeName",
+                  "Name: ${zoologist.name}",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text("Graduation Year: $graduationYear"),
-                Text("University: $university"),
+                Text("Age: ${zoologist.age} years"),
+                Text("NIC Number: ${zoologist.nicNumber}"),
+                Text("Contact Number: ${zoologist.contactNumber}"),
+                Text("Degree: ${zoologist.degreeName}"),
+                Text("Graduation Year: ${zoologist.graduationYear}"),
+                Text("University: ${zoologist.university}"),
+                const SizedBox(height: 16.0),
+                Image.asset(
+                  zoologist.graduationCertificateImage,
+                  fit: BoxFit.cover,
+                ),
                 const SizedBox(height: 16.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        // Handle Approve button click
+                        _showSuccessDialog(context);
                       },
                       child: const Text("Approve"),
                     ),
                     const SizedBox(width: 16.0), // Add spacing between buttons
                     ElevatedButton(
                       onPressed: () {
-                        // Handle Reject button click
+                        _showRejectionDialog(context);
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.red, // Button background color
@@ -100,3 +139,54 @@ class RequestCard extends StatelessWidget {
     );
   }
 }
+// Method to show a success dialog
+void _showSuccessDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("Approved"),
+        content: const Text("Request has been successfully approved."),
+        actions: [
+          TextButton(
+            child: Text("OK"),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ZoologistRequestsPage()),
+              );// Navigate to the new page
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+// Method to show a rejection dialog
+void _showRejectionDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Rejected"),
+        content: Text("Request has been rejected."),
+        actions: [
+          TextButton(
+            child: Text("OK"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ZoologistRequestsPage()),
+                );// Navigate to the new page
+              },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+

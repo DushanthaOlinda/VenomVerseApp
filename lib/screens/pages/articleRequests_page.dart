@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stacked_notification_cards/stacked_notification_cards.dart';
+import 'articleDetails_page.dart';
 
 class Post {
   final String name;
@@ -10,7 +12,7 @@ class Post {
     required this.name,
     required this.title,
     required this.requestedDate,
-    required this.imagePaths,
+    required this.imagePaths, required Icon leading,
   });
 }
 
@@ -22,146 +24,128 @@ class ArticleRequestsPage extends StatefulWidget {
 }
 
 class _ArticleRequestsPageState extends State<ArticleRequestsPage> {
-  final List<Post> posts = [
-    Post(
-      name: "John Doe",
-      title: "Science",
-      requestedDate: DateTime(2023, 9, 20), // Example date
-      imagePaths: [
-        'assets/images/snake2.jpg',
-        'assets/images/snake4.jpg',
-        // Add more image paths here...
-      ],
+  final List<NotificationCard> _listOfNotification = [
+    NotificationCard(
+      date: DateTime.now(),
+      leading: const Icon(
+        Icons.account_circle,
+        size: 48,
+      ),
+      title: 'S.D.Perera',
+      subtitle: 'title of the article',
     ),
-    // Add more posts here...
+    NotificationCard(
+      date: DateTime.now().subtract(
+        const Duration(minutes: 4),
+      ),
+      leading: const Icon(
+        Icons.account_circle,
+        size: 48,
+      ),
+      title: 'John Alvis',
+      subtitle: 'title of the article',
+    ),
+    NotificationCard(
+      date: DateTime.now().subtract(
+        const Duration(minutes: 10),
+      ),
+      leading: const Icon(
+        Icons.account_circle,
+        size: 48,
+      ),
+      title: 'Sayuru Madimbada',
+      subtitle: 'title of the article',
+    ),
+    NotificationCard(
+      date: DateTime.now().subtract(
+        const Duration(minutes: 30),
+      ),
+      leading: const Icon(
+        Icons.account_circle,
+        size: 48,
+      ),
+      title: 'Buwaneka Rajapakse',
+      subtitle: 'title of the article',
+    ),
+    NotificationCard(
+      date: DateTime.now().subtract(
+        const Duration(minutes: 44),
+      ),
+      leading: const Icon(
+        Icons.account_circle,
+        size: 48,
+      ),
+      title: 'Anton Piyadasa',
+      subtitle: 'title of the article',
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Articles"),
+        title: const Text("Approve Articles"),
       ),
+      backgroundColor: Colors.red [50],
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: SafeArea(
-            child: Column(
-              children: [
-                for (final post in posts)
-                  buildListTile(context, post),
+        child: Column(
+          children: [
+            StackedNotificationCards(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.25),
+                  blurRadius: 2.0,
+                )
               ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildListTile(BuildContext context, Post post) {
-    return Card(
-      elevation: 3.0,
-      child: ListTile(
-        title: Text("${post.name} - ${post.title}"),
-        subtitle: Text("Requested Date: ${post.requestedDate.toLocal()}"),
-        trailing: const Icon(Icons.arrow_forward),
-        onTap: () {
-          // Navigate to the specific post page and pass imagePaths
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ArticleDetailsPage(
-                post: post,
+              notificationCardTitle: 'category name',
+              notificationCards: [..._listOfNotification],
+              cardColor: const Color(0xFFF1F1F1),
+              padding: 16,
+              actionTitle: const Text(
+                'Requests',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class ArticleDetailsPage extends StatelessWidget {
-  final Post post;
-
-  const ArticleDetailsPage({Key? key, required this.post}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("${post.name} - ${post.title}"),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              "Requested Date: ${post.requestedDate.toLocal()}",
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Text(
-              // Display the full details here
-              "Having a Companion Could Help Rattlesnakes Stay Calm",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ),
-          const SizedBox(height: 10),
-          const Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Text(
-              // Display the full details here
-              "This is the full description of the post. You can provide more details and information about the post here.",
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-          const SizedBox(height: 10), // Add some spacing between description and images
-          Expanded(
-            child: ListView.builder(
-              itemCount: post.imagePaths.length,
-              itemBuilder: (context, index) {
-                return Image.asset(
-                  post.imagePaths[index],
-                  fit: BoxFit.cover,
+              showLessAction: const Text(
+                'Show less',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.deepPurple,
+                ),
+              ),
+              onTapClearAll: () {
+                setState(() {
+                  _listOfNotification.clear();
+                });
+              },
+              clearAllNotificationsAction: const Icon(Icons.close),
+              clearAllStacked: const Text('Clear All'),
+              cardClearButton: const Text('clear'),
+              cardViewButton: const Text('view'),
+              onTapClearCallback: (index) {
+                print(index);
+                setState(() {
+                  _listOfNotification.removeAt(index);
+                });
+              },
+              onTapViewCallback: (index) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>  ArticleDetailsPage()),
                 );
+                print(index);
               },
             ),
-          ),
-          const SizedBox(height: 20), // Add spacing below the images
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  // Handle Approve button click
-                  // You can implement the logic here
-                },
-                child: const Text("Approve"),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  // Handle Reject button click
-                  // You can implement the logic here
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red, // Button background color
-                ),
-                child: const Text(
-                  "Reject",
-                  style: TextStyle(
-                    color: Colors.white, // Text color
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20), // Add spacing below the buttons
-        ],
+          ],
+        ),
       ),
+
     );
   }
 }
+
+
