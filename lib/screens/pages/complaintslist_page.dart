@@ -1,29 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:stacked_notification_cards/stacked_notification_cards.dart';
-import 'articleDetails_page.dart';
 
-class Post {
-  final String name;
-  final String title;
-  final DateTime requestedDate;
-  final List<String> imagePaths; // List of image paths
+import 'complaints_page.dart';
 
-  const Post({
-    required this.name,
-    required this.title,
-    required this.requestedDate,
-    required this.imagePaths, required Icon leading,
-  });
-}
 
-class ArticleRequestsPage extends StatefulWidget {
-  const ArticleRequestsPage({Key? key}) : super(key: key);
+class ComplaintsListPage extends StatefulWidget {
+  const ComplaintsListPage({Key? key}) : super(key: key);
 
   @override
-  State<ArticleRequestsPage> createState() => _ArticleRequestsPageState();
+  State<ComplaintsListPage> createState() => _ComplaintsListPageState();
 }
 
-class _ArticleRequestsPageState extends State<ArticleRequestsPage> {
+class _ComplaintsListPageState extends State<ComplaintsListPage> {
   final List<NotificationCard> _listOfNotification = [
     NotificationCard(
       date: DateTime.now(),
@@ -32,7 +20,7 @@ class _ArticleRequestsPageState extends State<ArticleRequestsPage> {
         size: 48,
       ),
       title: 'S.D.Perera',
-      subtitle: 'title of the article',
+      subtitle: 'Title of the article 1',
     ),
     NotificationCard(
       date: DateTime.now().subtract(
@@ -43,7 +31,7 @@ class _ArticleRequestsPageState extends State<ArticleRequestsPage> {
         size: 48,
       ),
       title: 'John Alvis',
-      subtitle: 'title of the article',
+      subtitle: 'Title of the article 1',
     ),
     NotificationCard(
       date: DateTime.now().subtract(
@@ -54,7 +42,7 @@ class _ArticleRequestsPageState extends State<ArticleRequestsPage> {
         size: 48,
       ),
       title: 'Sayuru Madimbada',
-      subtitle: 'title of the article',
+      subtitle: 'Title of the article 1',
     ),
     NotificationCard(
       date: DateTime.now().subtract(
@@ -65,7 +53,7 @@ class _ArticleRequestsPageState extends State<ArticleRequestsPage> {
         size: 48,
       ),
       title: 'Buwaneka Rajapakse',
-      subtitle: 'title of the article',
+      subtitle: 'Title of the article 1',
     ),
     NotificationCard(
       date: DateTime.now().subtract(
@@ -76,7 +64,7 @@ class _ArticleRequestsPageState extends State<ArticleRequestsPage> {
         size: 48,
       ),
       title: 'Anton Piyadasa',
-      subtitle: 'title of the article',
+      subtitle: 'Title of the article 1',
     ),
   ];
 
@@ -84,7 +72,7 @@ class _ArticleRequestsPageState extends State<ArticleRequestsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Approve Articles"),
+        title: const Text("Complaints"),
       ),
       backgroundColor: Colors.red [50],
       body: SingleChildScrollView(
@@ -97,12 +85,12 @@ class _ArticleRequestsPageState extends State<ArticleRequestsPage> {
                   blurRadius: 2.0,
                 )
               ],
-              notificationCardTitle: 'category name',
+              notificationCardTitle: 'Message',
               notificationCards: [..._listOfNotification],
               cardColor: const Color(0xFFF1F1F1),
               padding: 16,
               actionTitle: const Text(
-                'Requests',
+                'Notifications',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -134,9 +122,9 @@ class _ArticleRequestsPageState extends State<ArticleRequestsPage> {
               onTapViewCallback: (index) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) =>  ArticleDetailsPage()),
+                  MaterialPageRoute(builder: (context) => const ComplaintsPage()),
                 );
+                print(index);
               },
             ),
           ],
@@ -144,4 +132,6 @@ class _ArticleRequestsPageState extends State<ArticleRequestsPage> {
       ),
     );
   }
+
+
 }

@@ -1,8 +1,11 @@
 import 'package:VenomVerse/models/user.dart';
 import 'package:VenomVerse/screens/pages/addNewArticlelist_page.dart';
+import 'package:VenomVerse/screens/pages/addnewarticle_page.dart';
 import 'package:VenomVerse/screens/pages/articleRequests_page.dart';
 import 'package:VenomVerse/screens/pages/catcher/requests_list.dart';
 import 'package:VenomVerse/screens/pages/catcher/service_requestlist.dart';
+import 'package:VenomVerse/screens/pages/complaints_page.dart';
+import 'package:VenomVerse/screens/pages/complaintslist_page.dart';
 import 'package:VenomVerse/screens/pages/feedback_page.dart';
 import 'package:VenomVerse/screens/pages/instructions_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/viewallquiz_page.dart';
@@ -145,6 +148,19 @@ class _MyHomePageState extends State<MyHomePage> {
             },
           ),
           SidebarXItem(
+            icon: Icons.report,
+            label: 'Complaints',
+            onTap: () {
+              if (context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ComplaintsListPage(),
+                  ),
+                );
+              }
+            },
+          ),
+          SidebarXItem(
             icon: Icons.post_add_sharp,
             label: 'My Articles',
             onTap: () {
@@ -164,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
               if (context.mounted) {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const NewArticlePage(),
+                    builder: (context) => const AddNewArticlePage(),
                   ),
                 );
               }
