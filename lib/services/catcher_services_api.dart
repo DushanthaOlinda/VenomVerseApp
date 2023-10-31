@@ -43,7 +43,7 @@ class CatcherServicesApi extends Api {
 
 
 
-  static Future<List<Map<String, dynamic>>> getAllCatchers() async {
+  static Future<List> getAllCatchers() async {
     var mockData = [
       {
         "reqId": 123,
@@ -232,8 +232,31 @@ class CatcherServicesApi extends Api {
 
 
     if (response.statusCode == 200){
-      return jsonDecode(response.body);
+      // print(json.decode(response.body));
+      List data = json.decode(response.body);
+      return data;
+      response.body;
     }
     return mockData;
+  }
+
+  static completedRequests(int catcherId) async {
+    // https://venomverser.azurewebsites.net/Catcher/AllRequestsCompleted/1695232719640
+    String fullUrl = "${mainUrl}Catcher/AllRequestsCompleted/$catcherId";
+
+    Response response =
+        await http.get(Uri.parse(fullUrl), headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    });
+
+    print(response.statusCode);
+
+    if (response.statusCode == 200){
+      // print(json.decode(response.body));
+      List data = json.decode(response.body);
+      // data.map((e) => {'Location': data[]})
+      response.body;
+    }
+    // return mockData;
   }
 }

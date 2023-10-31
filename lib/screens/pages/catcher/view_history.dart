@@ -1,9 +1,10 @@
 import 'package:VenomVerse/screens/pages/catcher/send_request.dart';
+import 'package:VenomVerse/services/catcher_services_api.dart';
 import 'package:flutter/material.dart';
 
 class ViewHistoryPage extends StatefulWidget {
-  const ViewHistoryPage({super.key});
-
+  ViewHistoryPage({super.key, required this.catcherId});
+  late int catcherId;
   @override
   State<ViewHistoryPage> createState() => _ViewHistoryPageState();
 }
@@ -24,8 +25,10 @@ class _ViewHistoryPageState extends State<ViewHistoryPage> {
     // Add more history data entries here
   ];
 
+
   @override
   Widget build(BuildContext context) {
+    var completedRequests = CatcherServicesApi.completedRequests(widget.catcherId);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Catcher History'),
