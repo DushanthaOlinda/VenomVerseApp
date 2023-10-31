@@ -90,13 +90,13 @@ class _ResultPopupState extends State<ResultPopup> {
         ElevatedButton(
           onPressed: () {
             // Add your logic to contact a snake catcher here
-            if (context.mounted) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const PendingCatcherRequest(),
-                ),
-              );
-            }
+            // if (context.mounted) {
+            //   Navigator.of(context).push(
+            //     MaterialPageRoute(
+            //       builder: (context) =>  PendingCatcherRequest(reqId: null,),
+            //     ),
+            //   );
+            // }
           },
           child: const Text('Contact Snake Catcher'),
         ),
@@ -106,7 +106,8 @@ class _ResultPopupState extends State<ResultPopup> {
 }
 
 class PendingCatcherRequest extends StatefulWidget {
-  const PendingCatcherRequest({super.key});
+  const PendingCatcherRequest({super.key, required this.reqId});
+  final int reqId;
 
   @override
   State<PendingCatcherRequest> createState() => _PendingCatcherRequestState();
@@ -117,7 +118,7 @@ class _PendingCatcherRequestState extends State<PendingCatcherRequest> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadCatcherList(context);
+    loadCatcherList(context, widget.reqId);
   }
 
   @override
@@ -147,7 +148,7 @@ class _PendingCatcherRequestState extends State<PendingCatcherRequest> {
   }
 }
 
-void loadCatcherList(BuildContext context) {
+void loadCatcherList(BuildContext context, int reqId) {
   // BuildContext context;
   Future.delayed(
       const Duration(seconds: 60),
@@ -157,7 +158,7 @@ void loadCatcherList(BuildContext context) {
               {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const CatcherList(),
+                    builder: (context) => CatcherList(reqId: reqId),
                   ),
                 )
               }

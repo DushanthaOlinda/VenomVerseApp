@@ -1,11 +1,16 @@
+import 'package:VenomVerse/models/auth.dart';
 import 'package:VenomVerse/screens/pages/catcher/view_history.dart';
 import 'package:VenomVerse/services/catcher_services_api.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stepper_list_view/stepper_list_view.dart';
 
+import '../../../services/api.dart';
+
 class CatcherList extends StatefulWidget {
-  const CatcherList({super.key});
+  const CatcherList({super.key, this.reqId});
+  final int? reqId;
 
   @override
   State<CatcherList> createState() => _CatcherListState();
@@ -195,12 +200,17 @@ class _CatcherListState extends State<CatcherList> {
                           ),
                         ),
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            var newReqId = DateTime.now().millisecondsSinceEpoch;
+                            AuthModel auth = context.read<AuthModel>();
+                            if(widget.reqId == null){
+                              Api.requestCatcher(newReqId, int.parse(auth.userName!), null, null, null,);
+                            }
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => ViewHistoryPage(
-                                        catcherId: int.parse(stepData.id!),
+                                        catcherId: int.parse(stepData.id!), reqId: widget.reqId ?? newReqId,
                                       )),
                             );
                           },

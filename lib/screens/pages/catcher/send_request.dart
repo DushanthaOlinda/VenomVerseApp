@@ -37,7 +37,7 @@ class _callingPageState extends State<callingPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'John Doe', // Display the name of the person being called
+                'Sending Request', // Display the name of the person being called
                 style: TextStyle(
                   color: Colors.white, // Set the text color to white
                   fontSize: 25, // Adjust the font size
@@ -45,7 +45,7 @@ class _callingPageState extends State<callingPage> {
               ),
               SizedBox(height: 30),
               Text(
-                'Calling...',
+                'Connecting...',
                 style: TextStyle(
                   color: Colors.white, // Set the text color to white
                   fontSize: 24, // Increase the font size
@@ -53,7 +53,7 @@ class _callingPageState extends State<callingPage> {
               ),
               SizedBox(height: 20),
               Icon(
-                Icons.call,
+                Icons.send,
                 size: 100, // Increase the size of the call icon
                 color: Colors.green, // Set the color of the call icon
               ),
@@ -86,7 +86,7 @@ class NextPage extends StatelessWidget {
           children: [
             // Add the statement at the top of the page
             const Text(
-              'Catcher Accepted Your Request. He Will Be in Your Place in a Few Minutes.',
+              'Catcher request has been sent catcher will respond to the request soon',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class NextPage extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const catcherFeedbackPage()),
                   );
                 },
-                child: const Text('Rate the Catcher'),
+                child: const Text('Rate the Service'),
               ),
             ),
           ],

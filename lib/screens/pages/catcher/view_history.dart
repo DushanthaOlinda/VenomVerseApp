@@ -3,8 +3,9 @@ import 'package:VenomVerse/services/catcher_services_api.dart';
 import 'package:flutter/material.dart';
 
 class ViewHistoryPage extends StatefulWidget {
-  ViewHistoryPage({super.key, required this.catcherId});
+  ViewHistoryPage({super.key, required this.catcherId, required this.reqId});
   late int catcherId;
+  late int reqId;
   @override
   State<ViewHistoryPage> createState() => _ViewHistoryPageState();
 }
@@ -33,34 +34,41 @@ class _ViewHistoryPageState extends State<ViewHistoryPage> {
       appBar: AppBar(
         title: const Text('Catcher History'),
       ),
-      body: ListView.builder(
-        itemCount: historyData.length,
-        itemBuilder: (context, index) {
-          final entry = historyData[index];
-          return Card(
-            elevation: 4, // Add shadow to the card
-            margin: const EdgeInsets.all(10), // Add margin around the card
-            child: ListTile(
-              title: Text(entry['Location'] ?? 'Unknown Location'),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Date: ${entry['date'] ?? 'Unknown Date'}'),
-                  Text('Details: ${entry['details'] ?? 'No details available'}'),
-                ],
-              ),
-            ),
+      body: FutureBuilder<List<Map<String, String>>>(
+        future: completedRequests,
+        builder: (context, snapshot) {
+          print(snapshot.data);
+          return ListView.builder(
+            itemCount: snapshot.data?.length ?? 1,
+            itemBuilder: (context, index) {
+              final entry = snapshot.data?[index];
+              return Card(
+                elevation: 4, // Add shadow to the card
+                margin: const EdgeInsets.all(10), // Add margin around the card
+                child: ListTile(
+                  title: Text(entry?['Location'] ?? 'Unknown Location'),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Date: ${entry?['date'] ?? 'Unknown Date'}'),
+                      Text('Details: ${entry?['details'] ?? 'No details available'}'),
+                    ],
+                  ),
+                ),
+              );
+            },
           );
-        },
+        }
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          CatcherServicesApi.serviceRequestResponse(widget.reqId, widget.catcherId, true);
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const callingPage()),
           );
         },
-        child: const Icon(Icons.call),
+        child: const Icon(Icons.send),
       ),
     );
   }

@@ -93,15 +93,16 @@ class _ResultPopupV2State extends State<ResultPopupV2> {
                   onPressed: () async {
                     // Add your logic to contact a snake catcher here
                     // final auth = context.read<AuthModel>();
+                    int reqId = DateTime.now().millisecondsSinceEpoch;
 
-                    await Api.requestCatcher(DateTime.now().millisecondsSinceEpoch, widget.user, widget.imageLink, widget.savedImageId, widget.resultRecordId,);
+                    await Api.requestCatcher(reqId, widget.user, widget.imageLink, widget.savedImageId, widget.resultRecordId,);
 
 
 
                     if (context.mounted) {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const PendingCatcherRequest(),
+                          builder: (context) => PendingCatcherRequest(reqId: reqId),
                         ),
                       );
                     }

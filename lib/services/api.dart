@@ -127,7 +127,7 @@ class Api {
     }
   }
 
-  static Future<dynamic> requestCatcher(int resultRecordId, int userName, String imageLink, int imageId, int serpentType) async {
+  static Future<dynamic> requestCatcher(int resultRecordId, int userName, String? imageLink, int? imageId, int? serpentType) async {
     // var fullUrl = "$mainUrl/requestCatcher";
     var fullUrl = "$mainUrl/ImageDetection/CreateService/$resultRecordId";
     Response response = await http.post(

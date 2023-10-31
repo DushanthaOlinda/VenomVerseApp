@@ -76,6 +76,21 @@ class _ServiceRequestsState extends State<ServiceRequests> {
     final List<NotificationCard> notificationCards = [];
 
     for (var data in notificationData) {
+      var snake = 'Cobra';
+      switch (data['selectedSerpent']) {
+        case 0 : // Enter this block if mark == 0
+          snake = "assets/images/sp1.jpeg" ;
+          break;
+        case 2:
+          snake = "assets/images/sp2.jpeg" ;
+          break;
+        case 3:
+          snake = "assets/images/sp3.jpeg" ;
+          break;
+        default :
+          snake = "assets/images/snake_image.png" ;
+      }
+
       notificationCards.add(NotificationCard(
         date: DateTime.now().subtract(
           Duration(minutes: notificationCards.length * 4),
@@ -84,8 +99,8 @@ class _ServiceRequestsState extends State<ServiceRequests> {
           Icons.account_circle,
           size: 48,
         ),
-        title: data['title'] as String,
-        subtitle: data['subtitle'] as String,
+        title: data['reqUserFirstName'] + " requested for " + snake as String,
+        subtitle: data['requestServiceId'].toString(),
       ));
     }
 
@@ -95,6 +110,7 @@ class _ServiceRequestsState extends State<ServiceRequests> {
   @override
   Widget build(BuildContext context) {
     var auth = context.watch<AuthModel>();
+    var cardList = _generateNotificationCards(int.parse(auth.userName!));
     return Scaffold(
       backgroundColor: Colors.red[50],
       appBar: AppBar(
@@ -105,7 +121,7 @@ class _ServiceRequestsState extends State<ServiceRequests> {
           children: [
             const SafeArea(child: SizedBox()),
             FutureBuilder<List<NotificationCard>>(
-              future: _generateNotificationCards(int.parse(auth.userName!)),
+              future: cardList,
               builder: (context, snapshot) {
                 if(snapshot.hasData) {
                   return StackedNotificationCards(
@@ -174,7 +190,7 @@ class _ServiceRequestsState extends State<ServiceRequests> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (
-                            context) => const ServiceInfo()),
+                            context) => ServiceInfo(reqId: int.parse(snapshot.data![index].subtitle))),
                       );
                       if (kDebugMode) {
                         print(index);
