@@ -11,6 +11,7 @@ import 'package:app_bar_with_search_switch/app_bar_with_search_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sidebarx/sidebarx.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../models/auth.dart';
 import '../services/api_user_control.dart';
@@ -30,7 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String get role => "TestUser";
   String page = "Home";
   late AuthModel auth;
-
+  bool isEnglish = true;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
       checkUser(auth.userName!);
     }
     return Scaffold(
+
       appBar: AppBarWithSearchSwitch(
         onChanged: (text) {
           // update your provider here
@@ -57,8 +59,10 @@ class _MyHomePageState extends State<MyHomePage> {
         appBarBuilder: (context) {
           return AppBar(
             title: Text(widget.title),
+
             actions: const [
               AppBarSearchButton(),
+
             ],
           );
         },
@@ -68,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
         userId: int.parse(auth.userName!),
       ),
       drawer: SidebarX(
+
         controller: _controller,
         theme: SidebarXTheme(
           margin: const EdgeInsets.all(10),
@@ -126,6 +131,15 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         items: [
           SidebarXItem(
+            icon: Icons.language,
+            label: isEnglish ?'සිංහල' : 'English',
+            onTap: () {
+              setState(() {
+                isEnglish = !isEnglish; // Toggle language
+              });
+            },
+          ),
+          SidebarXItem(
             icon: Icons.person,
             label: 'Catcher Requests',
             onTap: () {
@@ -145,9 +159,10 @@ class _MyHomePageState extends State<MyHomePage> {
               if (context.mounted) {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const FeedbackPage(),
+                    builder: (context) => FeedbackPage(isEnglish: isEnglish),
                   ),
                 );
+
               }
             },
           ),
@@ -190,8 +205,8 @@ class _MyHomePageState extends State<MyHomePage> {
               }
             },
           ),
-        ],
-        footerItems: [
+
+
           SidebarXItem(
               icon: Icons.logout,
               label: 'Logout',
@@ -199,7 +214,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 auth.logout();
                 Navigator.pushReplacementNamed(context, '/login');
               }),
+
         ],
+
+
       ),
     );
   }

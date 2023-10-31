@@ -7,6 +7,7 @@ import 'package:VenomVerse/screens/pages/profile_page.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.green,
             primaryColor: Colors.green,
+            textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme), // Set Poppins as the default font
           ),
           // home: const MyHomePage(title: "VenomVerse"),
           // initialRoute: '/selectImage',
