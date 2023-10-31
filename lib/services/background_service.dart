@@ -1,14 +1,17 @@
 // BackgroundService.dart
+import 'package:VenomVerse/services/catcher_services_api.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../main.dart';
+import '../models/auth.dart';
 import '../screens/pages/catcher/service_cancellation.dart';
 import '../screens/pages/catcher/service_requestlist.dart';
 
 class CatcherServices {
-  static handleNewOrder(List<dynamic> args) {
-    Future.delayed(const Duration(seconds: 5), () => {_popAlert()});
+  static dynamic handleNewOrder(List<dynamic>? args) {
+    Future.delayed(const Duration(seconds: 5), () => {_popAlert(args)});
     // final newOrder = Order.fromJson(args.first as Map<String, dynamic>);
     // Code to show a notification...
   }
@@ -23,7 +26,7 @@ void _onAlertButtonsPressed(BuildContext context) {
     context: context,
     type: AlertType.info,
     title: "You are getting a call",
-    desc: "The user is in need of your help. Please answer this call",
+    desc: "aca",
     buttons: [
       DialogButton(
         onPressed: () => Navigator.pop(context),
@@ -55,21 +58,24 @@ void _onAlertButtonsPressed(BuildContext context) {
   ).show();
 }
 
-_popAlert() {
+_popAlert(List<dynamic>? args) {
   final context = navigatorKey.currentContext!;
+  AuthModel auth = context.read()<AuthModel>();
   Alert(
     context: context,
     type: AlertType.info,
     title: "You are getting a call",
-    desc: "The user is in need of your help. Please View this Request",
+    desc: "${args?[0] ?? 'Snake'} in ${args?[1] ?? 'NearBy'}",
     buttons: [
       DialogButton(
-        onPressed: () => Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const ServiceRequests()
-          ),
-        ),
+        onPressed: () async => {
+          await CatcherServicesApi.serviceRequestResponse(
+              args?[3] ?? 0, int.parse(auth.userName ?? "0"), true),
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const ServiceRequests()),
+          )
+        },
         color: const Color.fromRGBO(0, 179, 134, 1.0),
         child: const Text(
           "Accept",
@@ -79,12 +85,14 @@ _popAlert() {
       ),
       DialogButton(
         // CancelReasonDialog();
-        onPressed: () => Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const CancelReasonDialog()
-          ),
-        ),
+        onPressed: () async => {
+          await CatcherServicesApi.serviceRequestResponse(
+              args?[3] ?? 0, int.parse(auth.userName ?? "0"), false),
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const CancelReasonDialog()),
+          )
+        },
         gradient: const LinearGradient(colors: [
           Color.fromRGBO(255, 80, 80, 1.0),
           Color.fromRGBO(200, 60, 60, 1.0),

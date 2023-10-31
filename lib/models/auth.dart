@@ -41,7 +41,7 @@ class AuthModel extends ChangeNotifier {
       }
       if (await storage.read(key: 'catcherPrivilege') == null) {
         catcherPrivilege = false;
-        hubConnection.on("ReceiveOrder", CatcherServices.handleNewOrder([1, 2]));
+        hubConnection.on("ReceiveOrder", CatcherServices.handleNewOrder);
       }
     }
     notifyListeners();
@@ -87,7 +87,7 @@ class AuthModel extends ChangeNotifier {
     }
     if (catcher) {
       await storage.write(key: 'catcherPrivilege', value: 'true');
-      hubConnection.on("ReceiveOrder", CatcherServices.handleNewOrder([]));
+      hubConnection.on("ReceiveOrder", CatcherServices.handleNewOrder);
     }
     if (comAdmin) {
       await storage.write(key: 'communityAdminPrivilege', value: 'true');
