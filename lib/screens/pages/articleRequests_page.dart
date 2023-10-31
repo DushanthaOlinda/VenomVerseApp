@@ -99,7 +99,7 @@ class ArticleDetailsPage extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: Text(
               "Requested Date: ${post.requestedDate.toLocal()}",
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
           ),
           const Padding(
@@ -148,7 +148,7 @@ class ArticleDetailsPage extends StatelessWidget {
                   // You can implement the logic here
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.red, // Button background color
+                  backgroundColor: Colors.red, // Button background color
                 ),
                 child: const Text(
                   "Reject",

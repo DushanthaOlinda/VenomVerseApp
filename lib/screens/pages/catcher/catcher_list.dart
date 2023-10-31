@@ -151,7 +151,7 @@ class _CatcherListState extends State<CatcherList> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.green, // Set the button background color to green.
+                      backgroundColor: Colors.green, // Set the button background color to green.
                     ),
                     child: const Text('View & Request'), // Text on the button.
                   ),

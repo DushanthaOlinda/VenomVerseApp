@@ -2,14 +2,14 @@ import 'package:VenomVerse/screens/pages/learning_resources/viewallquiz_page.dar
 import 'package:flutter/material.dart';
 
 class addQuizQuestionsPage extends StatefulWidget {
-  const addQuizQuestionsPage({Key? key});
+  const addQuizQuestionsPage({super.key});
 
   @override
   State<addQuizQuestionsPage> createState() => _addQuizQuestionsPageState();
 }
 
 class _addQuizQuestionsPageState extends State<addQuizQuestionsPage> {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   int currentPage = 0;
 
   List<QuizQuestion> questions = List.generate(
@@ -116,7 +116,7 @@ class QuestionForm extends StatefulWidget {
   final bool isLastPage;
   final VoidCallback onDonePressed;
 
-  QuestionForm({
+  const QuestionForm({
     Key? key, // Add Key parameter
     required this.questionNumber,
     required this.question,
@@ -193,7 +193,7 @@ class _QuestionFormState extends State<QuestionForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Answer $answerNumber', style: TextStyle(fontWeight: FontWeight.bold)),
+        Text('Answer $answerNumber', style: const TextStyle(fontWeight: FontWeight.bold)),
         TextField(
           decoration: InputDecoration(labelText: 'Sinhala $sinhalaLabel'),
           onChanged: (value) {
@@ -234,7 +234,7 @@ class _QuestionFormState extends State<QuestionForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Select Correct Answer', style: TextStyle(fontWeight: FontWeight.bold)),
+        const Text('Select Correct Answer', style: TextStyle(fontWeight: FontWeight.bold)),
         Row(
           children: [
             for (int i = 1; i <= 5; i++)

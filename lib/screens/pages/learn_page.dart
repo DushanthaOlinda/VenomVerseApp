@@ -5,17 +5,8 @@ import 'package:VenomVerse/screens/pages/learning_resources/resource_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/video_page.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:horizontal_card_pager/horizontal_card_pager.dart';
-import 'package:horizontal_card_pager/card_item.dart';
-import 'catcher/catcher_list.dart';
-import 'catcher/catcher_request.dart';
-import 'catcher/feedback_view.dart';
-import 'catcher/requestform_details.dart';
 import 'learning_resources/articles_page.dart';
-import 'catcher/result_popup.dart';
 import 'catcher/service_cancellation.dart';
-import 'catcher/service_history.dart';
-import 'catcher/service_requestlist.dart';
 import 'learning_resources/e_books_pages.dart';
 
 // class LearnPage extends StatefulWidget {

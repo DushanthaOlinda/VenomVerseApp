@@ -13,7 +13,6 @@ import '../../models/auth.dart';
 import '../../models/post.dart';
 import '../../services/post_api.dart';
 import '../../widgets/com_post_card.dart';
-import '../../widgets/generate_body.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

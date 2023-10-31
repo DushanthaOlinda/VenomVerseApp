@@ -1,6 +1,11 @@
 import 'package:VenomVerse/screens/pages/catcher/service_info.dart';
+import 'package:VenomVerse/services/catcher_services_api.dart';
+import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked_notification_cards/stacked_notification_cards.dart';
 import 'package:flutter/material.dart';
+
+import '../../../models/auth.dart';
 
 class ServiceRequests extends StatefulWidget {
   const ServiceRequests({super.key});
@@ -10,7 +15,37 @@ class ServiceRequests extends StatefulWidget {
 }
 
 class _ServiceRequestsState extends State<ServiceRequests> {
-  final List<Map<String, dynamic>> _notificationData = [
+
+
+
+  // final Map<String, dynamic> _notificationData = await CatcherServicesApi.getPendingServices(userName);
+
+      final _testtt = {
+    "requestServiceId": 0,
+    "reqUserId": 0,
+    "catcherId": 0,
+    "dateTime": "2023-10-31T03:25:44.214Z",
+    "scannedImageLink": "string",
+    "scannedImageId": 0,
+    "selectedSerpent": 0,
+    "rate": 0,
+    "ratingComment": "string",
+    "catcherMedia": [
+      "string"
+    ],
+    "catcherFeedback": "string",
+    "serviceFeedback": "string",
+    "serviceFeedbackMedia": [
+      "string"
+    ],
+    "reqUserFirstName": "string",
+    "reqUserLastName": "string",
+    "catcherFirstName": "string",
+    "catcherLastName": "string",
+    "scanImgUrl": "string"
+  };
+
+  final List<Map<String, dynamic>> _notificationData1 = [
     {
       'title': 'සිරිපාල පෙරේරා',
       'subtitle': 'සිරිපාල පෙරේරා ඔබගේ සේවය ඉල්ලා ඇත',
@@ -33,10 +68,14 @@ class _ServiceRequestsState extends State<ServiceRequests> {
     },
   ];
 
-  List<NotificationCard> _generateNotificationCards() {
+  Future<List<NotificationCard>> _generateNotificationCards(int userName) async {
+
+    final List<Map<String, dynamic>> notificationData = await CatcherServicesApi.getPendingServices(userName);
+
+
     final List<NotificationCard> notificationCards = [];
 
-    for (var data in _notificationData) {
+    for (var data in notificationData) {
       notificationCards.add(NotificationCard(
         date: DateTime.now().subtract(
           Duration(minutes: notificationCards.length * 4),
@@ -55,78 +94,102 @@ class _ServiceRequestsState extends State<ServiceRequests> {
 
   @override
   Widget build(BuildContext context) {
+    var auth = context.watch<AuthModel>();
     return Scaffold(
       backgroundColor: Colors.red[50],
+      appBar: AppBar(
+        title: const Text('සේවා ලැයිස්තුව'),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            StackedNotificationCards(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.25),
-                  blurRadius: 2.0,
-                )
-              ],
-              notificationCardTitle: 'පණිවුඩය',
-              notificationCards: _generateNotificationCards(),
-              cardColor: const Color(0xFF50C878),
-              padding: 16,
-              actionTitle: const Text(
-                'දැනුම්දීම්',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black, // Set the text color to black
-                ),
-              ),
-              showLessAction: const Text(
-                'අඩුවෙන් පෙන්වන්න',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black, // Set the text color to black
-                ),
-              ),
-              onTapClearAll: () {
-                setState(() {
-                  _notificationData.clear();
-                });
-              },
-              clearAllNotificationsAction: const Icon(
-                Icons.close,
-                color: Colors.black, // Set the icon color to black
-              ),
-              clearAllStacked: const Text(
-                'සියල්ල හිස් කරන්න',
-                style: TextStyle(
-                  color: Colors.black, // Set the text color to black
-                ),
-              ),
-              cardClearButton: const Text(
-                'සිදු කර ඇත',
-                style: TextStyle(
-                  color: Colors.black, // Set the text color to black
-                ),
-              ),
-              cardViewButton: const Text(
-                'බලන්න',
-                style: TextStyle(
-                  color: Colors.black, // Set the text color to black
-                ),
-              ),
-              onTapClearCallback: (index) {
-                print(index);
-                setState(() {
-                  _notificationData.removeAt(index);
-                });
-              },
-              onTapViewCallback: (index) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ServiceInfo()),
-                );
-                print(index);
-              },
+            const SafeArea(child: SizedBox()),
+            FutureBuilder<List<NotificationCard>>(
+              future: _generateNotificationCards(int.parse(auth.userName!)),
+              builder: (context, snapshot) {
+                if(snapshot.hasData) {
+                  return StackedNotificationCards(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.25),
+                        blurRadius: 2.0,
+                      )
+                    ],
+                    notificationCardTitle: 'පණිවුඩය',
+                    notificationCards: snapshot.data ?? [NotificationCard(date: DateTime.now(), leading: const Text("Accepted Requests"), title: "No Available requests", subtitle: "Try Again Later")],
+                    cardColor: const Color(0xFF50C878),
+                    padding: 16,
+                    actionTitle: const Text(
+                      'දැනුම්දීම්',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black, // Set the text color to black
+                      ),
+                    ),
+                    showLessAction: const Text(
+                      'අඩුවෙන් පෙන්වන්න',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black, // Set the text color to black
+                      ),
+                    ),
+                    onTapClearAll: () {
+                      setState(() {
+                        _notificationData1.clear();
+                      });
+                    },
+                    clearAllNotificationsAction: const Icon(
+                      Icons.close,
+                      color: Colors.black, // Set the icon color to black
+                    ),
+                    clearAllStacked: const Text(
+                      'සියල්ල හිස් කරන්න',
+                      style: TextStyle(
+                        color: Colors.black, // Set the text color to black
+                      ),
+                    ),
+                    cardClearButton: const Text(
+                      'සිදු කර ඇත',
+                      style: TextStyle(
+                        color: Colors.black, // Set the text color to black
+                      ),
+                    ),
+                    cardViewButton: const Text(
+                      'බලන්න',
+                      style: TextStyle(
+                        color: Colors.black, // Set the text color to black
+                      ),
+                    ),
+                    onTapClearCallback: (index) {
+                      if (kDebugMode) {
+                        print(index);
+                      }
+                      setState(() {
+                        _notificationData1.removeAt(index);
+                      });
+                    },
+                    onTapViewCallback: (index) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (
+                            context) => const ServiceInfo()),
+                      );
+                      if (kDebugMode) {
+                        print(index);
+                      }
+                    },
+                  );
+                }
+                else{
+                    return const Center(child: Text("No Data Available Try again later."));
+                  // return Scaffold(
+                    // appBar: ,
+                    // body: Center(child: Text("No Data Available Try again later.")),
+                  // );
+                }
+              }
             ),
           ],
         ),

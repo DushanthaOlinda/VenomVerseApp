@@ -127,14 +127,14 @@ class _ServiceInfoState extends State<ServiceInfo> {
                       ),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.green,
+                          backgroundColor: Colors.green,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
                           ),
                         ),
                         onPressed: () {
                           // Navigate to the ServiceRequests screen
-                          Navigator.of(context).push(
+                          Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (context) =>
                                   const ServiceRequests(), // Replace with the actual route or widget
@@ -166,13 +166,13 @@ class _ServiceInfoState extends State<ServiceInfo> {
                       ),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.red,
+                          backgroundColor: Colors.red,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
                           ),
                         ),
                         onPressed: () {
-                          Navigator.of(context).push(
+                          Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (context) =>
                                   const ServiceRequests(), // Replace with the actual route or widget

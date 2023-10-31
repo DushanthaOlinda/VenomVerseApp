@@ -157,7 +157,9 @@ class _ScanImageState extends State<ScanImage> {
             // Navigator.pushReplacementNamed(context, '/home');
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => const MyHomePage(title: "VenomVerse",),
+                builder: (context) => const MyHomePage(
+                  title: "VenomVerse",
+                ),
               ),
             );
           } else if (i == 2) {
@@ -252,10 +254,18 @@ class DisplayPictureScreen extends StatelessWidget {
 
     await ref.putFile(image);
     var imageLink = await ref.getDownloadURL();
-    print(imageLink);
+    if (kDebugMode) {
+      print(imageLink);
+    }
     var userName = await User.getUserName();
-    print(userName);
-    var recId = await Api.saveScannedImage(int.parse(userName!), imageLink, 1, result['confidence'], "", "");
+    if (kDebugMode) {
+      print(userName);
+    }
+    var recId = null;
+    if (result['snake_id'] != -1) {
+      recId = await Api.saveScannedImage(int.parse(userName!), imageLink,
+          result['snake_id'], result['confidence'], "", "");
+    }
 
     EasyLoading.dismiss();
     if (kDebugMode) {
@@ -265,9 +275,16 @@ class DisplayPictureScreen extends StatelessWidget {
       showDialog(
         context: context,
         builder: (BuildContext context) {
+          print(recId);
           // there are two result popups use ResultPopupV2 instead ResultPopup
           return ResultPopupV2(
-              species: result['class'], confidence: result['confidence'], resultRecordId: 1,);
+            species: result['class'],
+            confidence: result['confidence'],
+            resultRecordId: result['snake_id'],
+            imageLink : imageLink,
+            savedImageId : recId['scannedImageId'],
+            user: int.parse(userName!),
+          );
         },
       );
     }

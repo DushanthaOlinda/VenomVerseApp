@@ -94,7 +94,7 @@ class _CancelReasonDialogState extends State<CancelReasonDialog> {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    // Handle submit action here
+                    Navigator.pushReplacementNamed(context, "/home");
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.green),

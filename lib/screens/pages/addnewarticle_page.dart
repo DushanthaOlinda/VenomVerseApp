@@ -42,7 +42,7 @@ class _AddNewArticlePageState extends State<AddNewArticlePage> {
             ),
             const SizedBox(height: 10),
             // Display selected images
-            Container(
+            SizedBox(
               height: 200,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -96,7 +96,7 @@ class _AddNewArticlePageState extends State<AddNewArticlePage> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -119,9 +119,7 @@ class _AddNewArticlePageState extends State<AddNewArticlePage> {
       imageQuality: 50, // Adjust image quality as needed
     );
 
-    if (pickedImages != null) {
-      return pickedImages.map((pickedImage) => File(pickedImage.path)).toList();
-    }
+    return pickedImages.map((pickedImage) => File(pickedImage.path)).toList();
 
     return null;
   }

@@ -13,24 +13,26 @@ class User {
   late String? contactNo;
   late String? workingStatus;
   late String? accountStatus;
+  late String? profileImage;
 
   int? currentMarks = 0;
 
-  User(
-      {this.userId,
-      this.userName,
-      this.firstName,
-      this.lastName,
-      this.userEmail,
-      this.nic,
-      this.dob,
-      this.district,
-      this.address,
-      this.contactNo,
-      this.workingStatus,
-      this.accountStatus,
-      this.currentMarks
-      });
+  User({
+    this.userId,
+    this.userName,
+    this.firstName,
+    this.lastName,
+    this.userEmail,
+    this.nic,
+    this.dob,
+    this.district,
+    this.address,
+    this.contactNo,
+    this.workingStatus,
+    this.accountStatus,
+    this.currentMarks,
+    this.profileImage,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -46,7 +48,9 @@ class User {
         contactNo: json["contactNo"],
         workingStatus: json["workingStatus"],
         accountStatus: json["accountStatus"],
-        currentMarks: json["currentMarks"]);
+        currentMarks: json["currentMarks"],
+        profileImage: json["profileImage"]
+    );
   }
 
   setMarks(int marks) {
@@ -69,6 +73,7 @@ class User {
     prefs.setString('workingStatus', workingStatus!);
     prefs.setString('accountStatus', accountStatus ?? "None");
     prefs.setInt('currentMarks', currentMarks!);
+    prefs.setString('profileImage', profileImage ?? "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Antu_im-user-online.svg/512px-Antu_im-user-online.svg.png");
   }
 
   static loadUserData() async {
@@ -87,6 +92,7 @@ class User {
       workingStatus: prefs.getString('workingStatus'),
       accountStatus: prefs.getString('accountStatus') ?? "1",
       currentMarks: prefs.getInt('currentMarks'),
+      profileImage: prefs.getString('profileImage'),
     );
   }
 
@@ -110,6 +116,7 @@ class User {
       'workingStatus': workingStatus,
       'accountStatus': accountStatus,
       'currentMarks': currentMarks,
+      'profileImage': profileImage,
     };
   }
 }

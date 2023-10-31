@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'catcher_feedback.dart';
 
 class callingPage extends StatefulWidget {
-  const callingPage({Key? key});
+  const callingPage({super.key});
 
   @override
   State<callingPage> createState() => _callingPageState();
@@ -15,10 +15,10 @@ class _callingPageState extends State<callingPage> {
     super.initState();
 
     // Simulate a delay of 3 seconds for the waiting screen
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       // After the delay, navigate to a new page or perform the next action
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => NextPage(), // Replace 'NextPage' with your next page widget
+        builder: (context) => const NextPage(), // Replace 'NextPage' with your next page widget
       ));
     });
   }
@@ -71,6 +71,8 @@ class _callingPageState extends State<callingPage> {
 }
 
 class NextPage extends StatelessWidget {
+  const NextPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +80,7 @@ class NextPage extends StatelessWidget {
         title: const Text('Emergency Information'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

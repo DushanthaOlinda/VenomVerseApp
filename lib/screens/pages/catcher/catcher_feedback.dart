@@ -5,7 +5,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../home_screen.dart';
 
 class catcherFeedbackPage extends StatefulWidget {
-  const catcherFeedbackPage({Key? key});
+  const catcherFeedbackPage({super.key});
 
   @override
   State<catcherFeedbackPage> createState() => _catcherFeedbackPageState();

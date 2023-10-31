@@ -50,10 +50,10 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   });
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 'You rated: $rating',
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 50),
               const Text(
@@ -95,10 +95,6 @@ class _FeedbackPageState extends State<FeedbackPage> {
       desc: "By making your voice heard, you help us improve VenomVerse",
       buttons: [
         DialogButton(
-          child: Text(
-            "Go Back Home",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
           onPressed: () {
             Navigator.push(
               context,
@@ -107,6 +103,10 @@ class _FeedbackPageState extends State<FeedbackPage> {
             );
           },
           width: 150,
+          child: const Text(
+            "Go Back Home",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
         )
       ],
     ).show();

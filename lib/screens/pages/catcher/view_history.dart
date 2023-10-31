@@ -2,7 +2,7 @@ import 'package:VenomVerse/screens/pages/catcher/send_request.dart';
 import 'package:flutter/material.dart';
 
 class ViewHistoryPage extends StatefulWidget {
-  const ViewHistoryPage({Key? key});
+  const ViewHistoryPage({super.key});
 
   @override
   State<ViewHistoryPage> createState() => _ViewHistoryPageState();
@@ -28,7 +28,7 @@ class _ViewHistoryPageState extends State<ViewHistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Catcher History'),
+        title: const Text('Catcher History'),
       ),
       body: ListView.builder(
         itemCount: historyData.length,
@@ -36,7 +36,7 @@ class _ViewHistoryPageState extends State<ViewHistoryPage> {
           final entry = historyData[index];
           return Card(
             elevation: 4, // Add shadow to the card
-            margin: EdgeInsets.all(10), // Add margin around the card
+            margin: const EdgeInsets.all(10), // Add margin around the card
             child: ListTile(
               title: Text(entry['Location'] ?? 'Unknown Location'),
               subtitle: Column(
@@ -57,7 +57,7 @@ class _ViewHistoryPageState extends State<ViewHistoryPage> {
             MaterialPageRoute(builder: (context) => const callingPage()),
           );
         },
-        child: Icon(Icons.call),
+        child: const Icon(Icons.call),
       ),
     );
   }

@@ -5,15 +5,14 @@ import 'package:VenomVerse/screens/pages/catcher/requests_list.dart';
 import 'package:VenomVerse/screens/pages/catcher/service_requestlist.dart';
 import 'package:VenomVerse/screens/pages/feedback_page.dart';
 import 'package:VenomVerse/screens/pages/instructions_page.dart';
-import 'package:VenomVerse/screens/pages/learning_resources/addquiz_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/viewallquiz_page.dart';
 import 'package:VenomVerse/screens/pages/profile_page.dart';
 import 'package:VenomVerse/screens/pages/myArticle_page.dart';
 import 'package:VenomVerse/screens/pages/postRequests_page.dart';
-import 'package:VenomVerse/screens/pages/requests_page.dart';
 import 'package:VenomVerse/screens/pages/zoologistRequests_page.dart';
 import 'package:VenomVerse/widgets/generate_body.dart';
 import 'package:app_bar_with_search_switch/app_bar_with_search_switch.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sidebarx/sidebarx.dart';
@@ -287,7 +286,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     var userDet = await User.loadUserData();
-    print(userDet.userId);
+    if (kDebugMode) {
+      print(userDet.userId);
+    }
     if (userDet.userId == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.push(

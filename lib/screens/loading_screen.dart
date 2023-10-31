@@ -31,6 +31,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
 void loadHome(BuildContext context) {
   // BuildContext context;
-  Future.delayed(const Duration(seconds: 3),
+  Future.delayed(const Duration(seconds: 2),
       () => {Navigator.pushReplacementNamed(context, '/scan')});
 }

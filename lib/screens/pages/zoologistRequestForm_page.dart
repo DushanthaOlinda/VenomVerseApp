@@ -15,7 +15,7 @@ class _ZoologistRequestFormState extends State<ZoologistRequestForm> {
         title: const Text("Approval Requests"),
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: const [
           RequestCard(
             degreeName: "Master of Zoology",
@@ -36,7 +36,7 @@ class RequestCard extends StatelessWidget {
   final String university;
   final String imagePath;
 
-  const RequestCard({
+  const RequestCard({super.key, 
     required this.degreeName,
     required this.graduationYear,
     required this.university,
@@ -61,7 +61,7 @@ class RequestCard extends StatelessWidget {
               children: [
                 Text(
                   "Degree: $degreeName",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text("Graduation Year: $graduationYear"),
                 Text("University: $university"),
@@ -81,7 +81,7 @@ class RequestCard extends StatelessWidget {
                         // Handle Reject button click
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.red, // Button background color
+                        backgroundColor: Colors.red, // Button background color
                       ),
                       child: const Text(
                         "Reject",

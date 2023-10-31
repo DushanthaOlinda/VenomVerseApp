@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:VenomVerse/models/user.dart';
 import 'package:VenomVerse/services/api_user_control.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card_new/credit_card_brand.dart';
@@ -33,6 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
           if (!snapshot.hasData) {
             return const CircularProgressIndicator();
           } else {
+            print(snapshot.data?.profileImage);
             // print(sn)
             return Scaffold(
               body: SingleChildScrollView(
@@ -91,9 +93,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     Profile(
                       //profile data
                       imageUrl:
-                          "https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-
-                      name: "${snapshot.data?.firstName} ${snapshot.data?.lastName}",
+                          snapshot.data?.profileImage,
+                      name:
+                          "${snapshot.data?.firstName} ${snapshot.data?.lastName}",
                       website: "",
                       designation: snapshot.data?.address ?? "",
                       email: snapshot.data?.userEmail ?? "",
@@ -156,7 +158,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => BecomeCatcher(userId: widget.userId,),
+                                  builder: (context) => BecomeCatcher(
+                                    userId: widget.userId,
+                                  ),
                                 ),
                               );
                               // Handle button press
@@ -197,7 +201,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => BecomeZoologist(userId: widget.userId),
+                                  builder: (context) =>
+                                      BecomeZoologist(userId: widget.userId),
                                 ),
                               );
                               // Handle button press
@@ -370,7 +375,13 @@ class _BecomeZoologistState extends State<BecomeZoologist> {
                 String degree = degreeController.text;
                 String year = yearController.text;
                 String university = uniController.text;
-                UserApi.reqToBeZoologist(DateTime.timestamp().millisecondsSinceEpoch, widget.userId, ["evidence"], degree, year, university);
+                UserApi.reqToBeZoologist(
+                    DateTime.timestamp().millisecondsSinceEpoch,
+                    widget.userId,
+                    ["evidence"],
+                    degree,
+                    year,
+                    university);
                 // You can now use the 'imageFile', 'degree', and 'year' for further processing
               },
               style: ElevatedButton.styleFrom(
@@ -1007,7 +1018,10 @@ class _BecomeCatcherState extends State<BecomeCatcher> {
                           print("Title : ${video.title}");
                         }
 
-                        UserApi.reqToBeCatcher(DateTime.timestamp().millisecondsSinceEpoch, widget.userId, ["Link"]);
+                        UserApi.reqToBeCatcher(
+                            DateTime.timestamp().millisecondsSinceEpoch,
+                            widget.userId,
+                            ["Link"]);
                       } catch (e) {
                         if (kDebugMode) {
                           print("Failed to upload video: $e");
@@ -1092,11 +1106,18 @@ class _EditProfileState extends State<EditProfile> {
   void _changeProfilePicture() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _profilePictureUrl = pickedFile.path;
-      });
-    }
+    String fileName = "UserImages/${DateTime.timestamp()}.png";
+    final storage = FirebaseStorage.instance;
+    final Reference ref = storage.ref().child(fileName);
+    var image = File(pickedFile!.path);
+
+    await ref.putFile(image);
+    var imageLink = await ref.getDownloadURL();
+    print(imageLink);
+    setState(() {
+      _profilePictureUrl = imageLink ??
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Antu_im-user-online.svg/512px-Antu_im-user-online.svg.png";
+    });
   }
 
   final TextEditingController _firstNameController = TextEditingController();
@@ -1111,8 +1132,7 @@ class _EditProfileState extends State<EditProfile> {
   final TextEditingController _cnumController = TextEditingController();
   final TextEditingController _wstatusController = TextEditingController();
 
-  late String _profilePictureUrl =
-      'https://images.unsplash.com/photo-1598618356794-eb1720430eb4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
+  late String _profilePictureUrl;
 
   @override
   void initState() {
@@ -1126,13 +1146,18 @@ class _EditProfileState extends State<EditProfile> {
     _addressController.text = widget.usrData?["address"] ?? "";
     _cnumController.text = widget.usrData?["contactNo"] ?? "";
     _wstatusController.text = widget.usrData?["workingStatus"] ?? "";
-    print(widget.usrData);
+    _profilePictureUrl = widget.usrData?["profileImage"];
+    if (kDebugMode) {
+      print(widget.usrData);
+    }
   } // Store the profile picture URL here
 
   // Method to handle saving profile changes
 
   Future<void> _saveChanges() async {
-    print("Edit Page");
+    if (kDebugMode) {
+      print("Edit Page");
+    }
 
     // No Need to get email, password and username again
     // Implement the logic to save changes here
@@ -1177,29 +1202,27 @@ class _EditProfileState extends State<EditProfile> {
       workingStatus: wstatus,
       accountStatus: '0',
       currentMarks: widget.usrData?["currentMarks"] ?? 0,
+      profileImage: _profilePictureUrl,
     );
 
-    print(editedUser.toJson());
+    if (kDebugMode) {
+      print(editedUser.toJson());
+    }
     if (widget.usrData == null) {
       UserApi.addNewUser(editedUser.toJson());
     } else {
       UserApi.editUser(editedUser.toJson());
     }
 
-    var auth = context.watch<AuthModel>();
+    var auth = context.read<AuthModel>();
     var usr = await UserApi().getUser(int.parse(auth.userName!));
 
     if (usr["userId"] != null) {
       var newUser = User.fromJson(usr);
       await newUser.saveUser();
     }
-
+    print("POP");
     Navigator.pop(context);
-    // Perform saving operations (e.g., update database, send API requests)
-    // ...
-
-    // Optionally, show a success message or navigate back to the previous screen
-    // ...
   }
 
   @override

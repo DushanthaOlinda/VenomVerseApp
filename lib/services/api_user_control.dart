@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -37,15 +36,20 @@ class UserApi extends Api {
 
   static Future<void> editUser(Map<String, dynamic> json) async {
     print("Editing");
+    print(json);
     String fullUrl = "${mainUrl}UserDetail/${json["userId"]}";
     Response response = Response("Before Req", 404);
 
     try {
-      response = await http.post(Uri.parse(fullUrl),
+      response = await http.put(Uri.parse(fullUrl),
           body: jsonEncode(json),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           });
+
+      if (kDebugMode) {
+        print(response.statusCode);
+      }
     } on Exception catch (e) {
       if (kDebugMode) {
         print(e);
@@ -53,7 +57,9 @@ class UserApi extends Api {
     }
 
     if (response.statusCode != 201) {
-      print("Error: ${response.body}");
+      if (kDebugMode) {
+        print("Error: ${response.body}");
+      }
     }
   }
 

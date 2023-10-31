@@ -45,7 +45,7 @@ class _viewAllQuizesPageState extends State<viewAllQuizesPage> {
 
               },
               backgroundColor: Colors.green, // Change the button color as needed
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
             ),
           ),
         ],
@@ -57,7 +57,7 @@ class _viewAllQuizesPageState extends State<viewAllQuizesPage> {
 class QuizBox extends StatelessWidget {
   final String title;
 
-  QuizBox({required this.title});
+  const QuizBox({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {

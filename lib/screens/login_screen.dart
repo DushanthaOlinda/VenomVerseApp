@@ -1,6 +1,4 @@
 import 'package:VenomVerse/screens/home_screen.dart';
-import 'package:VenomVerse/screens/image_scan/scan_screen.dart';
-import 'package:VenomVerse/screens/pages/profile_page.dart';
 import 'package:VenomVerse/services/api.dart';
 import 'package:VenomVerse/services/api_user_control.dart';
 import 'package:camera/camera.dart';
