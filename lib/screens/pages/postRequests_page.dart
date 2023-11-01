@@ -89,7 +89,7 @@ class _PostRequestsPageState extends State<PostRequestsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Approve Articles"),
+        title: const Text("Approve Posts"),
       ),
       backgroundColor: Colors.red [50],
       body: SingleChildScrollView(

@@ -1,3 +1,4 @@
+import 'package:VenomVerse/screens/pages/addnewarticle_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/articles_list/art_1.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/articles_list/art_2.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/articles_list/art_3.dart';
@@ -82,16 +83,27 @@ class _ArticlesPageState extends State<ArticlesPage> {
                         article['description'],
                         article['imagePath'] ?? 'assets/images/snake image.jpg',
                         article['articlePage'] ?? const Article2(),
-                      ),
-                  ],
-                ),
+                  ),
+               ],
               ),
             ),
           ),
-        );
-      }
-    );
-  }
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          backgroundColor: Colors.green,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddNewArticlePage()),
+            );
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      );
+    }
+  );
+ }
 
   Widget buildArticleCard(
     BuildContext context,

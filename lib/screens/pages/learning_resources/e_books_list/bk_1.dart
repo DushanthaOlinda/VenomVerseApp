@@ -32,7 +32,7 @@ class _EBook1State extends State<EBook1> {
   }
 
   loadDocument() async {
-    document = await PDFDocument.fromAsset('assets/images/e_book.pdf');
+    document = await PDFDocument.fromAsset('assets/images/ebook1.pdf');
     setState(() => _isLoading = false);
   }
 

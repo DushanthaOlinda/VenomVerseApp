@@ -1,3 +1,4 @@
+import 'package:VenomVerse/screens/pages/learning_resources/addNewBook.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/e_books_list/bk_1.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/e_books_list/bk_2.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/e_books_list/bk_3.dart';
@@ -22,13 +23,13 @@ final List<dynamic> ebooks = [
     {
       'title': "SNAKES OF SRI LANKA",
       'description': "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
-      'imageUrl': 'assets/images/bk2.png',
+      'imageUrl': 'assets/images/ebook1.png', 
       'ebookPage': const EBook1(),
     },
     {
       'title': "SNAKES OF SRI LANKA",
       'description': "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
-      'imageUrl': 'assets/images/bk2.png',
+      'imageUrl': 'assets/images/ebook1.png',
       'ebookPage': const EBook2(),
     },
     {
@@ -91,10 +92,21 @@ final List<dynamic> ebooks = [
               ),
             ),
           ),
-        );
-      }
-    );
-  }
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          backgroundColor: Colors.green,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddNewEbookPage()),
+            );
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      );
+    }
+  );
+ }
 
   Widget buildArticleCard(
     BuildContext context,
