@@ -68,9 +68,7 @@ class _ServiceRequestsState extends State<ServiceRequests> {
     },
   ];
 
-  Future<List<NotificationCard>> _generateNotificationCards(int userName) async {
-
-    final List<Map<String, dynamic>> notificationData = await CatcherServicesApi.getPendingServices(userName);
+  List<NotificationCard> _generateNotificationCards(List<dynamic> notificationData) {
 
 
     final List<NotificationCard> notificationCards = [];
@@ -110,7 +108,8 @@ class _ServiceRequestsState extends State<ServiceRequests> {
   @override
   Widget build(BuildContext context) {
     var auth = context.watch<AuthModel>();
-    var cardList = _generateNotificationCards(int.parse(auth.userName!));
+    var cardList = [];
+    //_generateNotificationCards();
     return Scaffold(
       backgroundColor: Colors.red[50],
       appBar: AppBar(
@@ -120,9 +119,13 @@ class _ServiceRequestsState extends State<ServiceRequests> {
         child: Column(
           children: [
             const SafeArea(child: SizedBox()),
-            FutureBuilder<List<NotificationCard>>(
-              future: cardList,
+            FutureBuilder<dynamic>(
+              future: CatcherServicesApi.getPendingServices(int.parse(auth.userName!)),
               builder: (context, snapshot) {
+                if (kDebugMode) {
+                  print(snapshot.data);
+                  print("object");
+                }
                 if(snapshot.hasData) {
                   return StackedNotificationCards(
                     boxShadow: [
@@ -132,7 +135,7 @@ class _ServiceRequestsState extends State<ServiceRequests> {
                       )
                     ],
                     notificationCardTitle: 'පණිවුඩය',
-                    notificationCards: snapshot.data ?? [NotificationCard(date: DateTime.now(), leading: const Text("Accepted Requests"), title: "No Available requests", subtitle: "Try Again Later")],
+                    notificationCards: _generateNotificationCards(snapshot.data!) ?? [NotificationCard(date: DateTime.now(), leading: const Text("Accepted Requests"), title: "No Available requests", subtitle: "Try Again Later")],
                     cardColor: const Color(0xFF50C878),
                     padding: 16,
                     actionTitle: const Text(
@@ -187,10 +190,14 @@ class _ServiceRequestsState extends State<ServiceRequests> {
                       });
                     },
                     onTapViewCallback: (index) {
+                      int reqId = snapshot.data![index]['requestServiceId'];
+                      if (kDebugMode) {
+                        print(snapshot.data);
+                      }
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (
-                            context) => ServiceInfo(reqId: int.parse(snapshot.data![index].subtitle))),
+                            context) => ServiceInfo(reqId: reqId)),
                       );
                       if (kDebugMode) {
                         print(index);

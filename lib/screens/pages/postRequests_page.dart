@@ -140,11 +140,13 @@ class _PostRequestsPageState extends State<PostRequestsPage> {
                     });
                   },
                   onTapViewCallback: (index) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>  PostDetailsPage(postId: int.parse(snapshot.data![index].subtitle),),
-                    ));
+                    if(snapshot.hasData){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>  PostDetailsPage(postId: int.parse(snapshot.data![index].subtitle),),
+                          ));
+                    }
                     print(index);
                   },
                 );

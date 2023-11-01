@@ -56,34 +56,34 @@ class _ServiceInfoState extends State<ServiceInfo> {
                           mainAxisAlignment:
                               MainAxisAlignment.center, // Center vertically
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                    color: Colors.white, width: 2), // White stroke
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey
-                                        .withOpacity(0.5), // Shadow color
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: const Offset(0, 5), // Shadow position
-                                  ),
-                                ],
-                              ),
-                              child: Image.network(snapshot.data?["scanImgUrl"])
-                              // const CircleAvatar(
-                              //   backgroundImage:
-                              //       AssetImage('assets/images/man.jpg'),
-                              //   radius: 50.0,
-                              // ),
-                            ),
+                            // Container(
+                            //   decoration: BoxDecoration(
+                            //     shape: BoxShape.circle,
+                            //     border: Border.all(
+                            //         color: Colors.white, width: 2), // White stroke
+                            //     boxShadow: [
+                            //       BoxShadow(
+                            //         color: Colors.grey
+                            //             .withOpacity(0.5), // Shadow color
+                            //         spreadRadius: 5,
+                            //         blurRadius: 7,
+                            //         offset: const Offset(0, 5), // Shadow position
+                            //       ),
+                            //     ],
+                            //   ),
+                            //   // child: Image.network(snapshot.data?["scanImgUrl"])
+                            //   // const CircleAvatar(
+                            //   //   backgroundImage:
+                            //   //       AssetImage('assets/images/man.jpg'),
+                            //   //   radius: 50.0,
+                            //   // ),
+                            // ),
                             const SizedBox(height: 10), // Keep the larger spacing
                             Align(
                               alignment: Alignment.center,
                               child: Text(
                                 // 'සිරිපාල පෙරේරා',
-                                snapshot.data?["reqUserFirstName"] + " " + snapshot.data?["reqUserLastName"],
+                                "${snapshot.data?['reqUserFirstName']}  ${snapshot.data?['reqUserLastName']}",
                                 style: const TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
@@ -118,12 +118,16 @@ class _ServiceInfoState extends State<ServiceInfo> {
                     const Divider(color: Colors.black),
 
                     const SizedBox(height: 30),
-                    for (var details in serviceDetails)
-                      Image.asset(
-                        details[
-                            'imageAssetKey']!, // Use the key to fetch the asset path
-                        fit: BoxFit.cover,
-                      ),
+                    if (snapshot.data != null) Image.network(snapshot.data?["scanImgUrl"]),
+
+                    // for (var details in serviceDetails)
+                    // build(context){
+                    //   if(snapshot.data != null){
+                    //     Image.network(snapshot.data?["scanImgUrl"]),
+                    //   },
+                    // },
+
+
                     // Add some spacing below the scanned image
                     const SizedBox(height: 20),
                     // // Two buttons

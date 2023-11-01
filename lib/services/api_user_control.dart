@@ -64,8 +64,12 @@ class UserApi extends Api {
   }
 
   static Future<void> addNewUser(Map<String, dynamic> json) async {
-    print("Adding");
-    print(jsonEncode(json));
+    if (kDebugMode) {
+      print("Adding");
+    }
+    if (kDebugMode) {
+      print(jsonEncode(json));
+    }
     String fullUrl = "${mainUrl}UserDetail";
 
     Response response = Response("Before Req", 404);
@@ -83,7 +87,9 @@ class UserApi extends Api {
     }
 
     if (response.statusCode != 201) {
-      print("Error: ${response.body}");
+      if (kDebugMode) {
+        print("Error: ${response.body}");
+      }
     }
   }
 

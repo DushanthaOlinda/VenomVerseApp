@@ -7,9 +7,9 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 class CatcherServicesApi extends Api {
-  static Future<List<Map<String, dynamic>>> getPendingServices(
+  static Future<List> getPendingServices(
       int? userName) async {
-    String fullUrl = "${mainUrl}UserDetail/$userName";
+    String fullUrl = "${mainUrl}Catcher/AllRequestsCompleted/$userName";
 
     Response response = await http.get(
       Uri.parse(fullUrl),
@@ -19,10 +19,13 @@ class CatcherServicesApi extends Api {
     );
 
     if (response.statusCode == 404) {}
-    var jsonMap = json.decode(response.body);
+
+    List jsonMap = json.decode(response.body);
+
     if (kDebugMode) {
       print(jsonMap);
     }
+
     return jsonMap;
   }
 
@@ -315,5 +318,17 @@ class CatcherServicesApi extends Api {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
+  }
+
+  static Future<List> getBecomeCatcher() async {
+    String fullUrl =
+        "${mainUrl}Catcher/ViewRequestsToBecomeCatcher";
+
+    Response response = await http.get(Uri.parse(fullUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+    print(jsonDecode(response.body));
+    return jsonDecode(response.body);
   }
 }
