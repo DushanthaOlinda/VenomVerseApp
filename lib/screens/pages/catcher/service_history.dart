@@ -66,7 +66,8 @@ class _ServiceHistoryState extends State<ServiceHistory> {
                   vertical: -4,
                   horizontal: -4,
                 ),
-                title: Text(stepData.content['name'] ?? ''),
+                title: Text( stepData.content['name'] ?? '',
+                  style: const TextStyle(color: Color(0xFF322D31)),),
                 subtitle: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,11 +79,11 @@ class _ServiceHistoryState extends State<ServiceHistory> {
                       children: [
                         const Expanded(
                           flex: 3,
-                          child: Icon(Icons.work),
+                          child: Icon(Icons.circle,color: Colors.green,),
                         ),
                         Expanded(
                           flex: 7,
-                          child: Text(stepData.content['snake'] ?? ''),
+                          child: Text(stepData.content['snake'] ?? '', style: const TextStyle(color: Color(0xFF322D31)),),
                         ),
                       ],
                     ),
@@ -93,11 +94,11 @@ class _ServiceHistoryState extends State<ServiceHistory> {
                       children: [
                         const Expanded(
                           flex: 3,
-                          child: Icon(Icons.phone),
+                          child: Icon(Icons.phone,color: Colors.green),
                         ),
                         Expanded(
                           flex: 7,
-                          child: Text(stepData.content['mobileNumber'] ?? ''),
+                          child: Text(stepData.content['mobileNumber'] ?? '', style: const TextStyle(color: Color(0xFF322D31)),),
                         ),
                       ],
                     ),
@@ -108,11 +109,11 @@ class _ServiceHistoryState extends State<ServiceHistory> {
                       children: [
                         const Expanded(
                           flex: 3,
-                          child: Icon(Icons.email),
+                          child: Icon(Icons.home_filled,color: Colors.green),
                         ),
                         Expanded(
                           flex: 7,
-                          child: Text(stepData.content['location'] ?? ''),
+                          child: Text(stepData.content['location'] ?? '', style: const TextStyle(color: Color(0xFF322D31)),),
                         ),
                       ],
                     ),

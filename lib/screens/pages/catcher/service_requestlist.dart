@@ -138,14 +138,15 @@ class _ServiceRequestsState extends State<ServiceRequests> {
                     notificationCards: _generateNotificationCards(snapshot.data!) ?? [NotificationCard(date: DateTime.now(), leading: const Text("Accepted Requests"), title: "No Available requests", subtitle: "Try Again Later")],
                     cardColor: const Color(0xFF50C878),
                     padding: 16,
-                    actionTitle: const Text(
-                      'දැනුම්දීම්',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black, // Set the text color to black
-                      ),
-                    ),
+                    // actionTitle: const Text(
+                    //   'දැනුම්දීම්',
+                    //   style: TextStyle(
+                    //     fontSize: 24,
+                    //     fontWeight: FontWeight.bold,
+                    //     color: Colors.black, // Set the text color to black
+                    //   ),
+                    // ),
+                    actionTitle: Container(),
                     showLessAction: const Text(
                       'අඩුවෙන් පෙන්වන්න',
                       style: TextStyle(
