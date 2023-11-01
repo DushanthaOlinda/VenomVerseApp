@@ -89,6 +89,7 @@ dependencies:
   intl: ^0.18.1
   flutter_background_service: ^5.0.2
   signalr_core: ^1.1.1
+  file_picker: ^6.0.0
 
 dev_dependencies:
   flutter_test:

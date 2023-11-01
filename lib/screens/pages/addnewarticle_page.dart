@@ -39,20 +39,23 @@ class _AddNewArticlePageState extends State<AddNewArticlePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ElevatedButton.icon(
-                onPressed: () async {
-                  var pickedImages = await _getFromGallery();
-                  if (pickedImages != null) {
-                    setState(() {
-                      imageFiles.addAll(pickedImages);
-                    });
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+              Padding(
+                padding: const EdgeInsets.only(top: 50.0), // Adjust the top padding as needed
+                child: ElevatedButton.icon(
+                  onPressed: () async {
+                    var pickedImages = await _getFromGallery();
+                    if (pickedImages != null) {
+                      setState(() {
+                        imageFiles.addAll(pickedImages);
+                      });
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                  ),
+                  icon: const Icon(Icons.image),
+                  label: const Text('Select Images'),
                 ),
-                icon: const Icon(Icons.image),
-                label: const Text('Select Images'),
               ),
               const SizedBox(height: 10),
               // Display selected images
