@@ -35,7 +35,11 @@ class ReviewPage extends StatelessWidget {
     List<bool>.filled(4, false), // Initialize with an empty List<bool>
   ];
 
-  ReviewPage({Key? key}) : super(key: key);
+  int quizDetailId;
+
+  Map quizDataa;
+
+  ReviewPage(this.quizDetailId, this.quizDataa, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +50,8 @@ class ReviewPage extends StatelessWidget {
       body: ListView.builder(
         itemCount: quizData.length,
         itemBuilder: (context, index) {
+          final data = quizDataa;
+          final quizid = quizDetailId;
           final question = quizData[index]['question'];
           final options = quizData[index]['options'];
           final selected = selectedAnswers[index];

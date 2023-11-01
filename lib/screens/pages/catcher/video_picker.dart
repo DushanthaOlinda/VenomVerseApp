@@ -34,7 +34,7 @@ class _RequestedProfileState extends State<RequestedProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Video Picker:'),
+        title: const Text('Video Picker:'),
       ),
       body: Column(
         children: [
@@ -44,12 +44,12 @@ class _RequestedProfileState extends State<RequestedProfile> {
               child: VideoPlayer(_videoPlayerController),
             ):Container()
           else
-            Text('Click on pick video to select a video'),
+            const Text('Click on pick video to select a video'),
           ElevatedButton(
             onPressed: () {
               _pickVideo();
             },
-            child: Text('Pick video from gallery'),
+            child: const Text('Pick video from gallery'),
           )
         ],
       ),

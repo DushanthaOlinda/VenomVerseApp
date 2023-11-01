@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:VenomVerse/models/user.dart';
 import 'package:VenomVerse/screens/home_screen.dart';
 import 'package:VenomVerse/screens/pages/catcher/result_popup_v2.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:camera/camera.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -155,7 +157,9 @@ class _ScanImageState extends State<ScanImage> {
             // Navigator.pushReplacementNamed(context, '/home');
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => const MyHomePage(title: "VenomVerse",),
+                builder: (context) => const MyHomePage(
+                  title: "VenomVerse",
+                ),
               ),
             );
           } else if (i == 2) {
@@ -241,7 +245,28 @@ class DisplayPictureScreen extends StatelessWidget {
 
   _sendToScan(BuildContext context) async {
     EasyLoading.show(status: 'loading...');
+
     var result = await Api.scanSnake(File(imagePath));
+    var image = File(imagePath);
+    String fileName = "ScannedImages/${DateTime.timestamp()}.png";
+    final storage = FirebaseStorage.instance;
+    final Reference ref = storage.ref().child(fileName);
+
+    await ref.putFile(image);
+    var imageLink = await ref.getDownloadURL();
+    if (kDebugMode) {
+      print(imageLink);
+    }
+    var userName = await User.getUserName();
+    if (kDebugMode) {
+      print(userName);
+    }
+    var recId = null;
+    if (result['snake_id'] != -1) {
+      recId = await Api.saveScannedImage(int.parse(userName!), imageLink,
+          result['snake_id'], result['confidence'], "", "");
+    }
+
     EasyLoading.dismiss();
     if (kDebugMode) {
       print(result);
@@ -250,9 +275,16 @@ class DisplayPictureScreen extends StatelessWidget {
       showDialog(
         context: context,
         builder: (BuildContext context) {
+          print(recId);
           // there are two result popups use ResultPopupV2 instead ResultPopup
           return ResultPopupV2(
-              species: result['class'], confidence: result['confidence']);
+            species: result['class'],
+            confidence: result['confidence'],
+            resultRecordId: result['snake_id'],
+            imageLink : imageLink,
+            savedImageId : recId['scannedImageId'],
+            user: int.parse(userName!),
+          );
         },
       );
     }

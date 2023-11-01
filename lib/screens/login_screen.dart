@@ -1,6 +1,4 @@
 import 'package:VenomVerse/screens/home_screen.dart';
-import 'package:VenomVerse/screens/image_scan/scan_screen.dart';
-import 'package:VenomVerse/screens/pages/profile_page.dart';
 import 'package:VenomVerse/services/api.dart';
 import 'package:VenomVerse/services/api_user_control.dart';
 import 'package:camera/camera.dart';
@@ -69,11 +67,16 @@ class LoginPage extends StatelessWidget {
         var res = await Api().login(data.name, data.password);
         if (res != null) {
           await auth.login(res["token"]);
-          await auth.userSetup(res["username"], res["email"]);
+          var usr = await UserApi().getUser(int.parse(res["username"]));
+          if (usr["userId"] != null) {
+            await auth.userSetup(res["username"], res["email"], catcher: usr["catcherPrivilege"], comAdmin: usr["communityAdminPrivilege"], expert: usr["expertPrivilege"], zoologist: usr["zoologistPrivilege"]);
+          }
+          await auth.userSetup(res["username"], res["email"], catcher: false, comAdmin: false, expert: false, zoologist: false);
         }
         // print(res["username"]);
         if (auth.isAuthorized) {
           var usr = await UserApi().getUser(int.parse(res["username"]));
+          print(usr);
           if (usr["userId"] != null) {
             var newUser = User.fromJson(usr);
             await newUser.saveUser();

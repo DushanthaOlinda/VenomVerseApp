@@ -1,3 +1,4 @@
+import 'package:VenomVerse/services/catcher_services_api.dart';
 import 'package:stacked_notification_cards/stacked_notification_cards.dart';
 import 'package:flutter/material.dart';
 import 'requestform_details.dart';
@@ -68,62 +69,77 @@ class _RequestsListState extends State<RequestsList> {
 
   @override
   Widget build(BuildContext context) {
+    Future<List<dynamic>> catcherData = CatcherServicesApi.getBecomeCatcher();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pending Requests'),
       ),
       backgroundColor: Colors.red [50],
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            StackedNotificationCards(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.25),
-                  blurRadius: 2.0,
-                )
-              ],
-              notificationCardTitle: 'Message',
-              notificationCards: [..._listOfNotification],
-              cardColor: const Color(0xFFF1F1F1),
-              padding: 16,
-              actionTitle: const Text(
-                'Notifications',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              showLessAction: const Text(
-                'Show less',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.deepPurple,
-                ),
-              ),
-              onTapClearAll: () {
-                setState(() {
-                  _listOfNotification.clear();
-                });
-              },
-              clearAllNotificationsAction: const Icon(Icons.close),
-              clearAllStacked: const Text('Clear All'),
-              cardClearButton: const Text('clear'),
-              cardViewButton: const Text('view'),
-              onTapClearCallback: (index) {
-                setState(() {
-                  _listOfNotification.removeAt(index);
-                });
-              },
-              onTapViewCallback: (index) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const RequestForm()),
-                );
-              },
-            ),
-          ],
+        child: FutureBuilder<List<dynamic>>(
+          future: catcherData,
+          builder: (context, snapshot) {
+            if (snapshot.hasData){
+              List<NotificationCard>? notiData = snapshot.data?.map((e) => NotificationCard(date: DateTime.parse(e["dob"]), leading: const Text("Request"), title: e["description"], subtitle: e["specialNote"])).toList();
+              return Column(
+                children: [
+                  StackedNotificationCards(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.25),
+                        blurRadius: 2.0,
+                      )
+                    ],
+                    notificationCardTitle: 'Message',
+                    notificationCards: notiData ?? [..._listOfNotification],
+                    cardColor: const Color(0xFFF1F1F1),
+                    padding: 16,
+                    actionTitle: Container(),
+                    // actionTitle: const Text(
+                    //   'Notifications',
+                    //   style: TextStyle(
+                    //     fontSize: 24,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
+                    showLessAction: const Text(
+                      'Show less',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.deepPurple,
+                      ),
+                    ),
+                    onTapClearAll: () {
+                      setState(() {
+                        _listOfNotification.clear();
+                      });
+                    },
+                    clearAllNotificationsAction: const Icon(Icons.close),
+                    clearAllStacked: const Text('Clear All'),
+                    cardClearButton: const Text('clear'),
+                    cardViewButton: const Text('view'),
+                    onTapClearCallback: (index) {
+                      setState(() {
+                        _listOfNotification.removeAt(index);
+                      });
+                    },
+                    onTapViewCallback: (index) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => RequestForm(data: snapshot.data![index])),
+                      );
+                    },
+                  ),
+                ],
+              );
+            }else{
+              return const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Center(child: CircularProgressIndicator()),
+              );
+            }
+          }
         ),
       ),
     );

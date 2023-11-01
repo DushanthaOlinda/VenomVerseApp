@@ -1,10 +1,14 @@
+import 'package:VenomVerse/screens/pages/learning_resources/addNewBook.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/e_books_list/bk_1.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/e_books_list/bk_2.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/e_books_list/bk_3.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/e_books_list/bk_4.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/e_books_list/bk_5.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/e_books_list/bk_6.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import '../../../services/learn_content_api.dart';
 
 class EBooksPage extends StatefulWidget {
   const EBooksPage({Key? key}) : super(key: key);
@@ -14,17 +18,18 @@ class EBooksPage extends StatefulWidget {
 }
 
 class _EBooksPageState extends State<EBooksPage> {
-  final List<Map<String, dynamic>> ebooks = [
+  final _eBooks = LearnContentApi.getAllBooks();
+final List<dynamic> ebooks = [
     {
       'title': "SNAKES OF SRI LANKA",
       'description': "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
-      'imageUrl': 'assets/images/bk2.png',
+      'imageUrl': 'assets/images/ebook1.png', 
       'ebookPage': const EBook1(),
     },
     {
       'title': "SNAKES OF SRI LANKA",
       'description': "The second edition of my Sinhala language book ‘Snake of Sri Lanka’  was launched in June 2023. This nearly 400-page edition is co-authored with devoted herpetologists",
-      'imageUrl': 'assets/images/bk2.png',
+      'imageUrl': 'assets/images/ebook1.png',
       'ebookPage': const EBook2(),
     },
     {
@@ -53,33 +58,55 @@ class _EBooksPageState extends State<EBooksPage> {
     },
   ];
 
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Books"),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: SafeArea(
-            child: Column(
-              children: [
-                for (var ebook in ebooks)
-                  buildArticleCard(
-                    context,
-                    ebook['title'],
-                    ebook['description'],
-                    ebook['imageUrl'],
-                    ebook['ebookPage'],
-                  ),
-              ],
+    return FutureBuilder<List<dynamic>>(
+      future: _eBooks,
+      builder: (context, snapshot) {
+        if (kDebugMode) {
+          print(snapshot.data);
+        }
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text("Books"),
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: SafeArea(
+                child: Column(
+                  children: [
+                    for (var ebook in snapshot.data ?? ebooks)
+                      buildArticleCard(
+                        context,
+                        ebook['communityBookId'].toString(),
+                        ebook['description'],
+                        // ebook['content'],
+                        'assets/images/bk2.png',
+                        const EBook1(),
+                        // ebook['ebookPage'],
+                      ),
+                  ],
+                ),
+              ),
             ),
           ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          backgroundColor: Colors.green,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddNewEbookPage()),
+            );
+          },
         ),
-      ),
-    );
-  }
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      );
+    }
+  );
+ }
 
   Widget buildArticleCard(
     BuildContext context,

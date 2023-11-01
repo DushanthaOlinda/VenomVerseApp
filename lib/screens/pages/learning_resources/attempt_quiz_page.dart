@@ -1,7 +1,12 @@
+import 'package:VenomVerse/services/quiz_api.dart';
 import 'package:flutter/material.dart';
 
 class AttemptQuizPage extends StatefulWidget {
-  const AttemptQuizPage({Key? key}) : super(key: key);
+  final int quizDetailId;
+
+  final Map quizData;
+
+  const AttemptQuizPage(this.quizDetailId, this.quizData, {Key? key}) : super(key: key);
 
   @override
   State<AttemptQuizPage> createState() => _AttemptQuizPageState();
@@ -64,6 +69,22 @@ class _AttemptQuizPageState extends State<AttemptQuizPage> {
                 alignment: Alignment.bottomRight,
                 child: ElevatedButton(
                   onPressed: () {
+                    var data = {
+                      "quizUserAnswerId": 0,
+                      "quizAttemptId": 0,
+                      "questionId": 0,
+                      "select01": true,
+                      "correctness01": true,
+                      "select02": true,
+                      "correctness02": true,
+                      "select03": true,
+                      "correctness03": true,
+                      "select04": true,
+                      "correctness04": true,
+                      "select05": true,
+                      "correctness05": true
+                    };
+                    QuizApi.submit(data);
                     // Handle submit button press
                     // You can access the selected answers from the selectedAnswers list
                     for (var i = 0; i < quizData.length; i++) {

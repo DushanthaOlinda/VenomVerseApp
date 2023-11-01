@@ -2,13 +2,21 @@
 import 'package:VenomVerse/screens/pages/catcher/result_popup.dart';
 import 'package:flutter/material.dart';
 
+import '../../../services/api.dart';
+
 
 class ResultPopupV2 extends StatefulWidget {
-  const ResultPopupV2({Key? key, required this.species, required this.confidence})
+
+  const ResultPopupV2({Key? key, required this.species, required this.confidence, required this.resultRecordId, required this.savedImageId, required this.imageLink, required this.user})
       : super(key: key);
 
   final String species;
   final double confidence;
+  final int resultRecordId;
+  final int savedImageId;
+  final String imageLink;
+  final int user;
+
   @override
   State<ResultPopupV2> createState() => _ResultPopupV2State();
 }
@@ -20,14 +28,14 @@ class _ResultPopupV2State extends State<ResultPopupV2> {
   Widget build(BuildContext context) {
 
 
-    switch (widget.species) {
-      case 'Cobra' : // Enter this block if mark == 0
+    switch (widget.resultRecordId) {
+      case 0 : // Enter this block if mark == 0
         image = "assets/images/sp1.jpeg" ;
         break;
-      case 'Sri Lankan Krait':
+      case 2:
         image = "assets/images/sp2.jpeg" ;
         break;
-      case 'Whip snakes':
+      case 3:
         image = "assets/images/sp3.jpeg" ;
         break;
       default :
@@ -56,7 +64,7 @@ class _ResultPopupV2State extends State<ResultPopupV2> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Image.asset(image, width: 200, height: 200,),
+                Image.asset(image, width: 150, height: 150,),
                 const SizedBox(height: 20),
                 Text(
                   'Predicted Answer: \n\nSeems to be a ${widget.species}!',
@@ -72,15 +80,29 @@ class _ResultPopupV2State extends State<ResultPopupV2> {
                 Text('Confidence: ${widget.confidence}%',
                     style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                     textAlign: TextAlign.center),
+                const SizedBox(height: 20),
+                const Text(
+                    "This app uses AI for preliminary snake identification from images. "
+                        "Accuracy is not guaranteed due to AI limitations, snake variations, "
+                        "and image quality. Always consult a professional for definitive identification. "
+                        "Do not handle snakes based on this information.",
+                  style: TextStyle(fontSize: 10, color: Colors.white, fontStyle: FontStyle.italic),
+                ),
                 const Spacer(),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     // Add your logic to contact a snake catcher here
+                    // final auth = context.read<AuthModel>();
+                    int reqId = DateTime.now().millisecondsSinceEpoch;
+
+                    await Api.requestCatcher(reqId, widget.user, widget.imageLink, widget.savedImageId, widget.resultRecordId,);
+
+
 
                     if (context.mounted) {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const PendingCatcherRequest(),
+                          builder: (context) => PendingCatcherRequest(reqId: reqId),
                         ),
                       );
                     }

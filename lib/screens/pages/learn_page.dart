@@ -5,9 +5,8 @@ import 'package:VenomVerse/screens/pages/learning_resources/resource_page.dart';
 import 'package:VenomVerse/screens/pages/learning_resources/video_page.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'catcher/requestform_details.dart';
 import 'learning_resources/articles_page.dart';
-import 'catcher/result_popup.dart';
+import 'catcher/service_cancellation.dart';
 import 'learning_resources/e_books_pages.dart';
 
 // class LearnPage extends StatefulWidget {
@@ -22,7 +21,6 @@ class LearnPage extends StatefulWidget {
   @override
   State<LearnPage> createState() => _LearnPageState();
 }
-
 class _LearnPageState extends State<LearnPage> {
   @override
   Widget build(BuildContext context) {
@@ -337,11 +335,7 @@ class _LearnPageState extends State<LearnPage> {
               width: 400,
               child: FloatingActionButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => RequestForm(key: UniqueKey())),
 
-                  );
                 },
               ),
             ),

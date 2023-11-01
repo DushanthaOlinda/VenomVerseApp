@@ -5,8 +5,8 @@ import 'package:video_player/video_player.dart';
 // import 'alert_rejected.dart';
 
 class RequestForm extends StatefulWidget {
-  const RequestForm({Key? key}) : super(key: key);
-
+  const RequestForm({Key? key, required this.data}) : super(key: key);
+  final Map<String, dynamic> data;
   @override
   State<RequestForm> createState() => _RequestFormState();
 }
@@ -67,12 +67,13 @@ class _RequestFormState extends State<RequestForm> {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+    GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+        GlobalKey<ScaffoldMessengerState>();
     return ScaffoldMessenger(
       key: scaffoldMessengerKey,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Request Details:'),
+          title: const Text('Request Details'),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -91,10 +92,12 @@ class _RequestFormState extends State<RequestForm> {
                         Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 2), // White stroke
+                            border: Border.all(
+                                color: Colors.white, width: 2), // White stroke
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.withOpacity(0.5), // Shadow color
+                                color: Colors.grey
+                                    .withOpacity(0.5), // Shadow color
                                 spreadRadius: 5,
                                 blurRadius: 7,
                                 offset: const Offset(0, 5), // Shadow position
@@ -102,16 +105,20 @@ class _RequestFormState extends State<RequestForm> {
                             ],
                           ),
                           child: const CircleAvatar(
-                            backgroundImage: AssetImage('assets/images/man.jpg'),
+                            backgroundImage:
+                                AssetImage('assets/images/man.jpg'),
                             radius: 50.0,
                           ),
                         ),
                         const SizedBox(height: 10), // Keep the larger spacing
-                        const Align(
+                        Align(
                           alignment: Alignment.center,
                           child: Text(
-                            'Name: Siripala Perera',
-                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white),
+                            "${widget.data['userFirstName']} ${widget.data['userLastName']}",
+                            style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           ),
                         ),
                       ],
@@ -119,74 +126,96 @@ class _RequestFormState extends State<RequestForm> {
                   ),
                 ),
                 // Detail section
-                detailSection('Age:', '[Add age here]'),
-                detailSection('Details:', '[Add details here]'),
-                detailSection('Qualifications:', '[Add qualifications here]'),
-                const Divider(color: Colors.black),
-                GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: _controllers.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                  ),
-                  itemBuilder: (context, int i) {
-                    return GestureDetector(
-                      onTap: () => onTapVideo(i),
-                      child: Card(
-                        child: AspectRatio(
-                          aspectRatio: _controllers[i].value.size.aspectRatio,
-                          child: VideoPlayer(_controllers[i]),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 30),
-                _controller != null && _controller!.value.isInitialized
-                    ? AspectRatio(
-                  aspectRatio: _controller!.value.aspectRatio,
-                  child: VideoPlayer(_controller!),
+                detailSection(
+                    'Date Of Birth:',widget.data["dob"]
+                    // DateTimeRange(
+                    //     start: DateTime.parse(widget.data["dob"]),
+                    //     end: DateTime.now()).toString()
                 )
-                    : Container(),
+                ,
+                detailSection('Address:', widget.data["address"]),
+                detailSection('Contact Number:', widget.data["contactNo"]),
+                const Divider(color: Colors.black),
+                SizedBox(
+                  height: 200, // Set this to a suitable value
+                  child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: widget.data["catcherEvidence"].length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.network(widget.data["catcherEvidence"][index]),
+                      );
+                    },
+                  ),
+                ),          // widget.data["catcherEvidence"]
+                // Expanded(
+                //   child: GridView.builder(
+                //     shrinkWrap: true,
+                //     physics: const NeverScrollableScrollPhysics(),
+                //     itemCount: _controllers.length,
+                //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                //       crossAxisCount: 3,
+                //     ),
+                //     itemBuilder: (context, int i) {
+                //       return GestureDetector(
+                //         onTap: () => onTapVideo(i),
+                //         child: Card(
+                //           child: AspectRatio(
+                //             aspectRatio: _controllers[i].value.size.aspectRatio,
+                //             child: VideoPlayer(_controllers[i]),
+                //           ),
+                //         ),
+                //       );
+                //     },
+                //   ),
+                // ),
+                // const SizedBox(height: 30),
+                // _controller != null && _controller!.value.isInitialized
+                //     ? AspectRatio(
+                //         aspectRatio: _controller!.value.aspectRatio,
+                //         child: VideoPlayer(_controller!),
+                //       )
+                //     : Container(),
                 // Add some spacing below the video player
                 const SizedBox(height: 20),
                 // Two buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                  Material(
-                  // elevation: 2,
-                  shadowColor: Colors.black, // Add a black shadow
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                    Material(
+                      // elevation: 2,
+                      shadowColor: Colors.black, // Add a black shadow
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
                       ),
-                    ),
-                    onPressed: () {
-                      // navigateToApprovedAlert(); // Navigate to the ApprovedAlert screen
-                      ArtSweetAlert.show(
-                        context: context,
-                        artDialogArgs: ArtDialogArgs(
-                          type: ArtSweetAlertType.success,
-                          title: "Approved",
-                          text: "You have Successfully Approved this person as a snake catcher",
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
                         ),
-                      );
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text('Approve', style: TextStyle(color: Colors.white)),
+                        onPressed: () {
+                          // navigateToApprovedAlert(); // Navigate to the ApprovedAlert screen
+                          ArtSweetAlert.show(
+                            context: context,
+                            artDialogArgs: ArtDialogArgs(
+                              type: ArtSweetAlertType.success,
+                              title: "Approved",
+                              text:
+                                  "You have Successfully Approved this person as a snake catcher",
+                            ),
+                          );
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Text('Approve',
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-
-            Material(
+                    Material(
                       // elevation: 4,
                       shadowColor: Colors.black, // Add a black shadow
                       shape: RoundedRectangleBorder(
@@ -194,7 +223,7 @@ class _RequestFormState extends State<RequestForm> {
                       ),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.red,
+                          backgroundColor: Colors.red,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
                           ),
@@ -206,19 +235,17 @@ class _RequestFormState extends State<RequestForm> {
                               artDialogArgs: ArtDialogArgs(
                                   type: ArtSweetAlertType.danger,
                                   title: "Rejected",
-                                  text: "You have rejected this person"
-                              )
-                          );
+                                  text: "You have rejected this person"));
                         },
                         child: const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Text('Reject', style: TextStyle(color: Colors.white)),
+                          child: Text('Reject',
+                              style: TextStyle(color: Colors.white)),
                         ),
                       ),
                     ),
                   ],
                 ),
-
               ],
             ),
           ),
@@ -228,16 +255,21 @@ class _RequestFormState extends State<RequestForm> {
   }
 
   Widget detailSection(
-      String title,
-      String? subtitle,
-      ) {
+    String title,
+    String? subtitle,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF373737))),
-          Text(subtitle ?? '', style: const TextStyle(fontSize: 14, color: Colors.black)),
+          Text(title,
+              style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF373737))),
+          Text(subtitle ?? '',
+              style: const TextStyle(fontSize: 14, color: Colors.black)),
         ],
       ),
     );
@@ -246,8 +278,8 @@ class _RequestFormState extends State<RequestForm> {
   @override
   void dispose() {
     super.dispose();
-    _controllers.forEach((controller) {
+    for (var controller in _controllers) {
       controller.dispose();
-    });
+    }
   }
 }

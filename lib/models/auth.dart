@@ -1,3 +1,5 @@
+import 'package:VenomVerse/main.dart';
+import 'package:VenomVerse/services/background_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,6 +41,7 @@ class AuthModel extends ChangeNotifier {
       }
       if (await storage.read(key: 'catcherPrivilege') == null) {
         catcherPrivilege = false;
+        hubConnection.on("ReceiveOrder", CatcherServices.handleNewOrder);
       }
     }
     notifyListeners();
@@ -72,11 +75,15 @@ class AuthModel extends ChangeNotifier {
 
     this.userName = userName;
     this.userEmail = userEmail;
+    expertPrivilege = expert;
+    zoologistPrivilege = zoologist;
+    communityAdminPrivilege =comAdmin;
+    catcherPrivilege = catcher;
+
     // setting keys in the storage
 
     await storage.write(key: 'userName', value: userName);
     await storage.write(key: 'userEmail', value: userEmail);
-
     if (expert) {
       await storage.write(key: 'expertPrivilege', value: 'true');
     }
@@ -85,6 +92,7 @@ class AuthModel extends ChangeNotifier {
     }
     if (catcher) {
       await storage.write(key: 'catcherPrivilege', value: 'true');
+      hubConnection.on("ReceiveOrder", CatcherServices.handleNewOrder);
     }
     if (comAdmin) {
       await storage.write(key: 'communityAdminPrivilege', value: 'true');
