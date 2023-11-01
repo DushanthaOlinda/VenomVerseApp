@@ -36,7 +36,7 @@ class _ServiceInfoState extends State<ServiceInfo> {
       key: scaffoldMessengerKey,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('සර්ප ආරක්ෂකයන්'),
+          title: const Text('සේවා'),
         ),
         body: SingleChildScrollView(
           child: Padding(

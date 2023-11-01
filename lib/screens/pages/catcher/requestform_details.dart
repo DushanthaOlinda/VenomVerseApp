@@ -73,7 +73,7 @@ class _RequestFormState extends State<RequestForm> {
       key: scaffoldMessengerKey,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Request Details:'),
+          title: const Text('Request Details'),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -133,8 +133,8 @@ class _RequestFormState extends State<RequestForm> {
                     //     end: DateTime.now()).toString()
                 )
                 ,
-                detailSection('Details:', widget.data["address"]),
-                detailSection('Qualifications:', widget.data["contactNo"]),
+                detailSection('Address:', widget.data["address"]),
+                detailSection('Contact Number:', widget.data["contactNo"]),
                 const Divider(color: Colors.black),
                 SizedBox(
                   height: 200, // Set this to a suitable value

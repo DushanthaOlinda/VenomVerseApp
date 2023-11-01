@@ -2,7 +2,9 @@ import 'package:VenomVerse/models/user.dart';
 import 'package:VenomVerse/screens/pages/addNewArticlelist_page.dart';
 import 'package:VenomVerse/screens/pages/addnewarticle_page.dart';
 import 'package:VenomVerse/screens/pages/articleRequests_page.dart';
+import 'package:VenomVerse/screens/pages/catcher/feedback_view.dart';
 import 'package:VenomVerse/screens/pages/catcher/requests_list.dart';
+import 'package:VenomVerse/screens/pages/catcher/service_history.dart';
 import 'package:VenomVerse/screens/pages/catcher/service_requestlist.dart';
 import 'package:VenomVerse/screens/pages/complaints_page.dart';
 import 'package:VenomVerse/screens/pages/complaintslist_page.dart';
@@ -43,7 +45,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<AuthModel>();
-    var user = UserApi().getUser(int.parse(auth.userName!));
+
+    var user = UserApi().getUser(int.parse(auth.userName ?? "0"));
 
     if (auth.isAuthorized == false) {
       const AlertDialog(
@@ -76,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: GenerateBody(
         role: 'role',
-        userId: int.parse(auth.userName!),
+        userId: int.parse(auth.userName ?? "0"),
       ),
       drawer: FutureBuilder<Map<String, dynamic>>(
         future: user,
@@ -139,7 +142,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               );
             },
-            items: itemsForRoles(snapshot.data),
+            items: itemsForRoles(snapshot.data) +  [SidebarXItem(
+                  icon: Icons.logout,
+                  label: 'Logout',
+                  onTap: () {
+                    auth.logout();
+                    Navigator.pushReplacementNamed(context, '/login');
+                  }),],
             // items: [
             //   SidebarXItem(
             //     icon: Icons.quiz,
@@ -286,15 +295,7 @@ class _MyHomePageState extends State<MyHomePage> {
             //   ), // All Users
             //
             // ], //
-            footerItems: [
-              SidebarXItem(
-                  icon: Icons.logout,
-                  label: 'Logout',
-                  onTap: () {
-                    auth.logout();
-                    Navigator.pushReplacementNamed(context, '/login');
-                  }),
-            ],
+            // footerItem,
           );
         }
       ),
@@ -430,6 +431,32 @@ class _MyHomePageState extends State<MyHomePage> {
           break;
         case 'Catcher':
           items.addAll([
+            SidebarXItem(
+              icon: Icons.feedback,
+              label: 'My Service History',
+              onTap: () {
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ServiceHistory(),
+                    ),
+                  );
+                }
+              },
+            ), // Catcher
+            SidebarXItem(
+              icon: Icons.feedback,
+              label: 'My Feedback',
+              onTap: () {
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const FeedbackView(),
+                    ),
+                  );
+                }
+              },
+            ), // Catcher
             SidebarXItem(
               icon: Icons.feedback,
               label: 'Service List',

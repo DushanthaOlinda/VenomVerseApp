@@ -79,7 +79,7 @@ class _ArticlesPageState extends State<ArticlesPage> {
                     for (var article in snapshot.data ?? articles)
                       buildArticleCard(
                         context,
-                        article['communityArticleId'].toString(),
+                        article['title'].toString(),
                         article['description'],
                         article['imagePath'] ?? 'assets/images/snake image.jpg',
                         article['articlePage'] ?? const Article2(),

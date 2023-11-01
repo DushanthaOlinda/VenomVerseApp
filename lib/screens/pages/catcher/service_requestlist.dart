@@ -77,16 +77,34 @@ class _ServiceRequestsState extends State<ServiceRequests> {
       var snake = 'Cobra';
       switch (data['selectedSerpent']) {
         case 0 : // Enter this block if mark == 0
-          snake = "assets/images/sp1.jpeg" ;
+          snake = "Rat snake" ;
+          break;
+        case 1 : //
+          snake = "Cobra";
           break;
         case 2:
-          snake = "assets/images/sp2.jpeg" ;
+          snake = "Indian Python" ;
           break;
         case 3:
-          snake = "assets/images/sp3.jpeg" ;
+          snake = "Sand Boa" ;
           break;
-        default :
-          snake = "assets/images/snake_image.png" ;
+        case 4:
+          snake = "Hump Nosed Viper";
+          break;
+        case 6:
+          snake = "Sri Lankan Krait";
+          break;
+        case 7:
+          snake = "Common Krait";
+          break;
+        case 8:
+          snake = "Russell’s Viper";
+          break;
+        case 9:
+          snake = "Saw-scaled Viper";
+          break;
+      default :
+          snake = "Not Detected";
       }
 
       notificationCards.add(NotificationCard(

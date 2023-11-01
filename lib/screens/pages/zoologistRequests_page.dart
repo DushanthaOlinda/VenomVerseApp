@@ -131,7 +131,7 @@ class _ZoologistRequestsPageState extends State<ZoologistRequestsPage> {
                   onTapViewCallback: (index) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ZoologistRequestForm(data: snapshot.data![index],)),
+                      MaterialPageRoute(builder: (context) => ZoologistRequestForm(data: snapshot.data![index])),
                     );
                     if (kDebugMode) {
                       print(index);

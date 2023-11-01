@@ -94,13 +94,14 @@ class _RequestsListState extends State<RequestsList> {
                     notificationCards: notiData ?? [..._listOfNotification],
                     cardColor: const Color(0xFFF1F1F1),
                     padding: 16,
-                    actionTitle: const Text(
-                      'Notifications',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    actionTitle: Container(),
+                    // actionTitle: const Text(
+                    //   'Notifications',
+                    //   style: TextStyle(
+                    //     fontSize: 24,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
                     showLessAction: const Text(
                       'Show less',
                       style: TextStyle(
@@ -133,7 +134,10 @@ class _RequestsListState extends State<RequestsList> {
                 ],
               );
             }else{
-              return const Text("Loading");
+              return const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Center(child: CircularProgressIndicator()),
+              );
             }
           }
         ),
