@@ -129,6 +129,17 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.17.2"
+<<<<<<< Updated upstream
+=======
+  comment_box:
+    dependency: "direct main"
+    description:
+      name: comment_box
+      sha256: "6a0d9cc8d181435b123cc4249c567bd8bdf1bde8d714691b069b942e3e7d4fbb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.18"
+>>>>>>> Stashed changes
   cross_file:
     dependency: transitive
     description:
@@ -288,6 +299,33 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "10.5.0"
+<<<<<<< Updated upstream
+=======
+  freezed_annotation:
+    dependency: transitive
+    description:
+      name: freezed_annotation
+      sha256: c3fd9336eb55a38cc1bbd79ab17573113a8deccd0ecbbf926cca3c62803b5c2d
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
+  get:
+    dependency: transitive
+    description:
+      name: get
+      sha256: e4e7335ede17452b391ed3b2ede016545706c01a02292a6c97619705e7d2a85e
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.6.6"
+  get_it:
+    dependency: transitive
+    description:
+      name: get_it
+      sha256: f79870884de16d689cf9a7d15eedf31ed61d750e813c538a6efb92660fea83c3
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.6.4"
+>>>>>>> Stashed changes
   group_list_view:
     dependency: "direct main"
     description:
@@ -392,6 +430,33 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+<<<<<<< Updated upstream
+=======
+  mime:
+    dependency: transitive
+    description:
+      name: mime
+      sha256: e4ff8e8564c03f255408decd16e7899da1733852a9110a58fe6d1b817684a63e
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
+  mqtt_client:
+    dependency: transitive
+    description:
+      name: mqtt_client
+      sha256: ba10ec490ded55dc4e77bbc992529d823fb15d0d5ec68c2895f960312060c541
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.8.1"
+  multiviewlist:
+    dependency: "direct main"
+    description:
+      name: multiviewlist
+      sha256: ed6ebcdb08048e12088a8621ea8aebbb0ebfd5c6254a5b8fb28b46087511ff19
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
+>>>>>>> Stashed changes
   nested:
     dependency: transitive
     description:
@@ -560,6 +625,81 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
+<<<<<<< Updated upstream
+=======
+  shared_preferences:
+    dependency: "direct main"
+    description:
+      name: shared_preferences
+      sha256: b7f41bad7e521d205998772545de63ff4e6c97714775902c199353f8bf1511ac
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.1"
+  shared_preferences_android:
+    dependency: transitive
+    description:
+      name: shared_preferences_android
+      sha256: "8568a389334b6e83415b6aae55378e158fbc2314e074983362d20c562780fb06"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.1"
+  shared_preferences_foundation:
+    dependency: transitive
+    description:
+      name: shared_preferences_foundation
+      sha256: "7bf53a9f2d007329ee6f3df7268fd498f8373602f943c975598bbb34649b62a7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.4"
+  shared_preferences_linux:
+    dependency: transitive
+    description:
+      name: shared_preferences_linux
+      sha256: c2eb5bf57a2fe9ad6988121609e47d3e07bb3bdca5b6f8444e4cf302428a128a
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.1"
+  shared_preferences_platform_interface:
+    dependency: transitive
+    description:
+      name: shared_preferences_platform_interface
+      sha256: d4ec5fc9ebb2f2e056c617112aa75dcf92fc2e4faaf2ae999caa297473f75d8a
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.1"
+  shared_preferences_web:
+    dependency: transitive
+    description:
+      name: shared_preferences_web
+      sha256: d762709c2bbe80626ecc819143013cc820fa49ca5e363620ee20a8b15a3e3daf
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.1"
+  shared_preferences_windows:
+    dependency: transitive
+    description:
+      name: shared_preferences_windows
+      sha256: f763a101313bd3be87edffe0560037500967de9c394a714cd598d945517f694f
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.1"
+  shimmer:
+    dependency: transitive
+    description:
+      name: shimmer
+      sha256: "1f1009b5845a1f88f1c5630212279540486f97409e9fc3f63883e71070d107bf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
+  sidebarx:
+    dependency: "direct main"
+    description:
+      name: sidebarx
+      sha256: e14796e2ac07e51ad27e19dc35e1316d6993d32faa27eb0b6008718a70a8fa99
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.16.1"
+>>>>>>> Stashed changes
   sign_in_button:
     dependency: transitive
     description:
@@ -764,6 +904,49 @@ packages:
       sha256: dc8ccd225a2005c1be616fe02951e2e342092edf968cf0844220383757ef8f10
       url: "https://pub.dev"
     source: hosted
+<<<<<<< Updated upstream
+=======
+    version: "2.4.9"
+  video_player_avfoundation:
+    dependency: transitive
+    description:
+      name: video_player_avfoundation
+      sha256: f5f5b7fe8c865be8a57fe80c2dca130772e1db775b7af4e5c5aa1905069cfc6c
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.9"
+  video_player_platform_interface:
+    dependency: transitive
+    description:
+      name: video_player_platform_interface
+      sha256: "1ca9acd7a0fb15fb1a990cb554e6f004465c6f37c99d2285766f08a4b2802988"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.0"
+  video_player_web:
+    dependency: transitive
+    description:
+      name: video_player_web
+      sha256: "44ce41424d104dfb7cf6982cc6b84af2b007a24d126406025bf40de5d481c74c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.16"
+  video_uploader:
+    dependency: "direct main"
+    description:
+      name: video_uploader
+      sha256: "455f264d6fe63a733e709c9c6c542f0ee71e14a1bff6a994a8fbb0fa0eabcf3e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
+  web:
+    dependency: transitive
+    description:
+      name: web
+      sha256: dc8ccd225a2005c1be616fe02951e2e342092edf968cf0844220383757ef8f10
+      url: "https://pub.dev"
+    source: hosted
+>>>>>>> Stashed changes
     version: "0.1.4-beta"
   webview_flutter:
     dependency: transitive
@@ -831,4 +1014,8 @@ packages:
     version: "8.1.2"
 sdks:
   dart: ">=3.1.0-185.0.dev <4.0.0"
+<<<<<<< Updated upstream
   flutter: ">=3.10.0"
+=======
+  flutter: ">=3.13.0"
+>>>>>>> Stashed changes
