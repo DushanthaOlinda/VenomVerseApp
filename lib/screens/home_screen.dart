@@ -43,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<AuthModel>();
+    var user = UserApi().getUser(int.parse(auth.userName!));
 
     if (auth.isAuthorized == false) {
       const AlertDialog(
@@ -54,7 +55,9 @@ class _MyHomePageState extends State<MyHomePage> {
       });
       return const Text("Pls login");
     }else {
-      checkUser(auth.userName!);
+      if(auth.userName != null){
+        checkUser(auth.userName!);
+      }
     }
     return Scaffold(
       appBar: AppBarWithSearchSwitch(
@@ -75,222 +78,392 @@ class _MyHomePageState extends State<MyHomePage> {
         role: 'role',
         userId: int.parse(auth.userName!),
       ),
-      drawer: SidebarX(
-        controller: _controller,
-        theme: SidebarXTheme(
-          margin: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: canvasColor,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          hoverColor: scaffoldBackgroundColor,
-          textStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
-          selectedTextStyle: const TextStyle(color: Colors.white),
-          itemTextPadding: const EdgeInsets.only(left: 30),
-          selectedItemTextPadding: const EdgeInsets.only(left: 30),
-          itemDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: canvasColor),
-          ),
-          selectedItemDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: actionColor.withOpacity(0.37),
-            ),
-            gradient: const LinearGradient(
-              colors: [accentCanvasColor, canvasColor],
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.28),
-                blurRadius: 30,
+      drawer: FutureBuilder<Map<String, dynamic>>(
+        future: user,
+        builder: (context, snapshot) {
+          return SidebarX(
+            controller: _controller,
+            theme: SidebarXTheme(
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: canvasColor,
+                borderRadius: BorderRadius.circular(20),
               ),
-            ],
-          ),
-          iconTheme: IconThemeData(
-            color: Colors.white.withOpacity(0.7),
-            size: 20,
-          ),
-          selectedIconTheme: const IconThemeData(
-            color: Colors.white,
-            size: 20,
-          ),
-        ),
-        extendedTheme: const SidebarXTheme(
-          width: 200,
-
-          decoration: BoxDecoration(
-            color: canvasColor,
-          ),
-        ),
-        footerDivider: divider,
-        headerBuilder: (context, extended) {
-          return SizedBox(
-            height: 100,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Image.asset("assets/images/user image.png"),
+              hoverColor: scaffoldBackgroundColor,
+              textStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+              selectedTextStyle: const TextStyle(color: Colors.white),
+              itemTextPadding: const EdgeInsets.only(left: 30),
+              selectedItemTextPadding: const EdgeInsets.only(left: 30),
+              itemDecoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: canvasColor),
+              ),
+              selectedItemDecoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: actionColor.withOpacity(0.37),
+                ),
+                gradient: const LinearGradient(
+                  colors: [accentCanvasColor, canvasColor],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.28),
+                    blurRadius: 30,
+                  ),
+                ],
+              ),
+              iconTheme: IconThemeData(
+                color: Colors.white.withOpacity(0.7),
+                size: 20,
+              ),
+              selectedIconTheme: const IconThemeData(
+                color: Colors.white,
+                size: 20,
+              ),
             ),
-          );
-        },
-        items: [
-          SidebarXItem(
-            icon: Icons.person,
-            label: 'Catcher Requests',
-            onTap: () {
-              if (context.mounted) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const RequestsList(),
-                  ),
-                );
-              }
-            },
-          ),
-          SidebarXItem(
-            icon: Icons.report,
-            label: 'Complaints',
-            onTap: () {
-              if (context.mounted) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ComplaintsListPage(),
-                  ),
-                );
-              }
-            },
-          ),
-          SidebarXItem(
-            icon: Icons.post_add_sharp,
-            label: 'My Articles',
-            onTap: () {
-              if (context.mounted) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const MyArticlePage(),
-                  ),
-                );
-              }
-            },
-          ),
-          SidebarXItem(
-            icon: Icons.post_add_sharp,
-            label: 'Add New Article',
-            onTap: () {
-              if (context.mounted) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const AddNewArticlePage(),
-                  ),
-                );
-              }
-            },
-          ),
+            extendedTheme: const SidebarXTheme(
+              width: 200,
 
-          SidebarXItem(
-            icon: Icons.post_add,
-            label: 'Post Requests',
-            onTap: () {
-              if (context.mounted) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const PostRequestsPage(),
-                  ),
-                );
-              }
+              decoration: BoxDecoration(
+                color: canvasColor,
+              ),
+            ),
+            footerDivider: divider,
+            headerBuilder: (context, extended) {
+              return SizedBox(
+                height: 100,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Image.asset("assets/images/user image.png"),
+                ),
+              );
             },
-          ),
-          SidebarXItem(
-            icon: Icons.post_add,
-            label: 'Article requests',
-            onTap: () {
-              if (context.mounted) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ArticleRequestsPage(),
-                  ),
-                );
-              }
-            },
-          ),
-          SidebarXItem(
-            icon: Icons.person_add_outlined,
-            label: 'Approve Zoologists',
-            onTap: () {
-              if (context.mounted) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ZoologistRequestsPage(),
-                  ),
-                );
-              }
-            },
-          ),
-          SidebarXItem(
-            icon: Icons.feedback,
-            label: 'Feedback',
-            onTap: () {
-              if (context.mounted) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const FeedbackPage(),
-                  ),
-                );
-              }
-            },
-          ),
-          SidebarXItem(
-            icon: Icons.quiz,
-            label: 'Manage Quiz',
-            onTap: () {
-              if (context.mounted) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const viewAllQuizesPage(),
-                  ),
-                );
-              }
-            },
-          ),
-          SidebarXItem(
-            icon: Icons.feedback,
-            label: 'Service List',
-            onTap: () {
-              if (context.mounted) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ServiceRequests(),
-                  ),
-                );
-              }
-            },
-          ),
-          SidebarXItem(
-            icon: Icons.integration_instructions,
-            label: 'Instructions',
-            onTap: () {
-              if (context.mounted) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const InstructionsPage(),
-                  ),
-                );
-              }
-            },
-          ),
-        ],
-        footerItems: [
-          SidebarXItem(
-              icon: Icons.logout,
-              label: 'Logout',
-              onTap: () {
-                auth.logout();
-                Navigator.pushReplacementNamed(context, '/login');
-              }),
-        ],
+            items: itemsForRoles(snapshot.data),
+            // items: [
+            //   SidebarXItem(
+            //     icon: Icons.quiz,
+            //     label: 'Manage Quiz',
+            //     onTap: () {
+            //       if (context.mounted) {
+            //         Navigator.of(context).push(
+            //           MaterialPageRoute(
+            //             builder: (context) => const viewAllQuizesPage(),
+            //           ),
+            //         );
+            //       }
+            //     },
+            //   ), // Zoologist
+            //   SidebarXItem(
+            //     icon: Icons.post_add_sharp,
+            //     label: 'My Articles',
+            //     onTap: () {
+            //       if (context.mounted) {
+            //         Navigator.of(context).push(
+            //           MaterialPageRoute(
+            //             builder: (context) => const MyArticlePage(),
+            //           ),
+            //         );
+            //       }
+            //     },
+            //   ), // Zoologist
+            //   SidebarXItem(
+            //     icon: Icons.post_add_sharp,
+            //     label: 'Add New Article',
+            //     onTap: () {
+            //       if (context.mounted) {
+            //         Navigator.of(context).push(
+            //           MaterialPageRoute(
+            //             builder: (context) => const AddNewArticlePage(),
+            //           ),
+            //         );
+            //       }
+            //     },
+            //   ), // Zoologist
+            //   SidebarXItem(
+            //     icon: Icons.post_add,
+            //     label: 'Post Requests',
+            //     onTap: () {
+            //       if (context.mounted) {
+            //         Navigator.of(context).push(
+            //           MaterialPageRoute(
+            //             builder: (context) => const PostRequestsPage(),
+            //           ),
+            //         );
+            //       }
+            //     },
+            //   ), // Com Admin
+            //   SidebarXItem(
+            //     icon: Icons.report,
+            //     label: 'Complaints',
+            //     onTap: () {
+            //       if (context.mounted) {
+            //         Navigator.of(context).push(
+            //           MaterialPageRoute(
+            //             builder: (context) => const ComplaintsListPage(),
+            //           ),
+            //         );
+            //       }
+            //     },
+            //   ), // Com Admin
+            //   SidebarXItem(
+            //     icon: Icons.post_add,
+            //     label: 'Article requests',
+            //     onTap: () {
+            //       if (context.mounted) {
+            //         Navigator.of(context).push(
+            //           MaterialPageRoute(
+            //             builder: (context) => const ArticleRequestsPage(),
+            //           ),
+            //         );
+            //       }
+            //     },
+            //   ), // Com Admin
+            //   SidebarXItem(
+            //     icon: Icons.person_add_outlined,
+            //     label: 'Approve Zoologists',
+            //     onTap: () {
+            //       if (context.mounted) {
+            //         Navigator.of(context).push(
+            //           MaterialPageRoute(
+            //             builder: (context) => const ZoologistRequestsPage(),
+            //           ),
+            //         );
+            //       }
+            //     },
+            //   ), // Com Admin
+            //   SidebarXItem(
+            //     icon: Icons.feedback,
+            //     label: 'Service List',
+            //     onTap: () {
+            //       if (context.mounted) {
+            //         Navigator.of(context).push(
+            //           MaterialPageRoute(
+            //             builder: (context) => const ServiceRequests(),
+            //           ),
+            //         );
+            //       }
+            //     },
+            //   ), // Catcher
+            //   SidebarXItem(
+            //     icon: Icons.person,
+            //     label: 'Catcher Requests',
+            //     onTap: () {
+            //       if (context.mounted) {
+            //         Navigator.of(context).push(
+            //           MaterialPageRoute(
+            //             builder: (context) => const RequestsList(),
+            //           ),
+            //         );
+            //       }
+            //     },
+            //   ), // Catcher
+            //   SidebarXItem(
+            //     icon: Icons.integration_instructions,
+            //     label: 'Instructions',
+            //     onTap: () {
+            //       if (context.mounted) {
+            //         Navigator.of(context).push(
+            //           MaterialPageRoute(
+            //             builder: (context) => const InstructionsPage(),
+            //           ),
+            //         );
+            //       }
+            //     },
+            //   ), // All users
+            //   SidebarXItem(
+            //     icon: Icons.feedback,
+            //     label: 'Feedback',
+            //     onTap: () {
+            //       if (context.mounted) {
+            //         Navigator.of(context).push(
+            //           MaterialPageRoute(
+            //             builder: (context) => const FeedbackPage(),
+            //           ),
+            //         );
+            //       }
+            //     },
+            //   ), // All Users
+            //
+            // ], //
+            footerItems: [
+              SidebarXItem(
+                  icon: Icons.logout,
+                  label: 'Logout',
+                  onTap: () {
+                    auth.logout();
+                    Navigator.pushReplacementNamed(context, '/login');
+                  }),
+            ],
+          );
+        }
       ),
     );
   }
+
+  List<SidebarXItem> itemsForRoles(Map<String, dynamic>? auth) {
+    List<SidebarXItem> items = [];
+    // AuthModel auth = await context.watch<AuthModel>();
+
+    if (auth == null) {
+      return [];
+    }
+
+    print(auth["catcherPrivilege"]);
+
+    List roles = [];
+
+    if(auth["catcherPrivilege"]){
+      roles.add("Catcher");
+    }
+    if(auth["expertPrivilege"]){
+      roles.add("Expert");
+    }
+    if(auth["communityAdminPrivilege"]){
+      roles.add("ComAdmin");
+    }
+    if(auth["zoologistPrivilege"]){
+      roles.add("Zoologist");
+    }
+    for (String role in roles) {
+      switch (role) {
+        case 'Zoologist': // zoologist
+          items.addAll([
+            SidebarXItem(
+              icon: Icons.quiz,
+              label: 'Manage Quiz',
+              onTap: () {
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const viewAllQuizesPage(),
+                    ),
+                  );
+                }
+              },
+            ), // Zoologist
+            SidebarXItem(
+              icon: Icons.post_add_sharp,
+              label: 'My Articles',
+              onTap: () {
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const MyArticlePage(),
+                    ),
+                  );
+                }
+              },
+            ), // Zoologist
+            SidebarXItem(
+              icon: Icons.post_add_sharp,
+              label: 'Add New Article',
+              onTap: () {
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const AddNewArticlePage(),
+                    ),
+                  );
+                }
+              },
+            ), // Zoologist
+            // Catcher items...
+          ]);
+          break;
+        case 'ComAdmin': // Com Admin
+          items.addAll([
+            SidebarXItem(
+              icon: Icons.post_add,
+              label: 'Post Requests',
+              onTap: () {
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const PostRequestsPage(),
+                    ),
+                  );
+                }
+              },
+            ), // Com Admin
+            SidebarXItem(
+              icon: Icons.report,
+              label: 'Complaints',
+              onTap: () {
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ComplaintsListPage(),
+                    ),
+                  );
+                }
+              },
+            ), // Com Admin
+            SidebarXItem(
+              icon: Icons.post_add,
+              label: 'Article requests',
+              onTap: () {
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ArticleRequestsPage(),
+                    ),
+                  );
+                }
+              },
+            ), // Com Admin
+            SidebarXItem(
+              icon: Icons.person_add_outlined,
+              label: 'Approve Zoologists',
+              onTap: () {
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ZoologistRequestsPage(),
+                    ),
+                  );
+                }
+              },
+            ), // Com Admin
+            // Zoologist items...
+          ]);
+          break;
+        case 'Catcher':
+          items.addAll([
+            SidebarXItem(
+              icon: Icons.feedback,
+              label: 'Service List',
+              onTap: () {
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ServiceRequests(),
+                    ),
+                  );
+                }
+              },
+            ), // Catcher
+            SidebarXItem(
+              icon: Icons.person,
+              label: 'Catcher Requests',
+              onTap: () {
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const RequestsList(),
+                    ),
+                  );
+                }
+              },
+            ), // Catcher
+            // Com Admin items...
+          ]);
+          break;
+      }
+    }
+    return items;
+  }
+
 
   Future<void> checkUser(String userName) async {
     var auth = context.watch<AuthModel>();

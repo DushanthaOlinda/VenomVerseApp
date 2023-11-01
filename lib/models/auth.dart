@@ -75,6 +75,11 @@ class AuthModel extends ChangeNotifier {
 
     this.userName = userName;
     this.userEmail = userEmail;
+    expertPrivilege = expert;
+    zoologistPrivilege = zoologist;
+    communityAdminPrivilege =comAdmin;
+    catcherPrivilege = catcher;
+
     // setting keys in the storage
 
     await storage.write(key: 'userName', value: userName);
