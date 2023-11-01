@@ -335,11 +335,7 @@ class _LearnPageState extends State<LearnPage> {
               width: 400,
               child: FloatingActionButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CancelReasonDialog(key: UniqueKey())),
 
-                  );
                 },
               ),
             ),
