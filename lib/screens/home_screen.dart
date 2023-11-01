@@ -278,8 +278,6 @@ class _MyHomePageState extends State<MyHomePage> {
               }
             },
           ),
-        ],
-        footerItems: [
           SidebarXItem(
               icon: Icons.logout,
               label: 'Logout',
@@ -288,6 +286,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushReplacementNamed(context, '/login');
               }),
         ],
+        
       ),
     );
   }

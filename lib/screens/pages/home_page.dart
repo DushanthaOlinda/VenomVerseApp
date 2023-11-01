@@ -134,24 +134,31 @@ class AddNewPostState extends State<AddNewPost> {
               label: const Text('Select Images'),
             ),
             const SizedBox(height: 10),
-            // Display selected images
-            SizedBox(
-              height: 200,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: imageFiles.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.file(
-                      imageFiles[index],
-                      width: 150,
-                      height: 150,
+              // Display selected images
+              Center(
+                child: SizedBox(
+                  height: 200,
+                  child: Center(
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: imageFiles.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.file(
+                            imageFiles[index],
+                            width: 150,
+                            height: 150,
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
+                  ),
+                ),
               ),
-            ),
+
+
+
             const SizedBox(height: 20),
             DropdownMenu<String>(
               initialSelection: list.first,
