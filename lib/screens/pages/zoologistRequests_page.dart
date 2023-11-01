@@ -1,4 +1,6 @@
 import 'package:VenomVerse/screens/pages/zoologistRequestForm_page.dart';
+import 'package:VenomVerse/services/api_user_control.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked_notification_cards/stacked_notification_cards.dart';
 
@@ -68,67 +70,95 @@ class _ZoologistRequestsPageState extends State<ZoologistRequestsPage> {
   ];
   @override
   Widget build(BuildContext context) {
+    Future<List<Map<String, dynamic>>> toBecomeZoologist = UserApi.getZoologistReq();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Approve Zoologists"),
       ),
       backgroundColor: Colors.red [50],
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            StackedNotificationCards(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.25),
-                  blurRadius: 2.0,
-                )
+        child: FutureBuilder<List<Map<String, dynamic>>>(
+          future: toBecomeZoologist,
+          builder: (context, snapshot) {
+            if (kDebugMode) {
+              print(snapshot.data);
+            }
+            return Column(
+              children: [
+                StackedNotificationCards(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.25),
+                      blurRadius: 2.0,
+                    )
+                  ],
+                  notificationCardTitle: 'Message',
+                  notificationCards: getZoologistNotification(snapshot.data)??[..._listOfNotification],
+                  cardColor: const Color(0xFFF1F1F1),
+                  padding: 16,
+                  actionTitle: const Text(
+                    'Notifications',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  showLessAction: const Text(
+                    'Show less',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.deepPurple,
+                    ),
+                  ),
+                  onTapClearAll: () {
+                    setState(() {
+                      _listOfNotification.clear();
+                    });
+                  },
+                  clearAllNotificationsAction: const Icon(Icons.close),
+                  clearAllStacked: const Text('Clear All'),
+                  cardClearButton: const Text('clear'),
+                  cardViewButton: const Text('view'),
+                  onTapClearCallback: (index) {
+                    if (kDebugMode) {
+                      print(index);
+                    }
+                    setState(() {
+                      _listOfNotification.removeAt(index);
+                    });
+                  },
+                  onTapViewCallback: (index) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ZoologistRequestForm(data: snapshot.data![index],)),
+                    );
+                    if (kDebugMode) {
+                      print(index);
+                    }
+                  },
+                ),
               ],
-              notificationCardTitle: 'Message',
-              notificationCards: [..._listOfNotification],
-              cardColor: const Color(0xFFF1F1F1),
-              padding: 16,
-              actionTitle: const Text(
-                'Notifications',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              showLessAction: const Text(
-                'Show less',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.deepPurple,
-                ),
-              ),
-              onTapClearAll: () {
-                setState(() {
-                  _listOfNotification.clear();
-                });
-              },
-              clearAllNotificationsAction: const Icon(Icons.close),
-              clearAllStacked: const Text('Clear All'),
-              cardClearButton: const Text('clear'),
-              cardViewButton: const Text('view'),
-              onTapClearCallback: (index) {
-                print(index);
-                setState(() {
-                  _listOfNotification.removeAt(index);
-                });
-              },
-              onTapViewCallback: (index) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ZoologistRequestForm()),
-                );
-                print(index);
-              },
-            ),
-          ],
+            );
+          }
         ),
       ),
 
     );
   }
+}
+
+getZoologistNotification(List<Map<String, dynamic>>? data) {
+  print(data);
+  return data?.map((e) =>     NotificationCard(
+    date: DateTime.now().subtract(
+      const Duration(minutes: 4),
+    ),
+    leading: const Icon(
+      Icons.account_circle,
+      size: 48,
+    ),
+    title: e["userFirstName"],
+    subtitle: e["degreeName"],
+  )).toList();
 }

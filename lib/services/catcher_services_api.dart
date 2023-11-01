@@ -235,7 +235,8 @@ class CatcherServicesApi extends Api {
     return mockData;
   }
 
-  static Future<List<Map<String, String>>> completedRequests(int catcherId) async {
+  static Future<List<Map<String, String>>> completedRequests(
+      int catcherId) async {
     // https://venomverser.azurewebsites.net/Catcher/AllRequestsCompleted/1695232719640
     String fullUrl = "${mainUrl}Catcher/AllRequestsCompleted/$catcherId";
 
@@ -254,11 +255,13 @@ class CatcherServicesApi extends Api {
       //     {'date': "No Data", 'details': "No Data", 'Location': "No Data"}
       //   ];
       // }
-      data.map((e) => {
-            'date': e["dateTime"],
-            'details': e["ratingComment"],
-            'Location': e["catcherFeedback"]
-          }).toList();
+      data
+          .map((e) => {
+                'date': e["dateTime"],
+                'details': e["ratingComment"],
+                'Location': e["catcherFeedback"]
+              })
+          .toList();
       return data;
       // response.body;
     }
@@ -271,11 +274,12 @@ class CatcherServicesApi extends Api {
 
   static Future<Map<String, dynamic>> getService(int reqId) async {
     String fullUrl = "${mainUrl}Catcher/ViewRequest/$reqId";
-    Response response = await http.get(Uri.parse(fullUrl), headers: <String, String>{
+    Response response =
+        await http.get(Uri.parse(fullUrl), headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     });
 
-    if (response.statusCode == 200){
+    if (response.statusCode == 200) {
       return json.decode(response.body);
     }
 
@@ -297,16 +301,19 @@ class CatcherServicesApi extends Api {
       "reqUserLastName": "Test",
       "catcherFirstName": null,
       "catcherLastName": null,
-      "scanImgUrl": "https://firebasestorage.googleapis.com/v0/b/venomverse-ba46f.appspot.com/o/ScannedImages%2F2023-10-31%2014%3A59%3A33.805464Z.png?alt=media&token=282a65c1-66f7-42ad-ab1b-367fd0604265"
+      "scanImgUrl":
+          "https://firebasestorage.googleapis.com/v0/b/venomverse-ba46f.appspot.com/o/ScannedImages%2F2023-10-31%2014%3A59%3A33.805464Z.png?alt=media&token=282a65c1-66f7-42ad-ab1b-367fd0604265"
     };
   }
 
   static Future<void> completeReq(int parse, String s, int reqId) async {
-    String fullUrl =  "${mainUrl}Catcher/CompleteServiceReq/$reqId?catcherId=$parse&feedback=$s";
+    String fullUrl =
+        "${mainUrl}Catcher/CompleteServiceReq/$reqId?catcherId=$parse&feedback=$s";
 
-    Response response = await http.put(
-        Uri.parse(fullUrl), body:jsonEncode({"Comment"}), headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
+    Response response = await http.put(Uri.parse(fullUrl),
+        body: jsonEncode({"Comment"}),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
   }
 }

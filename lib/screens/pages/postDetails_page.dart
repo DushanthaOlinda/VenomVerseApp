@@ -1,11 +1,18 @@
+import 'package:VenomVerse/models/auth.dart';
 import 'package:VenomVerse/screens/pages/postRequests_page.dart';
+import 'package:VenomVerse/services/api.dart';
+import 'package:VenomVerse/services/post_api.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 
 
 class PostDetailsPage extends StatefulWidget {
 
-  const PostDetailsPage({Key? key}) : super(key: key);
+
+  const PostDetailsPage({Key? key, required this.postId}) : super(key: key);
+
+  final int postId;
 
   @override
   State<PostDetailsPage> createState() => _PostDetailsPageState();
@@ -23,7 +30,7 @@ class Post {
     required this.title,
     required this.summary,
     required this.description,
-    required this.images,
+    required this.images, required name,
 
   });
 }
@@ -31,14 +38,15 @@ class Post {
 class _PostDetailsPageState extends State<PostDetailsPage> {
   @override
   Widget build(BuildContext context) {
-    return PostDetailsWidget();
+    return PostDetailsWidget(postId: widget.postId);
   }
 }
 
 class PostCard extends StatelessWidget {
+
   final Post post;
 
-  PostCard({
+  const PostCard({
     Key? key, // Add the key parameter here
     required this.post,
   }) : super(key: key); // Correct the syntax here
@@ -71,21 +79,30 @@ class PostCard extends StatelessWidget {
   }
 }
 class PostDetailsWidget extends StatelessWidget {
-  final List<Post> posts = [
-    Post(
-      category: "science",
-      title: "This is the title",
-      summary: "This is the summary about the article",
-      description: "This is the description",
-      images: [
-        'assets/images/snake2.jpg',
-        'assets/images/snake4.jpg',
-        // Add more image paths here...
-      ],
-    ),
-  ];
+  const PostDetailsWidget({super.key, required this.postId});
+  final int postId;
 
   @override
+  // Widget build(BuildContext context) {
+//     // TODO: implement build
+//     throw UnimplementedError();
+//   }
+// }
+// final List<Post> posts = [
+//     Post(
+//       category: "science",
+//       title: "This is the title",
+//       summary: "This is the summary about the article",
+//       description: "This is the description",
+//       images: [
+//         'assets/images/snake2.jpg',
+//         'assets/images/snake4.jpg',
+//         // Add more image paths here...
+//       ],
+//     ),
+//   ];
+//
+//   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -93,14 +110,12 @@ class PostDetailsWidget extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.all(16.0),
-              children: posts.map((post) {
-                return PostCard(
-                  post: post,
-                );
-              }).toList(),
+           Expanded(
+            child: FutureBuilder<Map<String, dynamic>>(
+              future: PostApi.getPost(postId),
+              builder: (context, snapshot) {
+                return PostCard(post: Post(name: "", category: snapshot.data?["category"], title: snapshot.data?[""], summary: '', description: snapshot.data?["description"], images: snapshot.data?["media"]),);
+              }
             ),
           ),
           Padding(
@@ -110,18 +125,22 @@ class PostDetailsWidget extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    AuthModel auth = context.read<AuthModel>();
+                    PostApi.postApprove(postId, true, int.parse(auth.userName!));
                     _showSuccessDialog(context);
                   },
-                  child: Text("Approve"),
+                  child: const Text("Approve"),
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    AuthModel auth = context.read<AuthModel>();
+                    PostApi.postApprove(postId, false, int.parse(auth.userName!));
                     _showRejectionDialog(context);
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.red, // Set the background color to red
                   ),
-                  child: Text("Reject"),
+                  child: const Text("Reject"),
                 ),
               ],
             ),

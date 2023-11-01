@@ -1,14 +1,20 @@
+import 'package:VenomVerse/models/auth.dart';
 import 'package:VenomVerse/screens/pages/zoologistRequests_page.dart';
+import 'package:VenomVerse/services/api_user_control.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ZoologistRequestForm extends StatefulWidget {
-  const ZoologistRequestForm({Key? key}) : super(key: key);
+  const ZoologistRequestForm({Key? key, required this.data,}) : super(key: key);
+
+  final Map<String,dynamic > data;
 
   @override
   State<ZoologistRequestForm> createState() => _ZoologistRequestFormState();
 }
 
 class Zoologist {
+  final int zoologistId;
   final String name;
   final int age;
   final String nicNumber;
@@ -20,6 +26,7 @@ class Zoologist {
   final String graduationCertificateImage;
 
   Zoologist({
+    required this.zoologistId,
     required this.name,
     required this.age,
     required this.nicNumber,
@@ -33,29 +40,33 @@ class Zoologist {
 }
 
 class _ZoologistRequestFormState extends State<ZoologistRequestForm> {
-  final List<Zoologist> zoologists = [
-    Zoologist(
-      name: "John Doe",
-      age: 30,
-      nicNumber: "12345-67890",
-      contactNumber: "123-456-7890",
-      degreeName: "Master of Zoology",
-      graduationYear: "2022",
-      university: "University of Wildlife",
-      zoologistImage: "assets/images/zoologistImage1.jpeg",
-      graduationCertificateImage: "assets/images/graduationImage.jpeg",
-    ),
-    // Add more Zoologist objects for each request
-  ];
+
 
   @override
   Widget build(BuildContext context) {
+
+    final List<Zoologist> zoologists = [
+      Zoologist(
+        zoologistId: widget.data["zoologistId"],
+        name: widget.data["userFirstName"],
+        age: 30, // convert DOB widget.data["dob]
+        nicNumber: widget.data["nic"],
+        contactNumber: widget.data["contactNo"],
+        degreeName: widget.data["degreeName"],
+        graduationYear: widget.data["graduatedYear"],
+        university: widget.data["university"],
+        zoologistImage: "assets/images/zoologistImage1.jpeg",
+        graduationCertificateImage: "assets/images/graduationImage.jpeg",
+      ),
+      // Add more Zoologist objects for each request
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Approval Requests"),
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: zoologists.map((zoologist) {
           return RequestCard(
             zoologist: zoologist,
@@ -69,7 +80,7 @@ class _ZoologistRequestFormState extends State<ZoologistRequestForm> {
 class RequestCard extends StatelessWidget {
   final Zoologist zoologist;
 
-  const RequestCard({
+  const RequestCard({super.key,
     required this.zoologist,
   });
 
@@ -91,7 +102,7 @@ class RequestCard extends StatelessWidget {
               children: [
                 Text(
                   "Name: ${zoologist.name}",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text("Age: ${zoologist.age} years"),
                 Text("NIC Number: ${zoologist.nicNumber}"),
@@ -110,6 +121,8 @@ class RequestCard extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
+                        AuthModel auth = context.read<AuthModel>();
+                        UserApi.approveZooloigist(zoologist.zoologistId, int.parse(auth.userName!), true);
                         _showSuccessDialog(context);
                       },
                       child: const Text("Approve"),
@@ -149,7 +162,7 @@ void _showSuccessDialog(BuildContext context) {
         content: const Text("Request has been successfully approved."),
         actions: [
           TextButton(
-            child: Text("OK"),
+            child: const Text("OK"),
             onPressed: () {
               Navigator.push(
                 context,
@@ -170,11 +183,11 @@ void _showRejectionDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("Rejected"),
-        content: Text("Request has been rejected."),
+        title: const Text("Rejected"),
+        content: const Text("Request has been rejected."),
         actions: [
           TextButton(
-            child: Text("OK"),
+            child: const Text("OK"),
               onPressed: () {
                 Navigator.push(
                   context,
